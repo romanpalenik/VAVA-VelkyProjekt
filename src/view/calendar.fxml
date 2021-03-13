@@ -41,6 +41,6 @@
          </font>
       </Label>
       <Label fx:id="firstTag" layoutX="27.0" layoutY="134.0" text="Tags" />
-      <Button layoutX="79.0" layoutY="129.0" mnemonicParsing="false" text="Pridat tag" />
+      <Button fx:id="addTag" layoutX="79.0" layoutY="129.0" mnemonicParsing="false" onAction="#openWindowToAddNewTag" text="Pridat tag" />
    </children>
 </AnchorPane>

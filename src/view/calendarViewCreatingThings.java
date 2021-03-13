@@ -8,12 +8,27 @@ import model.CalendarDatabase;
 
 import java.util.ArrayList;
 
-public class CreateTagsInCalendar {
+/**
+ * class that create tags and make calendar bigger or smaller
+ */
+public class calendarViewCreatingThings {
 
-    CalendarDatabase calendarDatabase = new CalendarDatabase();
-    ArrayList<String> tags = new ArrayList<String>();
+    ArrayList<String> tags = new ArrayList<>();
+    ArrayList<Label> labelTags = new ArrayList<>();
 
-    public void createTags(AnchorPane root, Label fistTag) {
+    /**
+     * delete all tags, and create new from array
+     * @param root window pane
+     * @param fistTag tag by to navigate position
+     * @param calendarDatabase database with every information connected with calendar
+     */
+    public void createTags(AnchorPane root, Label fistTag,CalendarDatabase calendarDatabase) {
+
+        for(Label label:labelTags)
+        {
+            root.getChildren().remove(label);
+        }
+
         double yPosition = fistTag.getLayoutY() + 100;
         double xPosition = fistTag.getLayoutX();
         tags = calendarDatabase.getTags();
@@ -22,6 +37,8 @@ public class CreateTagsInCalendar {
             Label label = new Label(tag);
             label.setTranslateX(xPosition);
             label.setTranslateY(yPosition);
+
+            labelTags.add(label);
 
             root.getChildren().add(label);
 

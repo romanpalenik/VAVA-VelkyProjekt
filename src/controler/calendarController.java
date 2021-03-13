@@ -1,14 +1,21 @@
 package controler;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import model.AnchorPaneNode;
-import view.CreateTagsInCalendar;
+import model.CalendarDatabase;
+import view.calendarViewCreatingThings;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -30,12 +37,15 @@ public class calendarController {
     private Button monthBefore;
     @FXML
     private Label firstTag;
+    @FXML
+    private TextField tagName;
 
-
+    private Stage stage = new Stage();
     private ArrayList<AnchorPaneNode> allCalendarDays = new ArrayList<>(35);
     private YearMonth currentMonth = YearMonth.now();
     private boolean specialMonth = false;
-    CreateTagsInCalendar calendarView = new CreateTagsInCalendar();
+    calendarViewCreatingThings calendarView = new calendarViewCreatingThings();
+    CalendarDatabase calendarDatabase = new CalendarDatabase();
 
     public void initialize()
     {
@@ -52,7 +62,7 @@ public class calendarController {
         monthForward.setText(String.valueOf(currentMonth.plusMonths(1)));
         monthBefore.setText(String.valueOf(currentMonth.minusMonths(1)));
 
-        calendarView.createTags(root,firstTag);
+        calendarView.createTags(root,firstTag, calendarDatabase);
     }
 
     /**
@@ -146,6 +156,23 @@ public class calendarController {
             specialMonth = false;
         }
     }
+
+    /**
+     * opens new window when you can edit or create tag
+     * @throws IOException
+     */
+    public void openWindowToAddNewTag() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/createTag.fxml"));
+        Parent root2 = (Parent) loader.load();
+        CreateTagController controller = loader.getController();
+        controller.initData(calendarDatabase,calendarView, stage,root,firstTag);
+        Scene scene = new Scene(root2);
+        stage.setTitle("Pridat tag");
+        stage.setScene(scene);
+        stage.show();
+    }
+
 }
 
 
