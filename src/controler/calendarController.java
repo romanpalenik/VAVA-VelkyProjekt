@@ -43,7 +43,6 @@ public class calendarController {
     private Stage stage = new Stage();
     private ArrayList<AnchorPaneNode> allCalendarDays = new ArrayList<>(35);
     private YearMonth currentMonth = YearMonth.now();
-    private boolean specialMonth = false;
     calendarViewCreatingThings calendarView = new calendarViewCreatingThings();
     CalendarDatabase calendarDatabase = new CalendarDatabase();
 
@@ -143,17 +142,26 @@ public class calendarController {
      */
     public void checkMonthSize(YearMonth currentMonth)
     {
+        //check if calendar needs bigger or smaller, if neither than set it to normal size
         LocalDate calendarDate = LocalDate.of(currentMonth.getYear(), currentMonth.getMonthValue(), 1);
         int sizeOfMonth = currentMonth.lengthOfMonth();
         if(((calendarDate.getDayOfWeek().toString().equals("SATURDAY") || calendarDate.getDayOfWeek().toString().equals("SUNDAY"))
         && sizeOfMonth == 31) || calendarDate.getDayOfWeek().toString().equals("SUNDAY") && sizeOfMonth==30)
         {
-            specialMonth = true;
-            calendarView.makeCalendarBigger(root,calendar,allCalendarDays);
+
+            allCalendarDays = calendarView.makeCalendarBigger(root,calendar);
         }
-        else if(specialMonth ==true) {
+        else if((calendarDate.getDayOfWeek().toString().equals("MONDAY") && sizeOfMonth==28))
+        {
+            allCalendarDays = calendarView.makeCalendarLitter(root,calendar);
+        }
+        else{
             allCalendarDays = calendarView.makeCalendarNormalSize(root,calendar);
-            specialMonth = false;
+
+        }
+        if((calendarDate.getDayOfWeek().toString().equals("MONDAY") && sizeOfMonth==28))
+        {
+            allCalendarDays = calendarView.makeCalendarLitter(root,calendar);
         }
     }
 

@@ -49,19 +49,34 @@ public class calendarViewCreatingThings {
     /**
      * there is months that start on saturday or sunday and has 31 day so they
      * need 8 rows to show not only 7
+     * @return
      */
-    public void makeCalendarBigger(AnchorPane root, GridPane calendar, ArrayList<AnchorPaneNode> allCalendarDays) {
+    public ArrayList<AnchorPaneNode> makeCalendarBigger(AnchorPane root, GridPane calendar) {
 
         root.getChildren().remove(calendar);
-        for (int i = 0; i < 7; i++) {
-            AnchorPaneNode ap = new AnchorPaneNode();
-            ap.setPrefSize(0, 81);
-            calendar.add(ap, i, 5);
-            allCalendarDays.add(ap);
-        }
-        root.getChildren().add(calendar);
+
+        calendar = new GridPane();
+        calendar.setPrefSize(749, 487);
+        calendar.setLayoutX(209);
+        calendar.setLayoutY(142);
+        calendar.setGridLinesVisible(true);
+
+        ArrayList<AnchorPaneNode> allCalendarDays = new ArrayList<>(28);
+        calendar.getChildren().removeAll();
+
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 7; j++) {
+                AnchorPaneNode ap = new AnchorPaneNode();
+                ap.setPrefSize(200, 200);
+                calendar.add(ap, j, i);
+                allCalendarDays.add(ap);
+            }
 
         }
+
+        root.getChildren().add(calendar);
+        return allCalendarDays;
+    }
 
     /**
      * Create new calendar where size is normal 7x5
@@ -92,6 +107,34 @@ public class calendarViewCreatingThings {
             }
 
         }
+        root.getChildren().add(calendar);
+        return allCalendarDays;
+    }
+
+    public ArrayList<AnchorPaneNode> makeCalendarLitter(AnchorPane root, GridPane calendar)
+    {
+
+        root.getChildren().remove(calendar);
+
+        calendar = new GridPane();
+        calendar.setPrefSize(749,487);
+        calendar.setLayoutX(209);
+        calendar.setLayoutY(142);
+        calendar.setGridLinesVisible(true);
+
+        ArrayList<AnchorPaneNode> allCalendarDays = new ArrayList<>(28);
+        calendar.getChildren().removeAll();
+
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 7; j++) {
+                AnchorPaneNode ap = new AnchorPaneNode();
+                ap.setPrefSize(200, 200);
+                calendar.add(ap, j, i);
+                allCalendarDays.add(ap);
+            }
+
+        }
+
         root.getChildren().add(calendar);
         return allCalendarDays;
     }
