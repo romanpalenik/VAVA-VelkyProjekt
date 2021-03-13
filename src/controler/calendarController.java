@@ -1,18 +1,20 @@
 package controler;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import model.AnchorPaneNode;
+import view.CreateTagsInCalendar;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
 
 
-public class Controller {
+public class calendarController {
 
     @FXML
     private AnchorPane root;
@@ -22,11 +24,18 @@ public class Controller {
     private Label month;
     @FXML
     private Label year;
+    @FXML
+    private Button monthForward;
+    @FXML
+    private Button monthBefore;
+    @FXML
+    private Label firstTag;
 
 
     private ArrayList<AnchorPaneNode> allCalendarDays = new ArrayList<>(35);
     private YearMonth currentMonth = YearMonth.now();
     private boolean specialMonth = false;
+    CreateTagsInCalendar calendarView = new CreateTagsInCalendar();
 
     public void initialize()
     {
@@ -40,38 +49,43 @@ public class Controller {
             }
         }
         setUpDays(currentMonth);
+        monthForward.setText(String.valueOf(currentMonth.plusMonths(1)));
+        monthBefore.setText(String.valueOf(currentMonth.minusMonths(1)));
+
+        calendarView.createTags(root,firstTag);
     }
 
+    /**
+     * set to every cell of calendar right date
+     * @param currentMonth month to show
+     */
     public void setUpDays(YearMonth currentMonth)
     {
-        for (AnchorPaneNode ap : allCalendarDays) {
-//            ap.getStylesheets().add("daysInMonth.css");
-//            ap.getStylesheets().add("daysFromAnotherMonth.css");
-//            ap.getStyleClass().remove("pane");
-        }
+        monthForward.setText(String.valueOf(currentMonth.plusMonths(1)));
+        monthBefore.setText(String.valueOf(currentMonth.minusMonths(1)));
 
         LocalDate calendarDate = LocalDate.of(currentMonth.getYear(), currentMonth.getMonthValue(), 1);
-        // Dial back the day until it is SUNDAY (unless the month starts on a sunday)
+        // Dial back the day until it is Monday
         while (!calendarDate.getDayOfWeek().toString().equals("MONDAY") ) {
             calendarDate = calendarDate.minusDays(1);
         }
         // Populate the calendar with day numbers
-        boolean stop = false;
-        int i=1;
+        boolean dayIsInMonth = false;
+        int showedDays=1;
         for (AnchorPaneNode ap : allCalendarDays) {
 
-            if (calendarDate.getDayOfMonth() == 1 && stop == false) {
-                i = 1;
-                stop = true;
+            if (calendarDate.getDayOfMonth() == 1 && dayIsInMonth == false) {
+                showedDays = 1;
+                dayIsInMonth = true;
             }
-
-            if (i > calendarDate.getDayOfMonth() || stop == false) {
+            //if calendar create every day in month start mode not in month
+            if (showedDays > calendarDate.getDayOfMonth() || dayIsInMonth == false) {
                 ap.getStylesheets().remove("daysInMonth.css");
-                ap.getStylesheets().add("daysFromAnotherMonth.css");
+                ap.getStylesheets().add("/daysFromAnotherMonth.css");
                 ap.getStyleClass().add("pane");
             }
             else {
-                ap.getStylesheets().remove("daysFromAnotherMonth.css");
+                ap.getStylesheets().remove("/daysFromAnotherMonth.css");
                 ap.getStylesheets().add("daysInMonth.css");
                 ap.getStyleClass().add("pane");
             }
@@ -85,7 +99,7 @@ public class Controller {
             ap.setLeftAnchor(txt, 5.0);
             ap.getChildren().add(txt);
             calendarDate = calendarDate.plusDays(1);
-            i++;
+            showedDays++;
         }
     }
 
@@ -114,8 +128,8 @@ public class Controller {
     }
 
     /**
-     * there is months that start on saturday or sunday and has 31 day so they
-     * need 8 rows to show not only 7
+     * check if month needs more space than 7x5
+     * if yes, call it special month
      */
     public void checkMonthSize(YearMonth currentMonth)
     {
@@ -124,43 +138,13 @@ public class Controller {
         if(((calendarDate.getDayOfWeek().toString().equals("SATURDAY") || calendarDate.getDayOfWeek().toString().equals("SUNDAY"))
         && sizeOfMonth == 31) || calendarDate.getDayOfWeek().toString().equals("SUNDAY") && sizeOfMonth==30)
         {
-            root.getChildren().remove(calendar);
             specialMonth = true;
-            for(int i=0;i<7;i++)
-            {
-                AnchorPaneNode ap = new AnchorPaneNode();
-                ap.setPrefSize(0,81);
-                calendar.add(ap,i,5);
-                allCalendarDays.add(ap);
-            }
-            root.getChildren().add(calendar);
-
+            calendarView.makeCalendarBigger(root,calendar,allCalendarDays);
         }
         else if(specialMonth ==true) {
-
-            root.getChildren().remove(calendar);
-
-            GridPane calendar = new GridPane();
-            calendar.setPrefSize(749,487);
-            calendar.setLayoutX(209);
-            calendar.setLayoutY(142);
-            calendar.setGridLinesVisible(true);
-
-            allCalendarDays = new ArrayList<>(35);
-            calendar.getChildren().removeAll();
-
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 7; j++) {
-                    AnchorPaneNode ap = new AnchorPaneNode();
-                    ap.setPrefSize(200, 200);
-                    calendar.add(ap, j, i);
-                    allCalendarDays.add(ap);
-                }
-
-            }
-            root.getChildren().add(calendar);
+            allCalendarDays = calendarView.makeCalendarNormalSize(root,calendar);
+            specialMonth = false;
         }
-
     }
 }
 

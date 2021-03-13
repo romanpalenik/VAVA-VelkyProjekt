@@ -6,21 +6,39 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+import java.io.IOException;
+
+public class Main extends Application{
 
 
+    public static Stage primaryStage;
 
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/view/sample.fxml"));
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Super Faktúra");
-//        primaryStage.getIcons().add(new Image("../image.png"));
-        primaryStage.show();
-    }
+
 
     public static void main(String[] args) {
 
         launch(args);
+
+
     }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
+        this.primaryStage = primaryStage;
+        this.primaryStage.setTitle("EnginierCommand");
+        showMainView();
+    }
+
+    /**
+     * Display main stage with login scene
+     * @throws IOException
+     */
+    public static void showMainView() throws IOException {
+        Parent root = FXMLLoader.load(Main.class.getResource("/view/calendar.fxml"));
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
 }
