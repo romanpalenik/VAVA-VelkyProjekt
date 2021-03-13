@@ -1,10 +1,18 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CalendarDatabase {
 
-    private static ArrayList<String> tags = new ArrayList<String>();
+    private static List<String> tags = new ArrayList<String>();
+    private static List<OneEvent> events = new ArrayList<>();
+
+    public static void setTags(ArrayList<String> tags) {
+        CalendarDatabase.tags = tags;
+    }
+
 
     public CalendarDatabase() {
 
@@ -14,7 +22,7 @@ public class CalendarDatabase {
     }
 
     public ArrayList<String> getTags() {
-        return tags;
+        return (ArrayList<String>) tags;
     }
 
     /**
@@ -46,4 +54,22 @@ public class CalendarDatabase {
         }
 
     }
+
+    public void addToEvents(LocalDate date, String event)
+    {
+        OneEvent oneEvent = new OneEvent(date, event);
+        events.add(oneEvent);
+    }
+
+    public OneEvent findEventByDate(LocalDate date)
+    {
+        for(OneEvent event : events)
+        {
+            if (date.equals(event.getDate())){
+                return event;
+            }
+        }
+        return null;
+    }
+
 }

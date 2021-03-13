@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.CalendarDatabase;
-import view.calendarViewCreatingThings;
+import view.CalendarViewCreatingThings;
 
 public class CreateTagController {
 
@@ -33,7 +33,7 @@ public class CreateTagController {
 
 
     private CalendarDatabase calendarDatabase;
-    private calendarViewCreatingThings calendarView;
+    private CalendarViewCreatingThings calendarView;
     private Stage stage;
     private AnchorPane root;
     private Label firstTag;
@@ -60,7 +60,7 @@ public class CreateTagController {
         choiceMode.setOnAction(event);
 
     }
-    public void initData(CalendarDatabase calendarDatabase, calendarViewCreatingThings calendarView, Stage stage, AnchorPane root,
+    public void initData(CalendarDatabase calendarDatabase, CalendarViewCreatingThings calendarView, Stage stage, AnchorPane root,
                          Label firstTag) {
         this.calendarDatabase = calendarDatabase;
         this.calendarView = calendarView;

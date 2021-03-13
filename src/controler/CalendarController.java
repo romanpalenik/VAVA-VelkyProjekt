@@ -7,13 +7,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.AnchorPaneNode;
 import model.CalendarDatabase;
-import view.calendarViewCreatingThings;
+import view.CalendarViewCreatingThings;
+
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -21,7 +22,7 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 
 
-public class calendarController {
+public class CalendarController {
 
     @FXML
     private AnchorPane root;
@@ -43,74 +44,29 @@ public class calendarController {
     private Stage stage = new Stage();
     private ArrayList<AnchorPaneNode> allCalendarDays = new ArrayList<>(35);
     private YearMonth currentMonth = YearMonth.now();
-    calendarViewCreatingThings calendarView = new calendarViewCreatingThings();
+    CalendarViewCreatingThings calendarView = new CalendarViewCreatingThings();
     CalendarDatabase calendarDatabase = new CalendarDatabase();
 
     public void initialize()
     {
+        AnchorPaneNode.setRoot(root);
+        AnchorPaneNode.setCalendarView(calendarView);
+        calendarView.setCalendarController(this);
+        calendarView.setCalendarDatabase(calendarDatabase);
 
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 7; j++) {
-                AnchorPaneNode ap = new AnchorPaneNode();
-                ap.setPrefSize(200,200);
-                calendar.add(ap,j,i);
-                allCalendarDays.add(ap);
-            }
-        }
-        setUpDays(currentMonth);
+        checkMonthSize(currentMonth);
+
+        calendarView.setUpDays(currentMonth, allCalendarDays, root);
         monthForward.setText(String.valueOf(currentMonth.plusMonths(1)));
         monthBefore.setText(String.valueOf(currentMonth.minusMonths(1)));
 
         calendarView.createTags(root,firstTag, calendarDatabase);
+
+        root.setOnMouseClicked(this::removeLastShownNote);
+
     }
 
-    /**
-     * set to every cell of calendar right date
-     * @param currentMonth month to show
-     */
-    public void setUpDays(YearMonth currentMonth)
-    {
-        monthForward.setText(String.valueOf(currentMonth.plusMonths(1)));
-        monthBefore.setText(String.valueOf(currentMonth.minusMonths(1)));
 
-        LocalDate calendarDate = LocalDate.of(currentMonth.getYear(), currentMonth.getMonthValue(), 1);
-        // Dial back the day until it is Monday
-        while (!calendarDate.getDayOfWeek().toString().equals("MONDAY") ) {
-            calendarDate = calendarDate.minusDays(1);
-        }
-        // Populate the calendar with day numbers
-        boolean dayIsInMonth = false;
-        int showedDays=1;
-        for (AnchorPaneNode ap : allCalendarDays) {
-
-            if (calendarDate.getDayOfMonth() == 1 && dayIsInMonth == false) {
-                showedDays = 1;
-                dayIsInMonth = true;
-            }
-            //if calendar create every day in month start mode not in month
-            if (showedDays > calendarDate.getDayOfMonth() || dayIsInMonth == false) {
-                ap.getStylesheets().remove("daysInMonth.css");
-                ap.getStylesheets().add("/daysFromAnotherMonth.css");
-                ap.getStyleClass().add("pane");
-            }
-            else {
-                ap.getStylesheets().remove("/daysFromAnotherMonth.css");
-                ap.getStylesheets().add("daysInMonth.css");
-                ap.getStyleClass().add("pane");
-            }
-
-            if (ap.getChildren().size() != 0) {
-                ap.getChildren().remove(0);
-            }
-            Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
-            ap.setDate(calendarDate);
-            ap.setTopAnchor(txt, 5.0);
-            ap.setLeftAnchor(txt, 5.0);
-            ap.getChildren().add(txt);
-            calendarDate = calendarDate.plusDays(1);
-            showedDays++;
-        }
-    }
 
     public void changeMonthUp()
     {
@@ -118,10 +74,13 @@ public class calendarController {
         currentMonth = currentMonth.plusMonths(1);
 
         checkMonthSize(currentMonth);
-        setUpDays(currentMonth);
+        calendarView.setUpDays(currentMonth,allCalendarDays,root);
 
         month.setText(String.valueOf(currentMonth.getMonthValue()));
         year.setText(String.valueOf(currentMonth.getYear()));
+
+        monthForward.setText(String.valueOf(currentMonth.plusMonths(1)));
+        monthBefore.setText(String.valueOf(currentMonth.minusMonths(1)));
     }
 
     public void changeMonthDown()
@@ -129,11 +88,13 @@ public class calendarController {
         currentMonth = currentMonth.minusMonths(1);
 
         checkMonthSize(currentMonth);
-        setUpDays(currentMonth);
+        calendarView.setUpDays(currentMonth,allCalendarDays, root);
 
         month.setText(String.valueOf(currentMonth.getMonthValue()));
         year.setText(String.valueOf(currentMonth.getYear()));
 
+        monthForward.setText(String.valueOf(currentMonth.plusMonths(1)));
+        monthBefore.setText(String.valueOf(currentMonth.minusMonths(1)));
     }
 
     /**
@@ -163,6 +124,7 @@ public class calendarController {
         {
             allCalendarDays = calendarView.makeCalendarLitter(root,calendar);
         }
+
     }
 
     /**
@@ -180,6 +142,20 @@ public class calendarController {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void removeLastShownNote(MouseEvent event)
+    {
+        //if is outside of calendar
+        if(event.getX() > calendar.getLayoutX() && event.getX() < calendar.getLayoutX()+calendar.getPrefWidth() &&
+        event.getY()>calendar.getLayoutY() && event.getY()<calendar.getLayoutY()+calendar.getPrefHeight())
+        {
+
+        }
+        else {
+            calendarView.removeLastShownNote(root);
+        }
+    }
+
 
 }
 
