@@ -9,10 +9,9 @@ import javafx.scene.layout.GridPane;
 import controler.AnchorPaneNode;
 import javafx.scene.text.Text;
 import model.CalendarDatabase;
-import model.OneEvent;
+import model.OneCellRecord;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.ArrayList;
 
@@ -216,6 +215,9 @@ public class CalendarViewCreatingThings {
         saveNoteButton.setOnMouseClicked(e -> {
             calendarDatabase.addToEvents(date,textFieldNote.getText());
             removeLastShownNote(root);
+//            setUpDays(currentMonth,allCalendarDays,root);
+            calendarController.checkMonthSize(calendarController.getCurrentMonth());
+
         });
 
         LastShownTextFieldNote = textFieldNote;
@@ -266,7 +268,7 @@ public class CalendarViewCreatingThings {
                 ap.getStyleClass().add("pane");
                 ap.setInMonth(true);
                 //if cell has event show it
-                OneEvent event = calendarDatabase.findEventByDate(calendarDate);
+                OneCellRecord event = calendarDatabase.findEventByDate(calendarDate);
                 if(event!=null)
                 {
                     createLabelWithEvent(ap, event, root);
@@ -285,12 +287,24 @@ public class CalendarViewCreatingThings {
             showedDays++;
         }
     }
-    public void createLabelWithEvent(AnchorPaneNode cell, OneEvent event, AnchorPane root)
+
+    /**
+     * create label for every event that is planned on that date
+     * @param cell
+     * @param root
+     */
+    public void createLabelWithEvent(AnchorPaneNode cell, OneCellRecord oneCellRecord, AnchorPane root)
     {
-        Label eventLabel = new Label(event.getEvent());
-        eventLabel.setLayoutX(cell.getCenterX()-30);
-        eventLabel.setLayoutY(cell.getCenterY()-40);
-        root.getChildren().add(eventLabel);
+        int yOffset = 8;
+        for(String event:oneCellRecord.getEveryEvent())
+        {
+            Label eventLabel = new Label(event);
+            eventLabel.setLayoutX(cell.getCenterX()-60);
+            eventLabel.setLayoutY(cell.getCenterY()-40+yOffset);
+            root.getChildren().add(eventLabel);
+            yOffset +=14;
+        }
+
 
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 public class CalendarDatabase {
 
     private static List<String> tags = new ArrayList<String>();
-    private static List<OneEvent> events = new ArrayList<>();
+    private static List<OneCellRecord> events = new ArrayList<>();
 
     public static void setTags(ArrayList<String> tags) {
         CalendarDatabase.tags = tags;
@@ -55,15 +55,30 @@ public class CalendarDatabase {
 
     }
 
+    /**
+     * set new event to cell record, if has no record create one
+     * @param date
+     * @param event
+     */
     public void addToEvents(LocalDate date, String event)
     {
-        OneEvent oneEvent = new OneEvent(date, event);
-        events.add(oneEvent);
+        //search if cell has already record in database
+        for(OneCellRecord oneCellRecord:events)
+        {
+            if (oneCellRecord.getDate().equals(date))
+            {
+                //find existing record
+                oneCellRecord.addEvent(event);
+                return;
+            }
+        }
+            OneCellRecord oneCellRecord = new OneCellRecord(date, event);
+            events.add(oneCellRecord);
     }
 
-    public OneEvent findEventByDate(LocalDate date)
+    public OneCellRecord findEventByDate(LocalDate date)
     {
-        for(OneEvent event : events)
+        for(OneCellRecord event : events)
         {
             if (date.equals(event.getDate())){
                 return event;

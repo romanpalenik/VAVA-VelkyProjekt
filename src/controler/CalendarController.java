@@ -66,7 +66,9 @@ public class CalendarController {
 
     }
 
-
+    public YearMonth getCurrentMonth() {
+        return currentMonth;
+    }
 
     public void changeMonthUp()
     {
@@ -74,7 +76,7 @@ public class CalendarController {
         currentMonth = currentMonth.plusMonths(1);
 
         checkMonthSize(currentMonth);
-        calendarView.setUpDays(currentMonth,allCalendarDays,root);
+
 
         month.setText(String.valueOf(currentMonth.getMonthValue()));
         year.setText(String.valueOf(currentMonth.getYear()));
@@ -88,7 +90,6 @@ public class CalendarController {
         currentMonth = currentMonth.minusMonths(1);
 
         checkMonthSize(currentMonth);
-        calendarView.setUpDays(currentMonth,allCalendarDays, root);
 
         month.setText(String.valueOf(currentMonth.getMonthValue()));
         year.setText(String.valueOf(currentMonth.getYear()));
@@ -120,11 +121,7 @@ public class CalendarController {
             allCalendarDays = calendarView.makeCalendarNormalSize(root,calendar);
 
         }
-        if((calendarDate.getDayOfWeek().toString().equals("MONDAY") && sizeOfMonth==28))
-        {
-            allCalendarDays = calendarView.makeCalendarLitter(root,calendar);
-        }
-
+        calendarView.setUpDays(currentMonth,allCalendarDays,root);
     }
 
     /**
