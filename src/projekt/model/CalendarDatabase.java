@@ -2,24 +2,45 @@ package projekt.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CalendarDatabase {
 
     private static List<String> tags = new ArrayList<String>();
     private static List<OneCellRecord> events = new ArrayList<>();
+    private static List<String> colors = new ArrayList<>();
+
+    private static Map<String, String> tagsWithColor = new HashMap<>();
+    private Map<String, String> colorWithHexId = new HashMap<>();
+
+    /**
+     * used when is created new tag
+     * @param tag
+     * @param color
+     */
+    public void addNewTagWithColor(String tag, String color)
+    {
+        tagsWithColor.put(tag, color);
+    }
+
+    public CalendarDatabase() {
+
+        colorWithHexId.put("Modra","#a3d6f5");
+        colorWithHexId.put("Fialova","#b2a3f5");
+        colorWithHexId.put("Zelena","#a3d6f5");
+        colorWithHexId.put("Zlta","#f5f3a3");
+        colorWithHexId.put("Cervena","#f5a3a3");
+
+    }
 
     public static void setTags(ArrayList<String> tags) {
         CalendarDatabase.tags = tags;
     }
 
 
-    public CalendarDatabase() {
 
-        tags.add("skola");
-        tags.add("ine");
-
-    }
 
     public ArrayList<String> getTags() {
         return (ArrayList<String>) tags;
@@ -60,7 +81,7 @@ public class CalendarDatabase {
      * @param date
      * @param event
      */
-    public void addToEvents(LocalDate date, String event)
+    public void addToEvents(LocalDate date, String event, String tag)
     {
         //search if cell has already record in database
         for(OneCellRecord oneCellRecord:events)
@@ -68,12 +89,28 @@ public class CalendarDatabase {
             if (oneCellRecord.getDate().equals(date))
             {
                 //find existing record
-                oneCellRecord.addEvent(event);
+                oneCellRecord.addEvent(event, tag);
                 return;
             }
         }
-            OneCellRecord oneCellRecord = new OneCellRecord(date, event);
+            OneCellRecord oneCellRecord = new OneCellRecord(date, event, tag);
             events.add(oneCellRecord);
+    }
+
+    public void deleteFromEvents(LocalDate date, String event, String tag)
+    {
+        //search if cell has already record in database
+        for(OneCellRecord oneCellRecord:events)
+        {
+            if (oneCellRecord.getDate().equals(date))
+            {
+                //find existing record
+                oneCellRecord.addEvent(event, tag);
+                return;
+            }
+        }
+        OneCellRecord oneCellRecord = new OneCellRecord(date, event, tag);
+        events.add(oneCellRecord);
     }
 
     public OneCellRecord findEventByDate(LocalDate date)
@@ -87,4 +124,30 @@ public class CalendarDatabase {
         return null;
     }
 
+    public String findColorToTag(String tag)
+    {
+        return tagsWithColor.get(tag);
+    }
+
+    /**
+     * check if tag is already in array, if is not add it
+     * @param newTag
+     * @return
+     */
+    public boolean addToTags(String newTag, String color)
+    {
+        tagsWithColor.put(newTag,colorWithHexId.get(color));
+        return true;
+    }
+
+    public Map<String, String> getTagsWithColor()
+    {
+        return tagsWithColor;
+    }
+
+    public void deleteTag(String tagName)
+    {
+        tagsWithColor.remove(tagName);
+
+    }
 }

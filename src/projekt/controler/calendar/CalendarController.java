@@ -46,6 +46,7 @@ public class CalendarController {
     CalendarViewCreatingThings calendarView = new CalendarViewCreatingThings();
     CalendarDatabase calendarDatabase = new CalendarDatabase();
 
+
     public void initialize()
     {
         AnchorPaneNode.setRoot(root);
@@ -53,7 +54,8 @@ public class CalendarController {
         calendarView.setCalendarController(this);
         calendarView.setCalendarDatabase(calendarDatabase);
 
-        checkMonthSize(currentMonth);
+
+        updateCalendar(currentMonth);
 
         calendarView.setUpDays(currentMonth, allCalendarDays, root);
         monthForward.setText(String.valueOf(currentMonth.plusMonths(1)));
@@ -74,7 +76,7 @@ public class CalendarController {
 
         currentMonth = currentMonth.plusMonths(1);
 
-        checkMonthSize(currentMonth);
+        updateCalendar(currentMonth);
 
 
         month.setText(String.valueOf(currentMonth.getMonthValue()));
@@ -88,7 +90,7 @@ public class CalendarController {
     {
         currentMonth = currentMonth.minusMonths(1);
 
-        checkMonthSize(currentMonth);
+        updateCalendar(currentMonth);
 
         month.setText(String.valueOf(currentMonth.getMonthValue()));
         year.setText(String.valueOf(currentMonth.getYear()));
@@ -98,10 +100,10 @@ public class CalendarController {
     }
 
     /**
-     * check if month needs more space than 7x5
-     * if yes, call it special month
+     * check if month needs more space than 7x5 or less
+     * and create a new one, with
      */
-    public void checkMonthSize(YearMonth currentMonth)
+    public void updateCalendar(YearMonth currentMonth)
     {
         //check if calendar needs bigger or smaller, if neither than set it to normal size
         LocalDate calendarDate = LocalDate.of(currentMonth.getYear(), currentMonth.getMonthValue(), 1);
@@ -109,7 +111,6 @@ public class CalendarController {
         if(((calendarDate.getDayOfWeek().toString().equals("SATURDAY") || calendarDate.getDayOfWeek().toString().equals("SUNDAY"))
         && sizeOfMonth == 31) || calendarDate.getDayOfWeek().toString().equals("SUNDAY") && sizeOfMonth==30)
         {
-
             allCalendarDays = calendarView.makeCalendarBigger(root,calendar);
         }
         else if((calendarDate.getDayOfWeek().toString().equals("MONDAY") && sizeOfMonth==28))
@@ -132,7 +133,7 @@ public class CalendarController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/projekt/view/createTag.fxml"));
         Parent root2 = (Parent) loader.load();
         CreateTagController controller = loader.getController();
-        controller.initData(calendarDatabase,calendarView, stage,root,firstTag);
+        controller.initData(calendarDatabase,calendarView, stage,root,firstTag, this);
         Scene scene = new Scene(root2);
         stage.setTitle("Pridat tag");
         stage.setScene(scene);

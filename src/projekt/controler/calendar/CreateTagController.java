@@ -29,18 +29,23 @@ public class CreateTagController {
     private ComboBox choiceTag;
 
 
-    ObservableList<String> choice = FXCollections.observableArrayList("Upravit","Pridat novy");
-
+    ObservableList<String> choice = FXCollections.observableArrayList("Upravit","Pridat novy", "Vymazat");
+    ObservableList<String> colors = FXCollections.observableArrayList("Cervena","Zelena","Modra","Fialova","Zlta");
 
     private CalendarDatabase calendarDatabase;
     private CalendarViewCreatingThings calendarView;
+    private CalendarController calendarController;
     private Stage stage;
     private AnchorPane root;
     private Label firstTag;
 
+    public CalendarController getCalendarController() {
+        return calendarController;
+    }
+
     public void initialize()
     {
-
+        choiceColor.setItems(colors);
         choiceMode.setItems(choice);
         choiceMode.setValue("Pridat novy");
         tagWarning.setVisible(false);
@@ -59,14 +64,30 @@ public class CreateTagController {
 
         choiceMode.setOnAction(event);
 
+        EventHandler<ActionEvent> event2 = new EventHandler<ActionEvent> (){
+
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    tagName.setText((String) choiceTag.getValue());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        choiceTag.setOnAction(event2);
+
+
+
     }
     public void initData(CalendarDatabase calendarDatabase, CalendarViewCreatingThings calendarView, Stage stage, AnchorPane root,
-                         Label firstTag) {
+                         Label firstTag, CalendarController calendarController) {
         this.calendarDatabase = calendarDatabase;
         this.calendarView = calendarView;
         this.stage = stage;
         this.root = root;
         this.firstTag = firstTag;
+        this.calendarController = calendarController;
     }
 
     public void choiceEditOrCreate()
@@ -80,6 +101,10 @@ public class CreateTagController {
         {
             addNewTag();
         }
+        else if (choice.equals("Vymazat"))
+        {
+            deleteTag();
+        }
 
     }
 
@@ -87,7 +112,7 @@ public class CreateTagController {
     {
         tagWarning.setVisible(false);
 
-        if(calendarDatabase.addToTags(tagName.getText()))
+        if(calendarDatabase.addToTags(tagName.getText(), (String) choiceColor.getValue()))
         {
             calendarView.createTags(root,firstTag, calendarDatabase);
             stage.close();
@@ -101,10 +126,19 @@ public class CreateTagController {
 
     public void editTag()
     {
-        calendarDatabase.editTag((String) choiceTag.getValue(),tagName.getText());
+        calendarDatabase.addToTags(tagName.getText(), (String) choiceColor.getValue());
         calendarView.createTags(root,firstTag, calendarDatabase);
         stage.close();
     }
+
+    private void deleteTag()
+    {
+        calendarDatabase.deleteTag((String) choiceTag.getValue());
+        calendarView.createTags(root,firstTag, calendarDatabase);
+        calendarController.updateCalendar(calendarController.getCurrentMonth());
+        stage.close();
+    }
+
 
     public void switchToEditOrCreateMode()
     {
@@ -112,12 +146,24 @@ public class CreateTagController {
         if(choice.equals("Upravit"))
         {
             choiceTag.setVisible(true);
-            ObservableList<String> tags = FXCollections.observableArrayList(calendarDatabase.getTags());
+            ObservableList<String> tags = FXCollections.observableArrayList(calendarDatabase.getTagsWithColor().keySet());
             choiceTag.setItems(tags);
         }
         else if (choice.equals("Pridat novy"))
         {
+            tagName.setVisible(true);
+            choiceColor.setValue(true);
             choiceTag.setVisible(false);
+        }
+        else if (choice.equals("Vymazat"))
+        {
+
+            choiceTag.setVisible(true);
+            tagName.setVisible(false);
+            choiceColor.setVisible(false);
+
+            ObservableList<String> tags = FXCollections.observableArrayList(calendarDatabase.getTagsWithColor().keySet());
+            choiceTag.setItems(tags);
         }
     }
 
