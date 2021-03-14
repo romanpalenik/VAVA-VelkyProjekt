@@ -25,7 +25,7 @@ public class AnchorPaneNode extends AnchorPane {
         this.typeOfMonth = typeOfMonth;
     }
 
-    private String typeOfMonth="normal";
+    private String typeOfMonth;
 
     public static void setCalendarView(CalendarViewCreatingThings calendarView) {
         AnchorPaneNode.calendarView = calendarView;

@@ -102,6 +102,9 @@ public class CalendarViewCreatingThings {
                 ap.setCenterX(centerOfFistCellX);
                 ap.setCenterY(centerOfFistCellY);
 
+                ap.setTypeOfMonth("bigger");
+
+
                 ap.setPrefSize(200, 200);
                 calendar.add(ap, j, i);
                 allCalendarDays.add(ap);
@@ -147,6 +150,7 @@ public class CalendarViewCreatingThings {
                 ap.setCenterX(centerOfFistCellX);
                 ap.setCenterY(centerOfFistCellY);
 
+                ap.setTypeOfMonth("normal");
                 ap.setRoot(root);
 
                 ap.setPrefSize(200, 200);
@@ -186,6 +190,8 @@ public class CalendarViewCreatingThings {
 
                 ap.setCenterX(centerOfFistCellX);
                 ap.setCenterY(centerOfFistCellY);
+
+                ap.setTypeOfMonth("little");
 
                 ap.setPrefSize(200, 200);
                 calendar.add(ap, j, i);
@@ -293,6 +299,7 @@ public class CalendarViewCreatingThings {
             if (ap.getChildren().size() != 0) {
 //                ap.getChildren().remove(0);
             }
+
             Text txt = new Text(String.valueOf(calendarDate.getDayOfMonth()));
             ap.setDate(calendarDate);
             ap.setTopAnchor(txt, 5.0);
@@ -319,6 +326,28 @@ public class CalendarViewCreatingThings {
             root.getChildren().add(eventLabel);
             yOffset += 14;
         }
+        }
+        else if(cell.getTypeOfMonth().equals("little")) {
+
+            int yOffset = 8;
+            for (String event : oneCellRecord.getEveryEvent()) {
+                Label eventLabel = new Label(event);
+                eventLabel.setLayoutX(cell.getCenterX() - 50);
+                eventLabel.setLayoutY(cell.getCenterY() - 50 + yOffset);
+                root.getChildren().add(eventLabel);
+                yOffset += 14;
+            }
+        }
+        else if(cell.getTypeOfMonth().equals("bigger")) {
+
+            int yOffset = 8;
+            for (String event : oneCellRecord.getEveryEvent()) {
+                Label eventLabel = new Label(event);
+                eventLabel.setLayoutX(cell.getCenterX() - 50);
+                eventLabel.setLayoutY(cell.getCenterY() - 30 + yOffset);
+                root.getChildren().add(eventLabel);
+                yOffset += 14;
+            }
     }
 
     }
