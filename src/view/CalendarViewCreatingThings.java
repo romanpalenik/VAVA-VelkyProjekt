@@ -212,10 +212,11 @@ public class CalendarViewCreatingThings {
         saveNoteButton.setPrefSize(70, textFieldHeight);
         saveNoteButton.setLayoutX(x-15);
         saveNoteButton.setLayoutY(y-50); //than the text field +30
+
         saveNoteButton.setOnMouseClicked(e -> {
+
             calendarDatabase.addToEvents(date,textFieldNote.getText());
             removeLastShownNote(root);
-//            setUpDays(currentMonth,allCalendarDays,root);
             calendarController.checkMonthSize(calendarController.getCurrentMonth());
 
         });
@@ -299,12 +300,10 @@ public class CalendarViewCreatingThings {
         for(String event:oneCellRecord.getEveryEvent())
         {
             Label eventLabel = new Label(event);
-            eventLabel.setLayoutX(cell.getCenterX()-60);
+            eventLabel.setLayoutX(cell.getCenterX()-50);
             eventLabel.setLayoutY(cell.getCenterY()-40+yOffset);
             root.getChildren().add(eventLabel);
             yOffset +=14;
         }
-
-
     }
 }

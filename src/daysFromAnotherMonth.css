@@ -1,3 +1,5 @@
 .pane {
--fx-background-color: #6C6B74;
+    -fx-background-color: #c7c7c7;
+    -fx-border-color:black;
+    -fx-border-width: 0.2 0.2 0.2 0.2;
 }
