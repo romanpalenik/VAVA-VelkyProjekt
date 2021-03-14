@@ -1,4 +1,4 @@
-package controler;
+package projekt.controler;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -33,7 +33,7 @@ public class Main extends Application{
      * @throws IOException
      */
     public static void showMainView() throws IOException {
-        Parent root = FXMLLoader.load(Main.class.getResource("/view/calendar.fxml"));
+        Parent root = FXMLLoader.load(Main.class.getResource("/projekt/view/calendar/calendar.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();

@@ -1,4 +1,4 @@
-package controler;
+package projekt.controler.calendar;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,10 +10,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.CalendarDatabase;
-import view.CalendarViewCreatingThings;
+import projekt.model.CalendarDatabase;
+import projekt.view.calendar.CalendarViewCreatingThings;
 
 
 import java.io.IOException;
@@ -130,7 +129,7 @@ public class CalendarController {
      */
     public void openWindowToAddNewTag() throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/createTag.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/projekt/view/createTag.fxml"));
         Parent root2 = (Parent) loader.load();
         CreateTagController controller = loader.getController();
         controller.initData(calendarDatabase,calendarView, stage,root,firstTag);

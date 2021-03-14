@@ -1,6 +1,4 @@
-package model;
-
-import controler.AnchorPaneNode;
+package projekt.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

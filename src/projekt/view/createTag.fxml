@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="241.0" prefWidth="402.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controler.CreateTagController">
+<AnchorPane prefHeight="241.0" prefWidth="402.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projekt.controler.calendar.CreateTagController">
    <children>
       <Button layoutX="283.0" layoutY="193.0" mnemonicParsing="false" onAction="#choiceEditOrCreate" text="Pridat tag" />
       <TextField fx:id="tagName" layoutX="34.0" layoutY="110.0" prefHeight="26.0" prefWidth="157.0" />

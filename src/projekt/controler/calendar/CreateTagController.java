@@ -1,4 +1,4 @@
-package controler;
+package projekt.controler.calendar;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,8 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.CalendarDatabase;
-import view.CalendarViewCreatingThings;
+import projekt.model.CalendarDatabase;
+import projekt.view.calendar.CalendarViewCreatingThings;
 
 public class CreateTagController {
 

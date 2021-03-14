@@ -1,15 +1,15 @@
-package view;
+package projekt.view.calendar;
 
-import controler.CalendarController;
+import projekt.controler.calendar.AnchorPaneNode;
+import projekt.controler.calendar.CalendarController;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import controler.AnchorPaneNode;
 import javafx.scene.text.Text;
-import model.CalendarDatabase;
-import model.OneCellRecord;
+import projekt.model.CalendarDatabase;
+import projekt.model.OneCellRecord;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -90,18 +90,25 @@ public class CalendarViewCreatingThings {
         ArrayList<AnchorPaneNode> allCalendarDays = new ArrayList<>(28);
         calendar.getChildren().removeAll();
 
-        int offsetToCenter = widthOfCalendar/7;
+        int offsetToCenterX = widthOfCalendar/7;
+        int offsetToCenterY = heightOfCalendar/6;
         int centerOfFistCellY = leftUpCornerY + (heightOfCalendar/6)/2;
         int centerOfFistCellX = leftUpCornerX + (widthOfCalendar/7)/2;
 
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 7; j++) {
                 AnchorPaneNode ap = new AnchorPaneNode();
+
+                ap.setCenterX(centerOfFistCellX);
+                ap.setCenterY(centerOfFistCellY);
+
                 ap.setPrefSize(200, 200);
                 calendar.add(ap, j, i);
                 allCalendarDays.add(ap);
+                centerOfFistCellX += offsetToCenterX;
             }
-
+            centerOfFistCellX = leftUpCornerX + (widthOfCalendar/7)/2;
+            centerOfFistCellY += offsetToCenterY;
         }
 
         root.getChildren().add(calendar);
@@ -165,7 +172,8 @@ public class CalendarViewCreatingThings {
         calendar.setLayoutY(leftUpCornerY);
         calendar.setGridLinesVisible(true);
 
-        int offsetToCenter = widthOfCalendar/7;
+        int offsetToCenterX = widthOfCalendar/7;
+        int offsetToCenterY = heightOfCalendar/4;
         int centerOfFistCellY = leftUpCornerY + (heightOfCalendar/4)/2;
         int centerOfFistCellX = leftUpCornerX + (widthOfCalendar/7)/2;
 
@@ -175,12 +183,18 @@ public class CalendarViewCreatingThings {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 7; j++) {
                 AnchorPaneNode ap = new AnchorPaneNode();
+
+                ap.setCenterX(centerOfFistCellX);
+                ap.setCenterY(centerOfFistCellY);
+
                 ap.setPrefSize(200, 200);
                 calendar.add(ap, j, i);
                 allCalendarDays.add(ap);
+                centerOfFistCellX += offsetToCenterX;
             }
-
-        }
+            centerOfFistCellX = leftUpCornerX + (widthOfCalendar/7)/2;
+            centerOfFistCellY += offsetToCenterY;
+    }
 
         root.getChildren().add(calendar);
         return allCalendarDays;
@@ -296,14 +310,16 @@ public class CalendarViewCreatingThings {
      */
     public void createLabelWithEvent(AnchorPaneNode cell, OneCellRecord oneCellRecord, AnchorPane root)
     {
+        if(cell.getTypeOfMonth().equals("normal")) {
         int yOffset = 8;
-        for(String event:oneCellRecord.getEveryEvent())
-        {
+        for (String event : oneCellRecord.getEveryEvent()) {
             Label eventLabel = new Label(event);
-            eventLabel.setLayoutX(cell.getCenterX()-50);
-            eventLabel.setLayoutY(cell.getCenterY()-40+yOffset);
+            eventLabel.setLayoutX(cell.getCenterX() - 50);
+            eventLabel.setLayoutY(cell.getCenterY() - 40 + yOffset);
             root.getChildren().add(eventLabel);
-            yOffset +=14;
+            yOffset += 14;
         }
+    }
+
     }
 }

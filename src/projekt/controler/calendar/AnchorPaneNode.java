@@ -1,8 +1,8 @@
-package controler;
+package projekt.controler.calendar;
 
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
-import view.CalendarViewCreatingThings;
+import projekt.view.calendar.CalendarViewCreatingThings;
 
 import java.time.LocalDate;
 
@@ -16,6 +16,16 @@ public class AnchorPaneNode extends AnchorPane {
     private static AnchorPane root;
     private static CalendarViewCreatingThings calendarView;
     private boolean isInMonth;
+
+    public String getTypeOfMonth() {
+        return typeOfMonth;
+    }
+
+    public void setTypeOfMonth(String typeOfMonth) {
+        this.typeOfMonth = typeOfMonth;
+    }
+
+    private String typeOfMonth="normal";
 
     public static void setCalendarView(CalendarViewCreatingThings calendarView) {
         AnchorPaneNode.calendarView = calendarView;
@@ -62,6 +72,9 @@ public class AnchorPaneNode extends AnchorPane {
 
     }
 
+    /**
+     * set what happend if is it clicked on cell in calendar
+     */
     public void onClicked()
     {
         if (isInMonth) {

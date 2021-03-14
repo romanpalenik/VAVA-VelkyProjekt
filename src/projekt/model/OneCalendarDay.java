@@ -1,4 +1,4 @@
-package model;
+package projekt.model;
 
 public class OneCalendarDay {
 

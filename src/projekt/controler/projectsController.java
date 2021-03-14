@@ -1,4 +1,4 @@
-package controler;
+package projekt.controler;
 
 public class projectsController {
 }

@@ -1,6 +1,6 @@
-package model;
+package projekt.model;
 
-import controler.AnchorPaneNode;
+import projekt.controler.calendar.AnchorPaneNode;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
@@ -22,7 +22,7 @@ public class FullCalendarView {
     private YearMonth currentYearMonth;
 
     /**
-     * Create a calendar view
+     * Create a calendar projekt.controler.view
      * @param yearMonth year month to create the calendar of
      */
     public FullCalendarView(YearMonth yearMonth) {
@@ -64,7 +64,7 @@ public class FullCalendarView {
         titleBar.setAlignment(Pos.BASELINE_CENTER);
         // Populate calendar with the appropriate day numbers
         populateCalendar(yearMonth);
-        // Create the calendar view
+        // Create the calendar projekt.controler.view
         view = new VBox(titleBar, dayLabels, calendar);
     }
 
