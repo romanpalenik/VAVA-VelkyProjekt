@@ -142,6 +142,8 @@ public class CreateTagController {
 
     public void switchToEditOrCreateMode()
     {
+
+
         String choice = (String) choiceMode.getValue();
         if(choice.equals("Upravit"))
         {
