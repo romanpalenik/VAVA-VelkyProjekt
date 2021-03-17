@@ -17,8 +17,11 @@ import projekt.view.calendar.CalendarViewCreatingThings;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.Year;
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 
 public class CalendarController {
@@ -46,6 +49,8 @@ public class CalendarController {
     CalendarViewCreatingThings calendarView = new CalendarViewCreatingThings();
     CalendarDatabase calendarDatabase = new CalendarDatabase();
 
+    private Dictionary<Integer, String> monthsDict = new Hashtable<Integer, String>();
+
 
     public void initialize()
     {
@@ -54,8 +59,11 @@ public class CalendarController {
         calendarView.setCalendarController(this);
         calendarView.setCalendarDatabase(calendarDatabase);
 
-
         updateCalendar(currentMonth);
+
+        initMonthDictionary();
+        year.setText(String.valueOf(currentMonth.getYear()));
+        month.setText(monthsDict.get(currentMonth.getMonthValue()));
 
         calendarView.setUpDays(currentMonth, allCalendarDays, root);
         monthForward.setText(String.valueOf(currentMonth.plusMonths(1)));
@@ -66,6 +74,25 @@ public class CalendarController {
         root.setOnMouseClicked(this::removeLastShownNote);
 
     }
+
+    //------------------------------------------------------
+    //DICTIONARY NA MESIACE
+    //------------------------------------------------------
+    private void initMonthDictionary(){
+        monthsDict.put(1,"Január");
+        monthsDict.put(2,"Február");
+        monthsDict.put(3,"Marec");
+        monthsDict.put(4,"Apríl");
+        monthsDict.put(5,"Máj");
+        monthsDict.put(6,"Jún");
+        monthsDict.put(7,"Júl");
+        monthsDict.put(8,"August");
+        monthsDict.put(9,"September");
+        monthsDict.put(10,"Október");
+        monthsDict.put(11,"November");
+        monthsDict.put(12,"December");
+    }
+    //------------------------------------------------------
 
     public YearMonth getCurrentMonth() {
         return currentMonth;
@@ -79,7 +106,7 @@ public class CalendarController {
         updateCalendar(currentMonth);
 
 
-        month.setText(String.valueOf(currentMonth.getMonthValue()));
+        month.setText(monthsDict.get(currentMonth.getMonthValue()));
         year.setText(String.valueOf(currentMonth.getYear()));
 
         monthForward.setText(String.valueOf(currentMonth.plusMonths(1)));
@@ -92,7 +119,7 @@ public class CalendarController {
 
         updateCalendar(currentMonth);
 
-        month.setText(String.valueOf(currentMonth.getMonthValue()));
+        month.setText(monthsDict.get(currentMonth.getMonthValue()));
         year.setText(String.valueOf(currentMonth.getYear()));
 
         monthForward.setText(String.valueOf(currentMonth.plusMonths(1)));

@@ -29,8 +29,8 @@ public class CreateTagController {
     private ComboBox choiceTag;
 
 
-    ObservableList<String> choice = FXCollections.observableArrayList("Upravit","Pridat novy", "Vymazat");
-    ObservableList<String> colors = FXCollections.observableArrayList("Cervena","Zelena","Modra","Fialova","Zlta");
+    ObservableList<String> choice = FXCollections.observableArrayList("Upraviť","Pridať nový", "Vymazať");
+    ObservableList<String> colors = FXCollections.observableArrayList("Červená","Zelená","Modrá","Fialová","Žltá");
 
     private CalendarDatabase calendarDatabase;
     private CalendarViewCreatingThings calendarView;
@@ -47,7 +47,7 @@ public class CreateTagController {
     {
         choiceColor.setItems(colors);
         choiceMode.setItems(choice);
-        choiceMode.setValue("Pridat novy");
+        choiceMode.setValue("Pridať nový");
         tagWarning.setVisible(false);
         choiceTag.setVisible(false);
 
@@ -93,15 +93,15 @@ public class CreateTagController {
     public void choiceEditOrCreate()
     {
         String choice = (String) choiceMode.getValue();
-        if(choice.equals("Upravit"))
+        if(choice.equals("Upraviť"))
         {
             editTag();
         }
-        else if (choice.equals("Pridat novy"))
+        else if (choice.equals("Pridať nový"))
         {
             addNewTag();
         }
-        else if (choice.equals("Vymazat"))
+        else if (choice.equals("Vymazať"))
         {
             deleteTag();
         }
@@ -145,19 +145,19 @@ public class CreateTagController {
 
 
         String choice = (String) choiceMode.getValue();
-        if(choice.equals("Upravit"))
+        if(choice.equals("Upraviť"))
         {
             choiceTag.setVisible(true);
             ObservableList<String> tags = FXCollections.observableArrayList(calendarDatabase.getTagsWithColor().keySet());
             choiceTag.setItems(tags);
         }
-        else if (choice.equals("Pridat novy"))
+        else if (choice.equals("Pridať nový"))
         {
             tagName.setVisible(true);
             choiceColor.setValue(true);
             choiceTag.setVisible(false);
         }
-        else if (choice.equals("Vymazat"))
+        else if (choice.equals("Vymazať"))
         {
 
             choiceTag.setVisible(true);

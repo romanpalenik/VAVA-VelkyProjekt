@@ -27,11 +27,11 @@ public class CalendarDatabase {
 
     public CalendarDatabase() {
 
-        colorWithHexId.put("Modra","#a3d6f5");
-        colorWithHexId.put("Fialova","#b2a3f5");
-        colorWithHexId.put("Zelena","#a3d6f5");
-        colorWithHexId.put("Zlta","#f5f3a3");
-        colorWithHexId.put("Cervena","#f5a3a3");
+        colorWithHexId.put("Modrá","#a3d6f5");
+        colorWithHexId.put("Fialová","#b2a3f5");
+        colorWithHexId.put("Zelená","#b0fc38");
+        colorWithHexId.put("Žltá","#f5f3a3");
+        colorWithHexId.put("Červená","#f5a3a3");
 
     }
 

@@ -3,6 +3,7 @@ package projekt.view.calendar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
@@ -38,7 +39,7 @@ public class CalendarViewCreatingThings {
     private int widthOfCalendar = 750;
     private int heightOfCalendar = 487;
     private int leftUpCornerX = 209;
-    private int leftUpCornerY = 142;
+    private int leftUpCornerY = 170;
 
     private boolean canAddNote = false;
 
@@ -84,12 +85,13 @@ public class CalendarViewCreatingThings {
 
             String styleSheet = "-fx-background-color: " + entry.getValue();
             label.setStyle(styleSheet);
+            label.setPadding(new Insets(3 ,5 ,3,5));
 
             labelTags.add(label);
 
             root.getChildren().add(label);
 
-            yPosition += 70;
+            yPosition += 30;
         }
     }
 
@@ -378,7 +380,7 @@ public class CalendarViewCreatingThings {
     public void createLabelWithEvent(AnchorPaneNode cell, OneCellRecord oneCellRecord, AnchorPane root)
     {
         if(cell.getTypeOfMonth().equals("normal")) {
-        int yOffset = 8;
+        int yOffset = 10;
         for (OneCellRecord.Event event : oneCellRecord.getEveryEvent()) {
             Label eventLabel = new Label(event.getEventName());
             eventLabel.setLayoutX(cell.getCenterX() - 50);
@@ -396,14 +398,16 @@ public class CalendarViewCreatingThings {
             String styleSheet = "-fx-background-color: " + colorToEvent;
 
             eventLabel.setStyle(styleSheet);
+            eventLabel.setPrefWidth(widthOfCalendar/7 - 6);
+            eventLabel.setPadding(new Insets(0,0,0,3));
 
             root.getChildren().add(eventLabel);
-            yOffset += 14;
+            yOffset += 20;
         }
         }
         else if(cell.getTypeOfMonth().equals("little")) {
 
-            int yOffset = 8;
+            int yOffset = 10;
             for (OneCellRecord.Event event : oneCellRecord.getEveryEvent()) {
                 Label eventLabel = new Label(event.getEventName());
                 eventLabel.setLayoutX(cell.getCenterX() - 50);
@@ -413,14 +417,16 @@ public class CalendarViewCreatingThings {
                 String styleSheet = "-fx-background-color: " + colorToEvent;
 
                 eventLabel.setStyle(styleSheet);
+                eventLabel.setPrefWidth(widthOfCalendar/7 - 6);
+                eventLabel.setPadding(new Insets(0,0,0,3));
 
                 root.getChildren().add(eventLabel);
-                yOffset += 14;
+                yOffset += 20;
             }
         }
         else if(cell.getTypeOfMonth().equals("bigger")) {
 
-            int yOffset = 8;
+            int yOffset = 10;
             for (OneCellRecord.Event event : oneCellRecord.getEveryEvent()) {
                 Label eventLabel = new Label(event.getEventName());
                 eventLabel.setLayoutX(cell.getCenterX() - 50);
@@ -428,11 +434,13 @@ public class CalendarViewCreatingThings {
 
                 String colorToEvent = calendarDatabase.findColorToTag(event.getTag());
                 String styleSheet = "-fx-background-color: " + colorToEvent;
+                eventLabel.setPrefWidth(widthOfCalendar/7 - 6);
+                eventLabel.setPadding(new Insets(0,0,0,3));
 
                 eventLabel.setStyle(styleSheet);
 
                 root.getChildren().add(eventLabel);
-                yOffset += 14;
+                yOffset += 20;
             }
     }
 
