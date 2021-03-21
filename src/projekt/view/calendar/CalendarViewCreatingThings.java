@@ -8,17 +8,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
-import projekt.controler.Main;
-import projekt.controler.calendar.AnchorPaneNode;
-import projekt.controler.calendar.CalendarController;
+import projekt.controller.calendar.AnchorPaneNode;
+import projekt.controller.calendar.CalendarController;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import projekt.controler.calendar.CreateTagController;
-import projekt.controler.calendar.EventDetail;
+import projekt.controller.calendar.EventDetail;
 import projekt.model.CalendarDatabase;
 import projekt.model.OneCellRecord;
 
@@ -296,13 +294,13 @@ public class CalendarViewCreatingThings {
     }
 
     /**
-     * if is something in textfield change color to green and user can save new event
+     * if is something in textfield, change color to green and user can save new event
      */
     private void changeButtonColor(TextField textFieldNote, Button addButton) {
 
         if(!textFieldNote.getText().equals(""))
             {
-                addButton.setStyle("-fx-background-color: #00ff00");
+                addButton.setStyle("-fx-background-color:  #f4ed71");
                 canAddNote = true;
             }
         else
@@ -441,7 +439,7 @@ public class CalendarViewCreatingThings {
 
                 root.getChildren().add(eventLabel);
                 yOffset += 20;
-            }
+            }//https://www.overleaf.com/project/6034278245abed59ac1b56fe
     }
 
     }
@@ -457,4 +455,6 @@ public class CalendarViewCreatingThings {
         stage.setScene(scene);
         stage.show();
     }
+
+
 }

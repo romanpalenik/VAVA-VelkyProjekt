@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane prefHeight="692.0" prefWidth="996.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projekt.controler.projectsController">
+<AnchorPane prefHeight="692.0" prefWidth="996.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projekt.controller.projectsController">
     <children>
         <Separator layoutX="182.0" layoutY="3.0" orientation="VERTICAL" prefHeight="699.0" prefWidth="6.0" />
         <Separator layoutX="10.0" layoutY="82.0" prefHeight="7.0" prefWidth="996.0" />

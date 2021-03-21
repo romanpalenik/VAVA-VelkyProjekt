@@ -1,4 +1,4 @@
-package projekt.controler.calendar;
+package projekt.controller.calendar;
 
 import javafx.stage.Stage;
 import projekt.model.OneCellRecord;

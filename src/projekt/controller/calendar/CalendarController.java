@@ -1,4 +1,4 @@
-package projekt.controler.calendar;
+package projekt.controller.calendar;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,13 +11,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import projekt.controller.Main;
 import projekt.model.CalendarDatabase;
 import projekt.view.calendar.CalendarViewCreatingThings;
 
-
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.Year;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -42,7 +41,12 @@ public class CalendarController {
     private Label firstTag;
     @FXML
     private TextField tagName;
+    @FXML
+    private AnchorPane menuFMXL; //this anchor is anchor pane with menu
+    @FXML
+    private Label darkSideWhenMenu;
 
+    private boolean isMenuShown = false;
     private Stage stage = new Stage();
     private ArrayList<AnchorPaneNode> allCalendarDays = new ArrayList<>(35);
     private YearMonth currentMonth = YearMonth.now();
@@ -52,8 +56,10 @@ public class CalendarController {
     private Dictionary<Integer, String> monthsDict = new Hashtable<Integer, String>();
 
 
-    public void initialize()
-    {
+    public void initialize() throws IOException {
+
+        darkFilterWhileMenu();
+        darkSideWhenMenu.setVisible(false);
         AnchorPaneNode.setRoot(root);
         AnchorPaneNode.setCalendarView(calendarView);
         calendarView.setCalendarController(this);
@@ -71,8 +77,14 @@ public class CalendarController {
 
         calendarView.createTags(root,firstTag, calendarDatabase);
 
-        root.setOnMouseClicked(this::removeLastShownNote);
+        root.setOnMouseClicked(this::removeAllThingsByClicked);
 
+
+    }
+
+    private void removeAllThingsByClicked(MouseEvent mouseEvent) {
+        hideMenu(mouseEvent);
+        removeLastShownNote(mouseEvent);
     }
 
     //------------------------------------------------------
@@ -157,7 +169,7 @@ public class CalendarController {
      */
     public void openWindowToAddNewTag() throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/projekt/view/createTag.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/projekt/view/calendar/createTag.fxml"));
         Parent root2 = (Parent) loader.load();
         CreateTagController controller = loader.getController();
         controller.initData(calendarDatabase,calendarView, stage,root,firstTag, this);
@@ -180,6 +192,57 @@ public class CalendarController {
         }
     }
 
+    /**
+     * show menu, if is menu already shown hide it
+     * @throws IOException
+     */
+    public void showMenu() throws IOException {
+
+        if (isMenuShown)
+        {
+            hideMenu(null);
+            return;
+        }
+
+        root.getChildren().add(darkSideWhenMenu);
+        root.getChildren().add(loadFMXLMenu());
+
+        isMenuShown = true;
+        darkSideWhenMenu.setVisible(true);
+
+    }
+
+    private void hideMenu(MouseEvent mouseEvent) {
+
+        root.getChildren().remove(darkSideWhenMenu);
+        isMenuShown = false;
+        try {
+            root.getChildren().remove(menuFMXL);
+            darkSideWhenMenu.setVisible(false);
+        }
+        catch (NullPointerException e)
+        {
+
+        }
+    }
+
+
+    /**
+     * load anchor pane with menu buttons
+     * @return menu
+     */
+    public AnchorPane loadFMXLMenu() throws IOException {
+
+        menuFMXL = FXMLLoader.load(Main.class.getResource("/projekt/view/calendar/mainMenu.fxml"));
+        menuFMXL.setLayoutY(75);
+        return menuFMXL;
+    }
+
+    public Label darkFilterWhileMenu() throws IOException {
+        darkSideWhenMenu = FXMLLoader.load(Main.class.getResource("/projekt/view/calendar/darkFilterWhileMenu.fxml"));
+        darkSideWhenMenu.setLayoutX(174);
+        return darkSideWhenMenu;
+    }
 
 }
 

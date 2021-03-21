@@ -1,4 +1,4 @@
-package projekt.controler.calendar;
+package projekt.controller.calendar;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,7 +29,7 @@ public class CreateTagController {
     private ComboBox choiceTag;
 
 
-    ObservableList<String> choice = FXCollections.observableArrayList("Upraviť","Pridať nový", "Vymazať");
+    ObservableList<String> choice = FXCollections.observableArrayList("Pridať nový","Upraviť","Vymazať");
     ObservableList<String> colors = FXCollections.observableArrayList("Červená","Zelená","Modrá","Fialová","Žltá");
 
     private CalendarDatabase calendarDatabase;

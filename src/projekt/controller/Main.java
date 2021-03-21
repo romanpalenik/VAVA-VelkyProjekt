@@ -1,4 +1,4 @@
-package projekt.controler;
+package projekt.controller;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

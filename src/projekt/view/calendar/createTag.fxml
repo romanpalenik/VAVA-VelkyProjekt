@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="241.0" prefWidth="402.0" style="-fx-background-color: #383140;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projekt.controler.calendar.CreateTagController">
+<AnchorPane prefHeight="241.0" prefWidth="402.0" style="-fx-background-color: #383140;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projekt.controller.calendar.CreateTagController">
    <children>
       <Button layoutX="279.0" layoutY="176.0" mnemonicParsing="false" onAction="#choiceEditOrCreate" prefHeight="35.0" prefWidth="90.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 15;" text="Pridať tag" />
       <TextField fx:id="tagName" layoutX="34.0" layoutY="110.0" prefHeight="32.0" prefWidth="150.0" style="-fx-background-color: #cac7d7;" />

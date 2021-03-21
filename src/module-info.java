@@ -4,8 +4,8 @@ module ProjektVelky {
     requires javafx.fxml;
 
     requires javafx.controls;
-    opens projekt.controler;
-    opens projekt.controler.calendar;
+    opens projekt.controller;
+    opens projekt.controller.calendar;
 
 
 }

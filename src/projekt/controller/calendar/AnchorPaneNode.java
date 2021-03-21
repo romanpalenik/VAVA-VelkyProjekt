@@ -1,4 +1,4 @@
-package projekt.controler.calendar;
+package projekt.controller.calendar;
 
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
