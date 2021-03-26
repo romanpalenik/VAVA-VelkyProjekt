@@ -57,7 +57,7 @@ public class CalendarViewCreatingThings {
     }
 
     /**
-     * delete all tags, and create new from array
+     * delete all tags, and create new from database
      * @param root window pane
      * @param fistTag tag by to navigate position
      * @param calendarDatabase database with every information connected with calendar
@@ -386,7 +386,7 @@ public class CalendarViewCreatingThings {
 
             eventLabel.setOnMouseClicked(e -> {
                 try {
-                    showEditEvent(oneCellRecord, event.getEventName(), calendarController);
+                    showEditEvent(oneCellRecord, event, calendarController);
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
@@ -444,17 +444,16 @@ public class CalendarViewCreatingThings {
 
     }
 
-    public void showEditEvent(OneCellRecord event, String eventName, CalendarController calendarController) throws IOException {
+    public void showEditEvent(OneCellRecord event, OneCellRecord.Event eventName, CalendarController calendarController) throws IOException {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/projekt/view/calendar/eventDetail.fxml"));
         Parent root2 = (Parent) loader.load();
         EventDetail controller = loader.getController();
-        controller.initData(stage, event, eventName, calendarController);
+        controller.initData(stage, event, eventName, calendarController, calendarDatabase);
         Scene scene = new Scene(root2);
         stage.setTitle("Pridat tag");
         stage.setScene(scene);
         stage.show();
     }
-
 
 }

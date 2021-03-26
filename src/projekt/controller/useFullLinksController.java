@@ -72,8 +72,8 @@ public class useFullLinksController {
      * @return menu
      */
     public AnchorPane loadFMXLMenu() throws IOException {
-
-        menuFMXL = FXMLLoader.load(Main.class.getResource("/projekt/view/calendar/mainMenu.fxml"));
+        
+        menuFMXL = FXMLLoader.load(Main.class.getResource("/projekt/view/mainMenu.fxml"));
         menuFMXL.setLayoutY(75);
         return menuFMXL;
     }

@@ -148,6 +148,5 @@ public class CalendarDatabase {
     public void deleteTag(String tagName)
     {
         tagsWithColor.remove(tagName);
-
     }
 }
