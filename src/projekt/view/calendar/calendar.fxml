@@ -46,8 +46,13 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="firstTag" layoutX="7.0" layoutY="141.0" text="Tags" textFill="#cac7d7" />
-      <Button fx:id="addTag" layoutX="47.0" layoutY="132.0" mnemonicParsing="false" onAction="#openWindowToAddNewTag" prefHeight="35.0" prefWidth="114.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 15;" text="Sprava tagov" />
-      <Button layoutX="95.0" layoutY="25.0" mnemonicParsing="false" onAction="#showMenu" text="menu" />
+      <Label fx:id="firstTag" layoutX="14.0" layoutY="108.0" text="Tags" textFill="#cac7d7" />
+      <Button fx:id="addTag" layoutX="55.0" layoutY="98.0" mnemonicParsing="false" onAction="#openWindowToAddNewTag" prefHeight="35.0" prefWidth="114.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 15;" text="Sprava tagov" />
+      <Button fx:id="menuButton" layoutX="95.0" layoutY="25.0" mnemonicParsing="false" onAction="#showMenu" text="menu" />
+      <Label layoutX="193.0" layoutY="14.0" prefHeight="48.0" prefWidth="213.0" text="Kalendár" textFill="#f1f3f2">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

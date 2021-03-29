@@ -1,4 +1,4 @@
-package projekt.model;
+package projekt.model.calendar;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

@@ -7,12 +7,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import projekt.controller.Main;
-import projekt.model.CalendarDatabase;
+import projekt.model.calendar.CalendarDatabase;
 import projekt.view.calendar.CalendarViewCreatingThings;
 
 import java.io.IOException;
@@ -45,6 +47,8 @@ public class CalendarController {
     private AnchorPane menuFMXL; //this anchor is anchor pane with menu
     @FXML
     private Label darkSideWhenMenu;
+    @FXML
+    private Button menuButton;
 
     private boolean isMenuShown = false;
     private Stage stage = new Stage();
@@ -78,6 +82,7 @@ public class CalendarController {
         calendarView.createTags(root,firstTag, calendarDatabase);
 
         root.setOnMouseClicked(this::removeAllThingsByClicked);
+
 
 
     }
@@ -239,7 +244,7 @@ public class CalendarController {
     }
 
     public Label darkFilterWhileMenu() throws IOException {
-        darkSideWhenMenu = FXMLLoader.load(Main.class.getResource("/projekt/view/calendar/darkFilterWhileMenu.fxml"));
+        darkSideWhenMenu = FXMLLoader.load(Main.class.getResource("/projekt/view/darkFilterWhileMenu.fxml"));
         darkSideWhenMenu.setLayoutX(174);
         return darkSideWhenMenu;
     }

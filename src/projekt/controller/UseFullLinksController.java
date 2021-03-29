@@ -8,7 +8,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
-public class useFullLinksController {
+public class UseFullLinksController {
 
     @FXML
     private AnchorPane root;
@@ -79,7 +79,7 @@ public class useFullLinksController {
     }
 
     public Label darkFilterWhileMenu() throws IOException {
-        darkSideWhenMenu = FXMLLoader.load(Main.class.getResource("/projekt/view/calendar/darkFilterWhileMenu.fxml"));
+        darkSideWhenMenu = FXMLLoader.load(Main.class.getResource("/projekt/view/darkFilterWhileMenu.fxml"));
         darkSideWhenMenu.setLayoutX(174);
         return darkSideWhenMenu;
     }

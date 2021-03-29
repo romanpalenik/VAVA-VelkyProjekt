@@ -17,8 +17,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import projekt.controller.calendar.EventDetail;
-import projekt.model.CalendarDatabase;
-import projekt.model.OneCellRecord;
+import projekt.model.calendar.CalendarDatabase;
+import projekt.model.calendar.OneCellRecord;
 
 import java.io.IOException;
 import java.time.LocalDate;

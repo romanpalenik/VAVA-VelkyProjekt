@@ -1,4 +1,4 @@
-package projekt.model;
+package projekt.model.calendar;
 
 import projekt.controller.calendar.AnchorPaneNode;
 import javafx.geometry.Pos;

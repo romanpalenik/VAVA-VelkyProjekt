@@ -10,8 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import projekt.model.CalendarDatabase;
-import projekt.model.OneCellRecord;
+import projekt.model.calendar.CalendarDatabase;
+import projekt.model.calendar.OneCellRecord;
 
 public class EventDetail {
 
