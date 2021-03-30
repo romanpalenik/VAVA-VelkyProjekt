@@ -149,7 +149,9 @@ public class NotesController {
 
     public void saveNote()
     {
-        notesDatabase.addToNotes(nameOfNotes.getText(),note.getText());
+        if(!nameOfNotes.getText().equals("")) {
+            notesDatabase.addToNotes(nameOfNotes.getText(), note.getText());
+        }
     }
 
     public void changeNote(String noteName)
@@ -158,9 +160,11 @@ public class NotesController {
         note.setText(notesDatabase.getNoteByName(noteName));
     }
 
-    public void deleteNote(String note)
+    public void deleteNote(String noteToDelete)
     {
-        notesDatabase.deleteNotes(note);
+        note.setText("");
+        nameOfNotes.setText("");
+        notesDatabase.deleteNotes(noteToDelete);
         notesView.createTags(root,firstNote, notesDatabase);
     }
 

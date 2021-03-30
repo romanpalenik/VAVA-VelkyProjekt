@@ -49,7 +49,7 @@ public class NoteView {
             root.getChildren().remove(label);
         }
 
-        double yPosition = firstNote.getLayoutY() +10;
+        double yPosition = firstNote.getLayoutY() +30;
         double xPosition = firstNote.getLayoutX() -2;
 
         noteWithName = notesDatabase.getNotesWithName();
