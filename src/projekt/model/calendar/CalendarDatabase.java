@@ -100,6 +100,18 @@ public class CalendarDatabase {
         return true;
     }
 
+    /**
+     * check if tag is already in array, if is not add it
+     * @param newTag
+     * @return
+     */
+    public boolean addToTagsWithHex(String newTag, String color)
+    {
+        tagsWithColor.put(newTag,color);
+        return true;
+    }
+
+
     public Map<String, String> getTagsWithColor()
     {
         return tagsWithColor;
@@ -108,5 +120,11 @@ public class CalendarDatabase {
     public void deleteTag(String tagName)
     {
         tagsWithColor.remove(tagName);
+    }
+
+    public void renameTag(String oldNoteName, String colorToTag,String newNoteName )
+    {
+        deleteTag(oldNoteName);
+        addToTagsWithHex(newNoteName,colorToTag);
     }
 }

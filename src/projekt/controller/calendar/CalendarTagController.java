@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import projekt.model.calendar.CalendarDatabase;
 import projekt.view.calendar.CalendarViewCreatingThings;
 
-public class CreateTagController {
+public class CalendarTagController {
 
     @FXML
     private TextField tagName;
@@ -34,11 +34,14 @@ public class CreateTagController {
     private CalendarViewCreatingThings calendarView;
     private CalendarController calendarController;
     private Stage stage;
+
+
     private AnchorPane root;
     private Label firstTag;
+    private TextField newNoteName;
 
-    public CalendarController getCalendarController() {
-        return calendarController;
+    public void setNewNoteName(TextField newNoteName) {
+        this.newNoteName = newNoteName;
     }
 
     public void initialize()
@@ -106,13 +109,14 @@ public class CreateTagController {
 
     }
 
+
     public void addNewTag()
     {
         tagWarning.setVisible(false);
 
         if(calendarDatabase.addToTags(tagName.getText(), (String) choiceColor.getValue()))
         {
-            calendarView.createTags(root,firstTag, calendarDatabase);
+            calendarView.createTags(root,calendarDatabase);
             stage.close();
         }
         else {
@@ -125,14 +129,14 @@ public class CreateTagController {
     public void editTag()
     {
         calendarDatabase.addToTags(tagName.getText(), (String) choiceColor.getValue());
-        calendarView.createTags(root,firstTag, calendarDatabase);
+        calendarView.createTags(root,calendarDatabase);
         stage.close();
     }
 
     private void deleteTag()
     {
         calendarDatabase.deleteTag((String) choiceTag.getValue());
-        calendarView.createTags(root,firstTag, calendarDatabase);
+        calendarView.createTags(root,calendarDatabase);
         calendarController.updateCalendar(calendarController.getCurrentMonth());
         stage.close();
     }
@@ -168,10 +172,22 @@ public class CreateTagController {
     }
 
     public void renameNote(Label currentLabel) {
-        calendarDatabase.addToTags(currentLabel.getText(), calendarDatabase.findColorToTag(currentLabel.getText()));
+
+        calendarDatabase.renameTag(currentLabel.getText(), calendarDatabase.findColorToTag(currentLabel.getText()), newNoteName.getText());
+        root.getChildren().remove(newNoteName);
+        calendarView.createTags(root,calendarDatabase);
     }
 
-    public CreateTagController(CalendarController calendarController) {
+    public void setCalendarDatabase(CalendarDatabase calendarDatabase) {
+        this.calendarDatabase = calendarDatabase;
+    }
+
+    public void setCalendarView(CalendarViewCreatingThings calendarView) {
+        this.calendarView = calendarView;
+    }
+
+    public void setCalendarController(CalendarController calendarController) {
         this.calendarController = calendarController;
     }
+
 }

@@ -7,6 +7,8 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -75,7 +77,6 @@ public class NoteView {
 
             });
 
-
             labelTags.add(label);
 
             root.getChildren().add(label);
@@ -93,10 +94,22 @@ public class NoteView {
             public void handle(ActionEvent event) {
                 //create textfield to rename event
                 newNoteName = new TextField();
-                newNoteName.setLayoutX(currentLabel.getLayoutX());
-                newNoteName.setLayoutY(currentLabel.getLayoutY());
+                newNoteName.setPrefSize(152,10);
+                newNoteName.setText(currentLabel.getText());
+                newNoteName.setLayoutX(currentLabel.getTranslateX()-5);
+                newNoteName.setLayoutY(currentLabel.getTranslateY());
                 root.getChildren().add(newNoteName);
-                notesController.renameNote(newNoteName, currentLabel);
+                notesController.setNewNoteName(newNoteName);
+
+                newNoteName.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+                    @Override
+                    public void handle(KeyEvent event) {
+                        if(event.getCode().equals(KeyCode.ENTER)) {
+                            notesController.renameNote(currentLabel);
+                        }
+                    }
+                });
             }
         });
         item2.setOnAction(new EventHandler<ActionEvent>() {

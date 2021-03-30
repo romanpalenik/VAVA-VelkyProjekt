@@ -2,20 +2,23 @@ package projekt.view.calendar;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import projekt.controller.calendar.AnchorPaneNode;
 import projekt.controller.calendar.CalendarController;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import projekt.controller.calendar.CalendarTagController;
 import projekt.controller.calendar.EventDetail;
 import projekt.model.calendar.CalendarDatabase;
 import projekt.model.calendar.OneCellRecord;
@@ -34,10 +37,14 @@ public class CalendarViewCreatingThings {
 
     private Map<String, String> tagsWithColor = new HashMap<>();
     ArrayList<Label> labelTags = new ArrayList<>();
+
+    //number to calendar
     private int widthOfCalendar = 750;
     private int heightOfCalendar = 487;
     private int leftUpCornerX = 209;
     private int leftUpCornerY = 170;
+    private AnchorPane root;
+    private Label fistTag;
 
     private boolean canAddNote = false;
 
@@ -45,12 +52,38 @@ public class CalendarViewCreatingThings {
     private Button lastShownButton = new Button();
     private ComboBox lastShownComboBox = new ComboBox();
 
+    //obejcts connected to calendar
     private CalendarController calendarController;
-
-    public void setCalendarController(CalendarController calendarController) {
-        this.calendarController = calendarController;
-    }
+    private CalendarTagController calendarTagController;
     private CalendarDatabase calendarDatabase;
+
+    //menu to tags
+    private TextField newNoteName;
+    ContextMenu contextMenu = new ContextMenu();
+    MenuItem item2 = new MenuItem("Vymazať");
+    MenuItem item1 = new MenuItem("Premenovat");
+
+    /**
+     * construktor to set menu
+     */
+    public CalendarViewCreatingThings() {
+        contextMenu.getItems().addAll(item1, item2);
+    }
+
+    public void setFistTag(Label fistTag) {
+        this.fistTag = fistTag;
+    }
+
+    public void setCreateTagController(CalendarTagController calendarTagController) {
+        this.calendarTagController = calendarTagController;
+    }
+    public void setCalendarController(CalendarController calendarController, AnchorPane root) {
+        this.calendarController = calendarController;
+        this.root = root;
+    }
+
+
+
 
     public void setCalendarDatabase(CalendarDatabase calendarDatabase) {
         this.calendarDatabase = calendarDatabase;
@@ -59,10 +92,9 @@ public class CalendarViewCreatingThings {
     /**
      * delete all tags, and create new from database
      * @param root window pane
-     * @param fistTag tag by to navigate position
      * @param calendarDatabase database with every information connected with calendar
      */
-    public void createTags(AnchorPane root, Label fistTag,CalendarDatabase calendarDatabase) {
+    public void createTags(AnchorPane root,CalendarDatabase calendarDatabase) {
 
         for(Label label:labelTags)
         {
@@ -84,6 +116,15 @@ public class CalendarViewCreatingThings {
             String styleSheet = "-fx-background-color: " + entry.getValue();
             label.setStyle(styleSheet);
             label.setPadding(new Insets(3 ,5 ,3,5));
+
+            label.setOnMouseClicked(event -> {
+             if (event.getButton() == MouseButton.SECONDARY)
+                {
+                    setContextMenu(label);
+                    contextMenu.show(label, event.getScreenX(), event.getScreenY());
+                }
+
+            });
 
             labelTags.add(label);
 
@@ -217,6 +258,7 @@ public class CalendarViewCreatingThings {
 
                 ap.setPrefSize(200, 200);
                 calendar.add(ap, j, i);
+
                 allCalendarDays.add(ap);
                 centerOfFistCellX += offsetToCenterX;
             }
@@ -455,5 +497,44 @@ public class CalendarViewCreatingThings {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void setContextMenu(Label currentLabel)
+    {
+
+        item1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                //create textfield to rename event
+                newNoteName = new TextField();
+                newNoteName.setPrefSize(152,10);
+                newNoteName.setText(currentLabel.getText());
+                newNoteName.setLayoutX(currentLabel.getTranslateX()-5);
+                newNoteName.setLayoutY(currentLabel.getTranslateY());
+                root.getChildren().add(newNoteName);
+                calendarTagController.setNewNoteName(newNoteName);
+
+                newNoteName.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+                    @Override
+                    public void handle(KeyEvent event) {
+                        if(event.getCode().equals(KeyCode.ENTER)) {
+                            calendarTagController.renameNote(currentLabel);
+                        }
+                    }
+                });
+            }
+        });
+        item2.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event) {
+                calendarController.deleteNote(currentLabel.getText());
+            }
+        });
+
+        // Add MenuItem to ContextMenu
+    }
+
+
 
 }

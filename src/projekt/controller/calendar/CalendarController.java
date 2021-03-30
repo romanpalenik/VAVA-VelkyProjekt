@@ -7,8 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -50,12 +48,21 @@ public class CalendarController {
     @FXML
     private Button menuButton;
 
+    private TextField newNoteName;
+
+    public void setNewNoteName(TextField newNoteName) {
+        this.newNoteName = newNoteName;
+    }
+
     private boolean isMenuShown = false;
     private Stage stage = new Stage();
     private ArrayList<AnchorPaneNode> allCalendarDays = new ArrayList<>(35);
     private YearMonth currentMonth = YearMonth.now();
-    CalendarViewCreatingThings calendarView = new CalendarViewCreatingThings();
-    CalendarDatabase calendarDatabase = new CalendarDatabase();
+
+    private CalendarViewCreatingThings calendarView = new CalendarViewCreatingThings();
+    private CalendarDatabase calendarDatabase = new CalendarDatabase();
+    private CalendarTagController calendarTagController = new CalendarTagController();
+
 
     private Dictionary<Integer, String> monthsDict = new Hashtable<Integer, String>();
 
@@ -64,11 +71,30 @@ public class CalendarController {
 
         darkFilterWhileMenu();
         darkSideWhenMenu.setVisible(false);
+        //Section to set connect all object connected to calendar and tags
         AnchorPaneNode.setRoot(root);
         AnchorPaneNode.setCalendarView(calendarView);
-        calendarView.setCalendarController(this);
+        calendarView.setCalendarController(this, root);
         calendarView.setCalendarDatabase(calendarDatabase);
+        calendarView.setCreateTagController(calendarTagController);
 
+        calendarTagController.setCalendarController(this);
+        calendarTagController.setCalendarDatabase(calendarDatabase);
+        calendarTagController.setCalendarView(calendarView);
+
+        calendarView.setFistTag(firstTag);
+        calendarTagController.initData(calendarDatabase, calendarView, null, root,firstTag, this);
+
+        initCalendar();
+
+        root.setOnMouseClicked(this::removeAllThingsByClicked);
+    }
+
+    /**
+     * call to set up everything connected to calendar
+     */
+    private void initCalendar()
+    {
         updateCalendar(currentMonth);
 
         initMonthDictionary();
@@ -79,12 +105,7 @@ public class CalendarController {
         monthForward.setText(String.valueOf(currentMonth.plusMonths(1)));
         monthBefore.setText(String.valueOf(currentMonth.minusMonths(1)));
 
-        calendarView.createTags(root,firstTag, calendarDatabase);
-
-        root.setOnMouseClicked(this::removeAllThingsByClicked);
-
-
-
+        calendarView.createTags(root, calendarDatabase);
     }
 
     private void removeAllThingsByClicked(MouseEvent mouseEvent) {
@@ -114,6 +135,7 @@ public class CalendarController {
     public YearMonth getCurrentMonth() {
         return currentMonth;
     }
+
 
     public void changeMonthUp()
     {
@@ -176,7 +198,7 @@ public class CalendarController {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/projekt/view/calendar/createTag.fxml"));
         Parent root2 = (Parent) loader.load();
-        CreateTagController controller = loader.getController();
+        CalendarTagController controller = loader.getController();
         controller.initData(calendarDatabase,calendarView, stage,root,firstTag, this);
         Scene scene = new Scene(root2);
         stage.setTitle("Pridat tag");
@@ -247,6 +269,10 @@ public class CalendarController {
         darkSideWhenMenu = FXMLLoader.load(Main.class.getResource("/projekt/view/darkFilterWhileMenu.fxml"));
         darkSideWhenMenu.setLayoutX(174);
         return darkSideWhenMenu;
+    }
+
+
+    public void deleteNote(String text) {
     }
 
 }

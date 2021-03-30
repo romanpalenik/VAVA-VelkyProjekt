@@ -42,6 +42,12 @@ public class NotesController {
     private NotesDatabase notesDatabase = new NotesDatabase();
     private NoteView notesView;
 
+    public void setNewNoteName(TextField newNoteName) {
+        this.newNoteName = newNoteName;
+    }
+
+    private TextField newNoteName;
+
     public void initialize() throws IOException {
 
         notesView = new NoteView(this,root);
@@ -57,6 +63,7 @@ public class NotesController {
     private void removeAllThingsByClicked(MouseEvent mouseEvent) {
         root.getChildren().remove(menuFMXL);
         darkSideWhenMenu.setVisible(false);
+        if(newNoteName != null)root.getChildren().remove(newNoteName);
     }
 
     /**
@@ -160,9 +167,11 @@ public class NotesController {
         notesView.createTags(root,firstNote, notesDatabase);
     }
 
-    public void renameNote(TextField newNoteName, Label currentLabel)
+    public void renameNote(Label currentLabel)
     {
         notesDatabase.renameNotes(currentLabel.getText(),notesDatabase.getNoteByName(currentLabel.getText()),newNoteName.getText());
+        root.getChildren().remove(newNoteName);
+        notesView.createTags(root,firstNote, notesDatabase);
     }
 
 }
