@@ -24,8 +24,6 @@ public class CreateTagController {
     @FXML
     private ComboBox choiceColor;
     @FXML
-    private Label colorDescription;
-    @FXML
     private ComboBox choiceTag;
 
 
@@ -169,4 +167,11 @@ public class CreateTagController {
         }
     }
 
+    public void renameNote(Label currentLabel) {
+        calendarDatabase.addToTags(currentLabel.getText(), calendarDatabase.findColorToTag(currentLabel.getText()));
+    }
+
+    public CreateTagController(CalendarController calendarController) {
+        this.calendarController = calendarController;
+    }
 }
