@@ -13,7 +13,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import project.controller.NotesController;
-import project.model.notes.NotesDatabase;
+import project.model.databases.NotesDatabase;
+import project.model.databases.sizesAndPosition.NotesSizesAndPosition;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,12 +26,11 @@ public class NoteView {
     private ArrayList<Label> labelTags = new ArrayList<>();
     private NotesController notesController;
 
-    private AnchorPane root;
+    private NotesSizesAndPosition notesSizesAndPosition = new NotesSizesAndPosition();
 
-//    selected node to know which one delete, is it sending to controler to delete
-    private Label currentLabel;
-//
+    private AnchorPane root;
     private TextField newNoteName;
+
     //menu
     ContextMenu contextMenu = new ContextMenu();
     MenuItem item2 = new MenuItem("Vymazať");
@@ -49,39 +49,39 @@ public class NoteView {
             root.getChildren().remove(label);
         }
 
-        double yPosition = firstNote.getLayoutY() +30;
+        double yPosition = firstNote.getLayoutY() + notesSizesAndPosition.getDistanceFromFistNote();
         double xPosition = firstNote.getLayoutX() -2;
 
         noteWithName = notesDatabase.getNotesWithName();
 
         for ( Map.Entry<String, String> entry : noteWithName.entrySet() ) {
 
-            Label label = new Label(entry.getKey());
+            Label noteBlog = new Label(entry.getKey());
 
-            label.setTranslateX(xPosition);
-            label.setTranslateY(yPosition);
+            noteBlog.setTranslateX(xPosition);
+            noteBlog.setTranslateY(yPosition);
 
-            label.setTextFill(Color.color(1, 1, 1));
+            noteBlog.setTextFill(Color.color(1, 1, 1));
 
-            label.setPadding(new Insets(3 ,5 ,3,5));
+            noteBlog.setPadding(new Insets(3 ,5 ,3,5));
 
-            label.setOnMouseClicked(event -> {
+            noteBlog.setOnMouseClicked(event -> {
                 if (event.getButton() == MouseButton.PRIMARY)
                 {
-                    notesController.changeNote(label.getText());
+                    notesController.changeNote(noteBlog.getText());
                 } else if (event.getButton() == MouseButton.SECONDARY)
                 {
-                    setContextMenu(label);
-                    contextMenu.show(label, event.getScreenX(), event.getScreenY());
+                    setContextMenu(noteBlog);
+                    contextMenu.show(noteBlog, event.getScreenX(), event.getScreenY());
                 }
 
             });
 
-            labelTags.add(label);
+            labelTags.add(noteBlog);
 
-            root.getChildren().add(label);
+            root.getChildren().add(noteBlog);
 
-            yPosition += 30;
+            yPosition += notesSizesAndPosition.getDistanceBetweenNameOfBlogs();
         }
     }
 

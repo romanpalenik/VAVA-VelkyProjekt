@@ -20,8 +20,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import project.controller.calendar.CalendarTagController;
 import project.controller.calendar.EventDetail;
-import project.model.calendar.CalendarDatabase;
+import project.model.databases.CalendarDatabase;
 import project.model.calendar.OneCellRecord;
+import project.model.databases.sizesAndPosition.CalendarSizesAndPositonOfObjects;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -36,13 +37,9 @@ import java.util.Map;
 public class CalendarViewCreatingThings {
 
     private Map<String, String> tagsWithColor = new HashMap<>();
-    ArrayList<Label> labelTags = new ArrayList<>();
+    private ArrayList<Label> labelTags = new ArrayList<>();
+    private CalendarSizesAndPositonOfObjects calendarSizes = new CalendarSizesAndPositonOfObjects();
 
-    //number to calendar
-    private int widthOfCalendar = 750;
-    private int heightOfCalendar = 487;
-    private int leftUpCornerX = 209;
-    private int leftUpCornerY = 170;
     private AnchorPane root;
     private Label fistTag;
 
@@ -151,7 +148,7 @@ public class CalendarViewCreatingThings {
      */
     public ArrayList<AnchorPaneNode> makeCalendarBigger(AnchorPane root, GridPane calendar) {
 
-        return createCalendar(root,calendar,"bigger");
+        return createCalendar(root, calendar,"bigger");
     }
 
     /**
@@ -191,15 +188,15 @@ public class CalendarViewCreatingThings {
         root.getChildren().remove(calendar);
 
         calendar = new GridPane();
-        calendar.setPrefSize(widthOfCalendar, heightOfCalendar);
-        calendar.setLayoutX(leftUpCornerX);
-        calendar.setLayoutY(leftUpCornerY);
+        calendar.setPrefSize(calendarSizes.getWidthOfCalendar(), calendarSizes.getHeightOfCalendar());
+        calendar.setLayoutX(calendarSizes.getLeftUpCornerX());
+        calendar.setLayoutY(calendarSizes.getLeftUpCornerY());
         calendar.setGridLinesVisible(true);
 
-        int offsetToCenterX = widthOfCalendar/collums;
-        int offsetToCenterY = heightOfCalendar/row;
-        int centerOfFistCellY = leftUpCornerY + (heightOfCalendar/row)/2;
-        int centerOfFistCellX = leftUpCornerX + (widthOfCalendar/collums)/2;
+        int offsetToCenterX = calendarSizes.getWidthOfCalendar()/collums;
+        int offsetToCenterY = calendarSizes.getHeightOfCalendar()/row;
+        int centerOfFistCellY = calendarSizes.getLeftUpCornerY() + (calendarSizes.getHeightOfCalendar()/row)/2;
+        int centerOfFistCellX = calendarSizes.getLeftUpCornerX() + (calendarSizes.getWidthOfCalendar()/collums)/2;
 
         ArrayList<AnchorPaneNode> allCalendarDays = new ArrayList<>(row*collums);
         calendar.getChildren().removeAll();
@@ -213,106 +210,18 @@ public class CalendarViewCreatingThings {
 
                 ap.setTypeOfMonth(type);
 
-                ap.setPrefSize(200, 200);
+                ap.setPrefSize(calendarSizes.getOneCalendarCell(),calendarSizes.getOneCalendarCell());
                 calendar.add(ap, j, i);
 
                 allCalendarDays.add(ap);
                 centerOfFistCellX += offsetToCenterX;
             }
-            centerOfFistCellX = leftUpCornerX + (widthOfCalendar/collums)/2;
+            centerOfFistCellX = calendarSizes.getLeftUpCornerX() + (calendarSizes.getWidthOfCalendar()/collums)/2;
             centerOfFistCellY += offsetToCenterY;
         }
 
         root.getChildren().add(calendar);
         return allCalendarDays;
-    }
-
-    /**
-     * remove lastShown textfiled of notes from root and create a new one
-     * @param x of centre of node
-     * @param y of centre of node
-     * @param root
-     * @param date
-     */
-    public void createSettingNote(int x, int y, AnchorPane root, LocalDate date)
-    {
-        root.getChildren().remove(LastShownTextFieldNote);
-        root.getChildren().remove(lastShownButton);
-        root.getChildren().remove(lastShownComboBox);
-
-        int textFieldWidth = 150;
-        int textFieldHeight = 26;
-
-        TextField textFieldNote = new TextField();
-        textFieldNote.setPrefSize(textFieldWidth, textFieldHeight);
-        textFieldNote.setLayoutX(x-(textFieldWidth/2)-20);
-        textFieldNote.setLayoutY(y-80);
-
-
-        Button saveNoteButton = new Button();
-        saveNoteButton.setText("+");
-        saveNoteButton.setPrefSize(40, textFieldHeight);
-        saveNoteButton.setLayoutX(x+15);
-        saveNoteButton.setLayoutY(y-50); //than the text field +30
-
-        ComboBox tagsChoice = new ComboBox();
-        ObservableList<String> tags = FXCollections.observableArrayList(calendarDatabase.getTagsWithColor().keySet());
-        tagsChoice.setPrefSize(110, textFieldHeight);
-        tagsChoice.setItems(tags);
-        tagsChoice.setLayoutX(x-95);
-        tagsChoice.setLayoutY(y-50);
-
-
-        saveNoteButton.setOnMouseClicked(e -> {
-            if (canAddNote) {
-                calendarDatabase.addToEvents(date, textFieldNote.getText(), (String) tagsChoice.getValue());
-                removeLastShownNote(root);
-                calendarController.updateCalendar(calendarController.getCurrentMonth());
-            }
-        });
-
-
-        textFieldNote.textProperty().addListener((obs, oldText, newText) -> {
-            try {
-                changeButtonColor(textFieldNote, saveNoteButton);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            // ...
-        });
-        
-        lastShownComboBox = tagsChoice;
-        LastShownTextFieldNote = textFieldNote;
-        lastShownButton = saveNoteButton;
-
-        root.getChildren().add(tagsChoice);
-        root.getChildren().add(textFieldNote);
-        root.getChildren().add(saveNoteButton);
-
-
-    }
-
-    /**
-     * if is something in textfield, change color to green and user can save new event
-     */
-    private void changeButtonColor(TextField textFieldNote, Button addButton) {
-
-        if(!textFieldNote.getText().equals(""))
-            {
-                addButton.setStyle("-fx-background-color:  #f4ed71");
-                canAddNote = true;
-            }
-        else
-            {
-                addButton.setStyle("-fx-background-color: #d0d0d0");
-            }
-    }
-
-    public void removeLastShownNote(AnchorPane root)
-    {
-        root.getChildren().remove(lastShownComboBox);
-        root.getChildren().remove(LastShownTextFieldNote);
-        root.getChildren().remove(lastShownButton);
     }
 
     /**
@@ -351,7 +260,7 @@ public class CalendarViewCreatingThings {
                 OneCellRecord event = calendarDatabase.findEventByDate(calendarDate);
                 if(event!=null)
                 {
-                    createLabelWithEvent(ap, event, root);
+                    createEventsInsideCalendar(ap, event, root);
                 }
             }
 
@@ -374,7 +283,7 @@ public class CalendarViewCreatingThings {
      * @param cell
      * @param root
      */
-    public void createLabelWithEvent(AnchorPaneNode cell, OneCellRecord oneCellRecord, AnchorPane root) {
+    public void createEventsInsideCalendar(AnchorPaneNode cell, OneCellRecord oneCellRecord, AnchorPane root) {
 
         int YdistanceFromCenter = 0;
         if (cell.getTypeOfMonth().equals("little")) {
@@ -385,7 +294,7 @@ public class CalendarViewCreatingThings {
             YdistanceFromCenter = 25;
         }
 
-        int yOffset = 10;
+        int yOffset = calendarSizes.getPlaceBetweenTwoTags();
         for (OneCellRecord.Event event : oneCellRecord.getEveryEvent()) {
             Label eventLabel = new Label(event.getEventName());
             eventLabel.setLayoutX(cell.getCenterX() - 50);
@@ -403,7 +312,7 @@ public class CalendarViewCreatingThings {
             String styleSheet = "-fx-background-color: " + colorToEvent;
 
             eventLabel.setStyle(styleSheet);
-            eventLabel.setPrefWidth(widthOfCalendar / 7 - 6);
+            eventLabel.setPrefWidth(calendarSizes.getWidthOfCalendar() / 7 - 6);
             eventLabel.setPadding(new Insets(0, 0, 0, 3));
 
             root.getChildren().add(eventLabel);
@@ -411,6 +320,85 @@ public class CalendarViewCreatingThings {
 
 
         }
+    }
+
+    /**
+     * remove lastShown textfiled of notes from root and create a new one
+     * @param x of centre of node
+     * @param y of centre of node
+     * @param root
+     * @param date
+     */
+    public void createSettingNote(int x, int y, AnchorPane root, LocalDate date)
+    {
+        root.getChildren().remove(LastShownTextFieldNote);
+        root.getChildren().remove(lastShownButton);
+        root.getChildren().remove(lastShownComboBox);
+
+
+        TextField textFieldNote = new TextField();
+        textFieldNote.setPrefSize(calendarSizes.getTextFieldWidth(), calendarSizes.getTextFieldHeight());
+        textFieldNote.setLayoutX(x-(calendarSizes.getTextFieldWidth()/2)-20);
+        textFieldNote.setLayoutY(y-80);
+
+
+        Button saveNoteButton = new Button();
+        saveNoteButton.setText("+");
+        saveNoteButton.setPrefSize(calendarSizes.getButtonWidth(), calendarSizes.getTextFieldHeight());
+        saveNoteButton.setLayoutX(x+15);
+        saveNoteButton.setLayoutY(y-50); //than the text field +30
+
+        ComboBox tagsChoice = new ComboBox();
+        ObservableList<String> tags = FXCollections.observableArrayList(calendarDatabase.getTagsWithColor().keySet());
+        tagsChoice.setPrefSize(calendarSizes.getComboBoxWidth(), calendarSizes.getTextFieldHeight());
+        tagsChoice.setItems(tags);
+        tagsChoice.setLayoutX(x-95);
+        tagsChoice.setLayoutY(y-50);
+
+
+        saveNoteButton.setOnMouseClicked(e -> {
+            if (canAddNote) {
+                calendarDatabase.addToEvents(date, textFieldNote.getText(), (String) tagsChoice.getValue());
+                removeLastShownNote(root);
+                calendarController.updateCalendar(calendarController.getCurrentMonth());
+            }
+        });
+
+
+        textFieldNote.textProperty().addListener((obs, oldText, newText) -> {
+            try {
+                changeButtonColor(textFieldNote, saveNoteButton);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            // ...
+        });
+
+        lastShownComboBox = tagsChoice;
+        LastShownTextFieldNote = textFieldNote;
+        lastShownButton = saveNoteButton;
+
+        root.getChildren().add(tagsChoice);
+        root.getChildren().add(textFieldNote);
+        root.getChildren().add(saveNoteButton);
+
+
+    }
+
+    /**
+     * if is something in textfield, change color to green and user can save new event
+     */
+    private void changeButtonColor(TextField textFieldNote, Button addButton) {
+
+        if(!textFieldNote.getText().equals(""))
+            {
+                addButton.setStyle("-fx-background-color:  #f4ed71");
+                canAddNote = true;
+            }
+        else
+            {
+                addButton.setStyle("-fx-background-color: #d0d0d0");
+            }
     }
 
     public void showEditEvent(OneCellRecord event, OneCellRecord.Event eventName, CalendarController calendarController) throws IOException {
@@ -433,7 +421,7 @@ public class CalendarViewCreatingThings {
             public void handle(ActionEvent event) {
                 //create textfield to rename event
                 newNoteName = new TextField();
-                newNoteName.setPrefSize(152,10);
+                newNoteName.setPrefSize(calendarSizes.getTextFieldWidth(),calendarSizes.getTextFieldHeight());
                 newNoteName.setText(currentLabel.getText());
                 newNoteName.setLayoutX(currentLabel.getTranslateX()-5);
                 newNoteName.setLayoutY(currentLabel.getTranslateY());
@@ -490,26 +478,30 @@ public class CalendarViewCreatingThings {
         yellowColor.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                calendarTagController.changeColor(currentLabel,"Žltá");
+                calendarTagController.changeColor(currentLabel, "Žltá");
             }
 
         });
         redColor.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                calendarTagController.changeColor(currentLabel,"Červená");
+                calendarTagController.changeColor(currentLabel, "Červená");
             }
 
         });
         greenColor.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                calendarTagController.changeColor(currentLabel,"Zelená");
+                calendarTagController.changeColor(currentLabel, "Zelená");
             }
 
         });
     }
 
-
+    public void removeLastShownNote(AnchorPane root) {
+        root.getChildren().remove(lastShownComboBox);
+        root.getChildren().remove(LastShownTextFieldNote);
+        root.getChildren().remove(lastShownButton);
+    }
 
 }

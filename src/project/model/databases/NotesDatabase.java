@@ -1,4 +1,4 @@
-package project.model.notes;
+package project.model.databases;
 
 import java.io.IOException;
 import java.nio.file.Files;

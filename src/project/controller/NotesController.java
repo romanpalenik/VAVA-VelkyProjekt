@@ -7,7 +7,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import project.model.notes.NotesDatabase;
+import project.model.databases.NotesDatabase;
 import project.view.notes.NoteView;
 
 import java.io.File;
