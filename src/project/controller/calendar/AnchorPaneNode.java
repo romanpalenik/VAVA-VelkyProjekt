@@ -1,8 +1,8 @@
-package projekt.controler.calendar;
+package project.controller.calendar;
 
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
-import projekt.view.calendar.CalendarViewCreatingThings;
+import project.view.calendar.CalendarViewCreatingThings;
 
 import java.time.LocalDate;
 

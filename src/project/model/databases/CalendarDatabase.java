@@ -1,4 +1,6 @@
-package projekt.model;
+package project.model.databases;
+
+import project.model.calendar.OneCellRecord;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,46 +37,6 @@ public class CalendarDatabase {
 
     }
 
-    public static void setTags(ArrayList<String> tags) {
-        CalendarDatabase.tags = tags;
-    }
-
-
-
-
-    public ArrayList<String> getTags() {
-        return (ArrayList<String>) tags;
-    }
-
-    /**
-     * check if tag is already in array, if is not add it
-     * @param newTag
-     * @return
-     */
-    public boolean addToTags(String newTag)
-    {
-        for(String tag: tags)
-        {
-            if (tag.equals(newTag))
-            {
-                return false;
-            }
-        }
-        tags.add(newTag);
-        return true;
-    }
-
-    public void editTag(String tag, String name)
-    {
-        for(int i=0;i<tags.size(); i++)
-        {
-            if (tags.get(i).equals(tag))
-            {
-                tags.set(i, name);
-            }
-        }
-
-    }
 
     /**
      * set new event to cell record, if has no record create one
@@ -140,6 +102,18 @@ public class CalendarDatabase {
         return true;
     }
 
+    /**
+     * if tag is edited by right clicked, then program has only hex code of color not slovak name
+     * @param newTag
+     * @return
+     */
+    public boolean addToTagsWithHex(String newTag, String color)
+    {
+        tagsWithColor.put(newTag,color);
+        return true;
+    }
+
+
     public Map<String, String> getTagsWithColor()
     {
         return tagsWithColor;
@@ -148,6 +122,11 @@ public class CalendarDatabase {
     public void deleteTag(String tagName)
     {
         tagsWithColor.remove(tagName);
+    }
 
+    public void renameTag(String oldNoteName, String colorToTag,String newNoteName )
+    {
+        deleteTag(oldNoteName);
+        addToTagsWithHex(newNoteName,colorToTag);
     }
 }

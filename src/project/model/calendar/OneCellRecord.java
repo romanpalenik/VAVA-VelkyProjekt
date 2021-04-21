@@ -1,4 +1,4 @@
-package projekt.model;
+package project.model.calendar;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -43,11 +43,21 @@ public class OneCellRecord {
         this.everyEvent.add(eventObject);
     }
 
+    /**
+     * class to hold information of every event
+     */
     public class Event
     {
+        private String eventName;
+        private String tag;
+        private String notes;
+        private String location;
+
         public Event(String eventName, String tag) {
             this.eventName = eventName;
             this.tag = tag;
+            this.location = "";
+            this.notes = "";
         }
 
         public String getEventName() {
@@ -62,13 +72,25 @@ public class OneCellRecord {
             return tag;
         }
 
+        public String getNotes() {
+            return notes;
+        }
+
+        public void setNotes(String notes) {
+            this.notes = notes;
+        }
+
+        public String getLocation() {
+            return location;
+        }
+
+        public void setLocation(String location) {
+            this.location = location;
+        }
+
         public void setTag(String tag) {
             this.tag = tag;
         }
 
-        private String eventName;
-        private String tag;
-
-      
     }
 }

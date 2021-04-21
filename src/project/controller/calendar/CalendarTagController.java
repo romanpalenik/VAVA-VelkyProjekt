@@ -1,19 +1,20 @@
-package projekt.controler.calendar;
+package project.controller.calendar;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import projekt.model.CalendarDatabase;
-import projekt.view.calendar.CalendarViewCreatingThings;
+import project.model.databases.CalendarDatabase;
+import project.view.calendar.CalendarViewCreatingThings;
 
-public class CreateTagController {
+public class CalendarTagController {
 
     @FXML
     private TextField tagName;
@@ -24,23 +25,32 @@ public class CreateTagController {
     @FXML
     private ComboBox choiceColor;
     @FXML
+    private ComboBox choiceTag;
+    @FXML
+    private Label tagsDescription;
+    @FXML
     private Label colorDescription;
     @FXML
-    private ComboBox choiceTag;
+    private Button actionButton;
+    @FXML
+    private Label tagNameDescription;
 
 
-    ObservableList<String> choice = FXCollections.observableArrayList("Upraviť","Pridať nový", "Vymazať");
+    ObservableList<String> choice = FXCollections.observableArrayList("Pridať nový","Upraviť","Vymazať");
     ObservableList<String> colors = FXCollections.observableArrayList("Červená","Zelená","Modrá","Fialová","Žltá");
 
     private CalendarDatabase calendarDatabase;
     private CalendarViewCreatingThings calendarView;
     private CalendarController calendarController;
     private Stage stage;
+
+
     private AnchorPane root;
     private Label firstTag;
+    private TextField newNoteName;
 
-    public CalendarController getCalendarController() {
-        return calendarController;
+    public void setNewNoteName(TextField newNoteName) {
+        this.newNoteName = newNoteName;
     }
 
     public void initialize()
@@ -50,6 +60,7 @@ public class CreateTagController {
         choiceMode.setValue("Pridať nový");
         tagWarning.setVisible(false);
         choiceTag.setVisible(false);
+        tagsDescription.setVisible(false);
 
         EventHandler<ActionEvent> event = new EventHandler<ActionEvent> (){
 
@@ -108,13 +119,14 @@ public class CreateTagController {
 
     }
 
+
     public void addNewTag()
     {
         tagWarning.setVisible(false);
 
         if(calendarDatabase.addToTags(tagName.getText(), (String) choiceColor.getValue()))
         {
-            calendarView.createTags(root,firstTag, calendarDatabase);
+            calendarView.createTags(root,calendarDatabase);
             stage.close();
         }
         else {
@@ -127,14 +139,15 @@ public class CreateTagController {
     public void editTag()
     {
         calendarDatabase.addToTags(tagName.getText(), (String) choiceColor.getValue());
-        calendarView.createTags(root,firstTag, calendarDatabase);
+        calendarView.createTags(root,calendarDatabase);
+        calendarController.updateCalendar(calendarController.getCurrentMonth());
         stage.close();
     }
 
     private void deleteTag()
     {
         calendarDatabase.deleteTag((String) choiceTag.getValue());
-        calendarView.createTags(root,firstTag, calendarDatabase);
+        calendarView.createTags(root,calendarDatabase);
         calendarController.updateCalendar(calendarController.getCurrentMonth());
         stage.close();
     }
@@ -147,19 +160,34 @@ public class CreateTagController {
         String choice = (String) choiceMode.getValue();
         if(choice.equals("Upraviť"))
         {
+            actionButton.setText("Upraviť tag");
+            tagsDescription.setText("Tag na úpravu");
+
+            colorDescription.setVisible(true);
+            tagsDescription.setVisible(true);
             choiceTag.setVisible(true);
+
             ObservableList<String> tags = FXCollections.observableArrayList(calendarDatabase.getTagsWithColor().keySet());
             choiceTag.setItems(tags);
         }
         else if (choice.equals("Pridať nový"))
         {
+            actionButton.setText("Pridať tag");
+
+            colorDescription.setVisible(true);
+            tagsDescription.setVisible(false);
             tagName.setVisible(true);
             choiceColor.setValue(true);
             choiceTag.setVisible(false);
         }
         else if (choice.equals("Vymazať"))
         {
+            actionButton.setText("Vymazať");
+            tagsDescription.setText("Tag na vymazanie");
 
+            tagNameDescription.setVisible(true);
+            tagsDescription.setVisible(false);
+            colorDescription.setVisible(false);
             choiceTag.setVisible(true);
             tagName.setVisible(false);
             choiceColor.setVisible(false);
@@ -167,6 +195,42 @@ public class CreateTagController {
             ObservableList<String> tags = FXCollections.observableArrayList(calendarDatabase.getTagsWithColor().keySet());
             choiceTag.setItems(tags);
         }
+    }
+
+    public void renameNote(Label currentTag) {
+
+        calendarDatabase.renameTag(currentTag.getText(), calendarDatabase.findColorToTag(currentTag.getText()), newNoteName.getText());
+        root.getChildren().remove(newNoteName);
+        calendarView.createTags(root,calendarDatabase);
+    }
+
+    public void deleteNote(Label currentLabel) {
+        calendarDatabase.deleteTag(currentLabel.getText());
+        root.getChildren().remove(newNoteName);
+        calendarView.createTags(root,calendarDatabase);
+        calendarController.updateCalendar(calendarController.getCurrentMonth());
+
+    }
+
+
+    public void setCalendarDatabase(CalendarDatabase calendarDatabase) {
+        this.calendarDatabase = calendarDatabase;
+    }
+
+    public void setCalendarView(CalendarViewCreatingThings calendarView) {
+        this.calendarView = calendarView;
+    }
+
+    public void setCalendarController(CalendarController calendarController) {
+        this.calendarController = calendarController;
+    }
+
+    public void changeColor(Label currentTag, String color)
+    {
+        calendarDatabase.addToTags(currentTag.getText(), color);
+        calendarView.createTags(root,calendarDatabase);
+        calendarController.updateCalendar(calendarController.getCurrentMonth());
+
     }
 
 }

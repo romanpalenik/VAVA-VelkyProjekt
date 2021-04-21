@@ -1,6 +1,6 @@
-package projekt.model;
+package project.model.calendar;
 
-import projekt.controler.calendar.AnchorPaneNode;
+import project.controller.calendar.AnchorPaneNode;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;

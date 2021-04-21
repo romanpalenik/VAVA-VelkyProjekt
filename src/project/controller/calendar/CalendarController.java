@@ -1,4 +1,4 @@
-package projekt.controler.calendar;
+package project.controller.calendar;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,13 +11,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import projekt.model.CalendarDatabase;
-import projekt.view.calendar.CalendarViewCreatingThings;
-
+import project.controller.Main;
+import project.model.databases.CalendarDatabase;
+import project.view.calendar.CalendarViewCreatingThings;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.Year;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -41,24 +40,58 @@ public class CalendarController {
     @FXML
     private Label firstTag;
     @FXML
-    private TextField tagName;
+    private AnchorPane menuFMXL; //this anchor is anchor pane with menu
+    @FXML
+    private Label darkSideWhenMenu;
 
+
+    private boolean isMenuShown = false;
     private Stage stage = new Stage();
     private ArrayList<AnchorPaneNode> allCalendarDays = new ArrayList<>(35);
     private YearMonth currentMonth = YearMonth.now();
-    CalendarViewCreatingThings calendarView = new CalendarViewCreatingThings();
-    CalendarDatabase calendarDatabase = new CalendarDatabase();
+
+    private CalendarViewCreatingThings calendarView = new CalendarViewCreatingThings();
+    private CalendarDatabase calendarDatabase = new CalendarDatabase();
+    private CalendarTagController calendarTagController = new CalendarTagController();
+
+    private TextField newNoteName;
+
+    public void setNewNoteName(TextField newNoteName) {
+        this.newNoteName = newNoteName;
+    }
 
     private Dictionary<Integer, String> monthsDict = new Hashtable<Integer, String>();
 
 
-    public void initialize()
-    {
+    public void initialize() throws IOException {
+
+        darkFilterWhileMenu();
+        darkSideWhenMenu.setVisible(false);
+
+        //Section to set connect all object connected to calendar and tags
         AnchorPaneNode.setRoot(root);
         AnchorPaneNode.setCalendarView(calendarView);
-        calendarView.setCalendarController(this);
+        calendarView.setCalendarController(this, root);
         calendarView.setCalendarDatabase(calendarDatabase);
+        calendarView.setCreateTagController(calendarTagController);
 
+        calendarTagController.setCalendarController(this);
+        calendarTagController.setCalendarDatabase(calendarDatabase);
+        calendarTagController.setCalendarView(calendarView);
+
+        calendarView.setFistTag(firstTag);
+        calendarTagController.initData(calendarDatabase, calendarView, null, root,firstTag, this);
+
+        initCalendar();
+
+        root.setOnMouseClicked(this::removeAllThingsByClicked);
+    }
+
+    /**
+     * call to set up everything connected to calendar
+     */
+    private void initCalendar()
+    {
         updateCalendar(currentMonth);
 
         initMonthDictionary();
@@ -69,9 +102,13 @@ public class CalendarController {
         monthForward.setText(String.valueOf(currentMonth.plusMonths(1)));
         monthBefore.setText(String.valueOf(currentMonth.minusMonths(1)));
 
-        calendarView.createTags(root,firstTag, calendarDatabase);
+        calendarView.createTags(root, calendarDatabase);
+    }
 
-        root.setOnMouseClicked(this::removeLastShownNote);
+    private void removeAllThingsByClicked(MouseEvent mouseEvent) {
+        hideMenu(mouseEvent);
+        removeLastShownNote(mouseEvent);
+        root.getChildren().remove(newNoteName);
 
     }
 
@@ -97,6 +134,7 @@ public class CalendarController {
     public YearMonth getCurrentMonth() {
         return currentMonth;
     }
+
 
     public void changeMonthUp()
     {
@@ -157,9 +195,9 @@ public class CalendarController {
      */
     public void openWindowToAddNewTag() throws IOException {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/projekt/view/createTag.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/project/view/calendar/createTag.fxml"));
         Parent root2 = (Parent) loader.load();
-        CreateTagController controller = loader.getController();
+        CalendarTagController controller = loader.getController();
         controller.initData(calendarDatabase,calendarView, stage,root,firstTag, this);
         Scene scene = new Scene(root2);
         stage.setTitle("Pridat tag");
@@ -167,6 +205,10 @@ public class CalendarController {
         stage.show();
     }
 
+    /**
+     * hide section to create new event if is clicked outside calendar
+     * @param event
+     */
     public void removeLastShownNote(MouseEvent event)
     {
         //if is outside of calendar
@@ -180,7 +222,57 @@ public class CalendarController {
         }
     }
 
+    /**
+     * show menu, if is menu already shown hide it
+     * @throws IOException
+     */
+    public void showMenu() throws IOException {
 
+        if (isMenuShown)
+        {
+            hideMenu(null);
+            return;
+        }
+
+        root.getChildren().add(darkSideWhenMenu);
+        root.getChildren().add(loadFMXLMenu());
+
+        isMenuShown = true;
+        darkSideWhenMenu.setVisible(true);
+
+    }
+
+    private void hideMenu(MouseEvent mouseEvent) {
+
+        root.getChildren().remove(darkSideWhenMenu);
+        isMenuShown = false;
+        try {
+            root.getChildren().remove(menuFMXL);
+            darkSideWhenMenu.setVisible(false);
+        }
+        catch (NullPointerException e)
+        {
+
+        }
+    }
+
+
+    /**
+     * load anchor pane with menu buttons
+     * @return menu
+     */
+    public AnchorPane loadFMXLMenu() throws IOException {
+
+        menuFMXL = FXMLLoader.load(Main.class.getResource("/project/view/mainMenu.fxml"));
+        menuFMXL.setLayoutY(75);
+        return menuFMXL;
+    }
+
+    public Label darkFilterWhileMenu() throws IOException {
+        darkSideWhenMenu = FXMLLoader.load(Main.class.getResource("/project/view/darkFilterWhileMenu.fxml"));
+        darkSideWhenMenu.setLayoutX(174);
+        return darkSideWhenMenu;
+    }
 }
 
 

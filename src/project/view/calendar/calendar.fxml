@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="692.0" prefWidth="996.0" style="-fx-background-color: #383140;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projekt.controler.calendar.CalendarController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="692.0" prefWidth="996.0" style="-fx-background-color: #383140;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.controller.calendar.CalendarController">
    <children>
       <Separator layoutX="172.0" layoutY="-7.0" orientation="VERTICAL" prefHeight="699.0" prefWidth="2.0" />
       <GridPane fx:id="calendar" gridLinesVisible="true" layoutX="209.0" layoutY="167.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="487.0" prefWidth="749.0">
@@ -41,12 +41,18 @@
          <font>
             <Font size="18.0" />
          </font></Label>
-      <Label layoutX="14.0" layoutY="14.0" prefHeight="48.0" prefWidth="147.0" text="Kalendár" textFill="#f1f3f2">
+      <Label layoutX="14.0" layoutY="14.0" prefHeight="48.0" prefWidth="81.0" text="Menu" textFill="#f1f3f2">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="firstTag" layoutX="17.0" layoutY="138.0" text="Tags" textFill="#cac7d7" />
-      <Button fx:id="addTag" layoutX="64.0" layoutY="131.0" mnemonicParsing="false" onAction="#openWindowToAddNewTag" prefHeight="35.0" prefWidth="90.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 15;" text="Pridať tag" />
+      <Label fx:id="firstTag" layoutX="14.0" layoutY="108.0" text="Tags" textFill="#cac7d7" />
+      <Button fx:id="addTag" layoutX="55.0" layoutY="98.0" mnemonicParsing="false" onAction="#openWindowToAddNewTag" prefHeight="35.0" prefWidth="114.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 15;" text="Sprava tagov" />
+      <Button fx:id="menuButton" layoutX="95.0" layoutY="25.0" mnemonicParsing="false" onAction="#showMenu" text="menu" />
+      <Label layoutX="193.0" layoutY="14.0" prefHeight="48.0" prefWidth="213.0" text="Kalendár" textFill="#f1f3f2">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
