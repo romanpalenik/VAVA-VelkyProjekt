@@ -18,9 +18,7 @@ import project.view.calendar.CalendarViewCreatingThings;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Hashtable;
+import java.util.*;
 
 
 public class CalendarController extends AplicationWindow {
@@ -30,18 +28,25 @@ public class CalendarController extends AplicationWindow {
     @FXML
     private GridPane calendar;
     @FXML
+    private Button monthBefore;
+    @FXML
+    private Button monthForward;
+    @FXML
     private Label month;
     @FXML
     private Label year;
     @FXML
-    private Button monthForward;
-    @FXML
-    private Button monthBefore;
-    @FXML
     private Label firstTag;
     @FXML
+    private Button addTag;
+    @FXML
+    private Label titleLbl;
+    @FXML
     private Button menuButton;
+    @FXML
+    private Button languageButton;
 
+    public static String language;
 
     private boolean isMenuShown = false;
     private Stage stage = new Stage();
@@ -83,7 +88,6 @@ public class CalendarController extends AplicationWindow {
         calendarView.createTags(root, calendarDatabase);
         root.setOnMouseClicked(this::removeAllThingsByClicked);
 
-
     }
 
     /**
@@ -93,7 +97,14 @@ public class CalendarController extends AplicationWindow {
     {
         updateCalendar(currentMonth);
 
-        initMonthDictionary();
+        if(languageButton.getText().equals("EN")){
+            initMonthDictionarySK();
+            language = "SK";
+        }else{
+            initMonthDictionaryEN();
+            language = "EN";
+        }
+
         year.setText(String.valueOf(currentMonth.getYear()));
         month.setText(monthsDict.get(currentMonth.getMonthValue()));
 
@@ -113,7 +124,7 @@ public class CalendarController extends AplicationWindow {
     //------------------------------------------------------
     //DICTIONARY NA MESIACE
     //------------------------------------------------------
-    private void initMonthDictionary(){
+    private void initMonthDictionarySK(){
         monthsDict.put(1,"Január");
         monthsDict.put(2,"Február");
         monthsDict.put(3,"Marec");
@@ -124,6 +135,20 @@ public class CalendarController extends AplicationWindow {
         monthsDict.put(8,"August");
         monthsDict.put(9,"September");
         monthsDict.put(10,"Október");
+        monthsDict.put(11,"November");
+        monthsDict.put(12,"December");
+    }
+    private void initMonthDictionaryEN(){
+        monthsDict.put(1,"January");
+        monthsDict.put(2,"February");
+        monthsDict.put(3,"March");
+        monthsDict.put(4,"April");
+        monthsDict.put(5,"May");
+        monthsDict.put(6,"June");
+        monthsDict.put(7,"July");
+        monthsDict.put(8,"August");
+        monthsDict.put(9,"September");
+        monthsDict.put(10,"October");
         monthsDict.put(11,"November");
         monthsDict.put(12,"December");
     }
@@ -219,6 +244,27 @@ public class CalendarController extends AplicationWindow {
             calendarView.removeLastShownNote(root);
         }
     }
+
+    @FXML
+    void changeLanguage() {
+        Locale locale;
+        ResourceBundle bundle;
+        if(languageButton.getText().equals("EN")){
+            locale = new Locale("en");
+            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
+            language = "EN";
+        }
+        else{
+            locale = new Locale("sk");
+            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
+            language = "SK";
+        }
+        titleLbl.setText(bundle.getString("title"));
+        addTag.setText(bundle.getString("tagManagement"));
+        languageButton.setText(bundle.getString("language"));
+        initCalendar();
+    }
+
 
 }
 

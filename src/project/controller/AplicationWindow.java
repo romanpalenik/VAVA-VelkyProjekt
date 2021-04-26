@@ -9,12 +9,25 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import project.controller.calendar.AnchorPaneNode;
+import project.controller.calendar.CalendarController;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class AplicationWindow {
 
+    @FXML
+    private Button calendarBtn;
+    @FXML
+    private Button todoBtn;
+    @FXML
+    private Button linksBtn;
+    @FXML
+    private Button notificationsBtn;
+    @FXML
+    private Button notesBtn;
 
     @FXML
     private AnchorPane root;
@@ -24,6 +37,7 @@ public class AplicationWindow {
     private Button menuButton;
 
     private Label darkSideWhenMenu;
+
 
 
     private boolean isMenuShown = false;
@@ -42,13 +56,14 @@ public class AplicationWindow {
         });
         darkFilterWhileMenu();
         darkSideWhenMenu = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/project/view/darkFilterWhileMenu.fxml")));
-        darkSideWhenMenu.setLayoutX(174);
+//        darkSideWhenMenu.setLayoutX(174);
         darkSideWhenMenu.setVisible(false);
 
         //Section to set connect all object connected to calendar and tags
         AnchorPaneNode.setRoot(root);
 
     }
+
 
 
     /**
@@ -91,15 +106,24 @@ public class AplicationWindow {
      * @return menu
      */
     public AnchorPane loadFMXLMenu() throws IOException {
-
-        menuFMXL = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/project/view/mainMenu.fxml")));
-        menuFMXL.setLayoutY(75);
+        Locale locale;
+        ResourceBundle bundle;
+        if(CalendarController.language.equals("EN")){
+            locale = new Locale("en");
+            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
+        }
+        else{
+            locale = new Locale("sk");
+            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
+        }
+        menuFMXL = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/project/view/mainMenu.fxml")), bundle);
+//        menuFMXL.setLayoutY(75);
         return menuFMXL;
     }
 
     public void darkFilterWhileMenu() throws IOException {
         darkSideWhenMenu = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/project/view/darkFilterWhileMenu.fxml")));
-        darkSideWhenMenu.setLayoutX(174);
+//        darkSideWhenMenu.setLayoutX(174);
     }
 
 }
