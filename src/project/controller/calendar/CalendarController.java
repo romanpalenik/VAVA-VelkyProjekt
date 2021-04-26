@@ -11,7 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import project.controller.Main;
+import project.controller.AplicationWindow;
 import project.model.databases.CalendarDatabase;
 import project.view.calendar.CalendarViewCreatingThings;
 
@@ -23,7 +23,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 
-public class CalendarController {
+public class CalendarController extends AplicationWindow {
 
     @FXML
     private AnchorPane root;
@@ -40,9 +40,7 @@ public class CalendarController {
     @FXML
     private Label firstTag;
     @FXML
-    private AnchorPane menuFMXL; //this anchor is anchor pane with menu
-    @FXML
-    private Label darkSideWhenMenu;
+    private Button menuButton;
 
 
     private boolean isMenuShown = false;
@@ -65,11 +63,10 @@ public class CalendarController {
 
     public void initialize() throws IOException {
 
-        darkFilterWhileMenu();
-        darkSideWhenMenu.setVisible(false);
+        super.start(root, menuButton);
+
 
         //Section to set connect all object connected to calendar and tags
-        AnchorPaneNode.setRoot(root);
         AnchorPaneNode.setCalendarView(calendarView);
         calendarView.setCalendarController(this, root);
         calendarView.setCalendarDatabase(calendarDatabase);
@@ -79,12 +76,14 @@ public class CalendarController {
         calendarTagController.setCalendarDatabase(calendarDatabase);
         calendarTagController.setCalendarView(calendarView);
 
-        calendarView.setFistTag(firstTag);
+        calendarView.setFirstTag(firstTag);
         calendarTagController.initData(calendarDatabase, calendarView, null, root,firstTag, this);
 
         initCalendar();
-
+        calendarView.createTags(root, calendarDatabase);
         root.setOnMouseClicked(this::removeAllThingsByClicked);
+
+
     }
 
     /**
@@ -102,11 +101,10 @@ public class CalendarController {
         monthForward.setText(String.valueOf(currentMonth.plusMonths(1)));
         monthBefore.setText(String.valueOf(currentMonth.minusMonths(1)));
 
-        calendarView.createTags(root, calendarDatabase);
     }
 
     private void removeAllThingsByClicked(MouseEvent mouseEvent) {
-        hideMenu(mouseEvent);
+        super.hideMenu();
         removeLastShownNote(mouseEvent);
         root.getChildren().remove(newNoteName);
 
@@ -191,12 +189,12 @@ public class CalendarController {
 
     /**
      * opens new window when you can edit or create tag
-     * @throws IOException
+     * @throws IOException if fxml is not find
      */
     public void openWindowToAddNewTag() throws IOException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/project/view/calendar/createTag.fxml"));
-        Parent root2 = (Parent) loader.load();
+        Parent root2 = loader.load();
         CalendarTagController controller = loader.getController();
         controller.initData(calendarDatabase,calendarView, stage,root,firstTag, this);
         Scene scene = new Scene(root2);
@@ -222,57 +220,6 @@ public class CalendarController {
         }
     }
 
-    /**
-     * show menu, if is menu already shown hide it
-     * @throws IOException
-     */
-    public void showMenu() throws IOException {
-
-        if (isMenuShown)
-        {
-            hideMenu(null);
-            return;
-        }
-
-        root.getChildren().add(darkSideWhenMenu);
-        root.getChildren().add(loadFMXLMenu());
-
-        isMenuShown = true;
-        darkSideWhenMenu.setVisible(true);
-
-    }
-
-    private void hideMenu(MouseEvent mouseEvent) {
-
-        root.getChildren().remove(darkSideWhenMenu);
-        isMenuShown = false;
-        try {
-            root.getChildren().remove(menuFMXL);
-            darkSideWhenMenu.setVisible(false);
-        }
-        catch (NullPointerException e)
-        {
-
-        }
-    }
-
-
-    /**
-     * load anchor pane with menu buttons
-     * @return menu
-     */
-    public AnchorPane loadFMXLMenu() throws IOException {
-
-        menuFMXL = FXMLLoader.load(Main.class.getResource("/project/view/mainMenu.fxml"));
-        menuFMXL.setLayoutY(75);
-        return menuFMXL;
-    }
-
-    public Label darkFilterWhileMenu() throws IOException {
-        darkSideWhenMenu = FXMLLoader.load(Main.class.getResource("/project/view/darkFilterWhileMenu.fxml"));
-        darkSideWhenMenu.setLayoutX(174);
-        return darkSideWhenMenu;
-    }
 }
 
 

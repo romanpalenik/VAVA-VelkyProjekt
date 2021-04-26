@@ -62,27 +62,21 @@ public class CalendarTagController {
         choiceTag.setVisible(false);
         tagsDescription.setVisible(false);
 
-        EventHandler<ActionEvent> event = new EventHandler<ActionEvent> (){
-
-            public void handle(ActionEvent actionEvent) {
-                try {
-                    switchToEditOrCreateMode();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventHandler<ActionEvent> event = actionEvent -> {
+            try {
+                switchToEditOrCreateMode();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         };
 
         choiceMode.setOnAction(event);
 
-        EventHandler<ActionEvent> event2 = new EventHandler<ActionEvent> (){
-
-            public void handle(ActionEvent actionEvent) {
-                try {
-                    tagName.setText((String) choiceTag.getValue());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventHandler<ActionEvent> event2 = actionEvent -> {
+            try {
+                tagName.setText((String) choiceTag.getValue());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         };
 
@@ -104,17 +98,16 @@ public class CalendarTagController {
     public void choiceEditOrCreate()
     {
         String choice = (String) choiceMode.getValue();
-        if(choice.equals("Upraviť"))
-        {
-            editTag();
-        }
-        else if (choice.equals("Pridať nový"))
-        {
-            addNewTag();
-        }
-        else if (choice.equals("Vymazať"))
-        {
-            deleteTag();
+        switch (choice) {
+            case "Upraviť":
+                editTag();
+                break;
+            case "Pridať nový":
+                addNewTag();
+                break;
+            case "Vymazať":
+                deleteTag();
+                break;
         }
 
     }
@@ -158,42 +151,43 @@ public class CalendarTagController {
 
 
         String choice = (String) choiceMode.getValue();
-        if(choice.equals("Upraviť"))
-        {
-            actionButton.setText("Upraviť tag");
-            tagsDescription.setText("Tag na úpravu");
+        switch (choice) {
+            case "Upraviť": {
+                actionButton.setText("Upraviť tag");
+                tagsDescription.setText("Tag na úpravu");
 
-            colorDescription.setVisible(true);
-            tagsDescription.setVisible(true);
-            choiceTag.setVisible(true);
+                colorDescription.setVisible(true);
+                tagsDescription.setVisible(true);
+                choiceTag.setVisible(true);
 
-            ObservableList<String> tags = FXCollections.observableArrayList(calendarDatabase.getTagsWithColor().keySet());
-            choiceTag.setItems(tags);
-        }
-        else if (choice.equals("Pridať nový"))
-        {
-            actionButton.setText("Pridať tag");
+                ObservableList<String> tags = FXCollections.observableArrayList(calendarDatabase.getTagsWithColor().keySet());
+                choiceTag.setItems(tags);
+                break;
+            }
+            case "Pridať nový":
+                actionButton.setText("Pridať tag");
 
-            colorDescription.setVisible(true);
-            tagsDescription.setVisible(false);
-            tagName.setVisible(true);
-            choiceColor.setValue(true);
-            choiceTag.setVisible(false);
-        }
-        else if (choice.equals("Vymazať"))
-        {
-            actionButton.setText("Vymazať");
-            tagsDescription.setText("Tag na vymazanie");
+                colorDescription.setVisible(true);
+                tagsDescription.setVisible(false);
+                tagName.setVisible(true);
+                choiceColor.setValue(true);
+                choiceTag.setVisible(false);
+                break;
+            case "Vymazať": {
+                actionButton.setText("Vymazať");
+                tagsDescription.setText("Tag na vymazanie");
 
-            tagNameDescription.setVisible(true);
-            tagsDescription.setVisible(false);
-            colorDescription.setVisible(false);
-            choiceTag.setVisible(true);
-            tagName.setVisible(false);
-            choiceColor.setVisible(false);
+                tagNameDescription.setVisible(true);
+                tagsDescription.setVisible(false);
+                colorDescription.setVisible(false);
+                choiceTag.setVisible(true);
+                tagName.setVisible(false);
+                choiceColor.setVisible(false);
 
-            ObservableList<String> tags = FXCollections.observableArrayList(calendarDatabase.getTagsWithColor().keySet());
-            choiceTag.setItems(tags);
+                ObservableList<String> tags = FXCollections.observableArrayList(calendarDatabase.getTagsWithColor().keySet());
+                choiceTag.setItems(tags);
+                break;
+            }
         }
     }
 

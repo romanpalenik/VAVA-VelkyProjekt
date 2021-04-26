@@ -60,14 +60,11 @@ public class EventDetail {
         tagsChoice.setItems(tags);
         deleteOrChangeTag.setItems(choiceDeleteOrEdit);
 
-        EventHandler<ActionEvent> event2 = new EventHandler<ActionEvent> (){
-
-            public void handle(ActionEvent actionEvent) {
-                try {
-                    showTagsOrHide();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventHandler<ActionEvent> event2 = actionEvent -> {
+            try {
+                showTagsOrHide();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         };
         deleteOrChangeTag.setOnAction(event2);
