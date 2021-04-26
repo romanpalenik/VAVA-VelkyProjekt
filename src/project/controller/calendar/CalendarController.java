@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import project.controller.Main;
@@ -27,6 +28,8 @@ public class CalendarController {
 
     @FXML
     private AnchorPane root;
+    @FXML
+    private BorderPane mainRoot;
     @FXML
     private GridPane calendar;
     @FXML
@@ -234,8 +237,8 @@ public class CalendarController {
             return;
         }
 
-        root.getChildren().add(darkSideWhenMenu);
-        root.getChildren().add(loadFMXLMenu());
+        mainRoot.getChildren().add(darkSideWhenMenu);
+        mainRoot.getChildren().add(loadFMXLMenu());
 
         isMenuShown = true;
         darkSideWhenMenu.setVisible(true);
@@ -244,10 +247,10 @@ public class CalendarController {
 
     private void hideMenu(MouseEvent mouseEvent) {
 
-        root.getChildren().remove(darkSideWhenMenu);
+        mainRoot.getChildren().remove(darkSideWhenMenu);
         isMenuShown = false;
         try {
-            root.getChildren().remove(menuFMXL);
+            mainRoot.getChildren().remove(menuFMXL);
             darkSideWhenMenu.setVisible(false);
         }
         catch (NullPointerException e)
@@ -264,7 +267,7 @@ public class CalendarController {
     public AnchorPane loadFMXLMenu() throws IOException {
 
         menuFMXL = FXMLLoader.load(Main.class.getResource("/project/view/mainMenu.fxml"));
-        menuFMXL.setLayoutY(75);
+        menuFMXL.setLayoutY(0);
         return menuFMXL;
     }
 
