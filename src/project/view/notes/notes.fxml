@@ -17,7 +17,7 @@
                 <Font name="System Bold" size="24.0" />
             </font>
         </Label>
-      <Button layoutX="95.0" layoutY="25.0" mnemonicParsing="false" onAction="#showMenu" text="menu" />
+      <Button fx:id="menuButton" layoutX="95.0" layoutY="25.0" mnemonicParsing="false" text="menu" />
       <Label fx:id="circle" layoutX="195.0" layoutY="14.0" prefHeight="48.0" prefWidth="213.0" text="Poznámky" textFill="#f1f3f2">
          <font>
             <Font name="System Bold" size="24.0" />

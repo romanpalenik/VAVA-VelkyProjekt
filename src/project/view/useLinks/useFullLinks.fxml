@@ -15,13 +15,13 @@
                 <Font name="System Bold" size="24.0" />
             </font>
         </Label>
-      <Button layoutX="95.0" layoutY="25.0" mnemonicParsing="false" onAction="#showMenu" text="menu" />
-      <Label fx:id="firstTag" layoutX="195.0" layoutY="14.0" prefHeight="48.0" prefWidth="256.0" text="Užitočné linky" textFill="#f1f3f2">
+      <Button fx:id="menuButton" layoutX="95.0" layoutY="25.0" mnemonicParsing="false" text="menu" />
+      <Label fx:id="firstTag" layoutX="195.0" layoutY="14.0" prefHeight="48.0" prefWidth="245.0" text="Užitočné linky" textFill="#f1f3f2">
          <font>
             <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-      <Button layoutX="26.0" layoutY="106.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="109.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 15;" text="Pridať link" />
-      <Label fx:id="fisrtTag" layoutX="195.0" layoutY="106.0" text="Linky" textFill="WHITE" />
+      <Label fx:id="firstTagForLinkGroups" layoutX="19.0" layoutY="106.0" text="Skupiny linkov" textFill="WHITE" />
+      <Button fx:id="addButton" layoutX="185.0" layoutY="93.0" mnemonicParsing="false" onAction="#addToLinks" text="Pridat" />
     </children>
 </AnchorPane>
