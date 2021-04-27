@@ -7,13 +7,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import project.controller.calendar.CalendarController;
 import project.model.databases.NotesDatabase;
 import project.view.notes.NoteView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
-public class NotesController {
+public class NotesController extends AplicationWindow{
 
     @FXML
     private AnchorPane root;
@@ -33,87 +37,45 @@ public class NotesController {
     private Label circle;
     @FXML
     private Label menu;
+    @FXML
+    private Button menuButton;
+    @FXML
+    private Button languageButton;
+    @FXML
+    private Button saveBtn;
+    @FXML
+    private Button importBtn;
+    @FXML
+    private Button createNoteBtn;
+    @FXML
+    private Label noteNameLbl;
 
 
     private boolean isMenuShown = false;
     private NotesDatabase notesDatabase = new NotesDatabase();
     private NoteView notesView;
 
+    private TextField newNoteName;
+
     public void setNewNoteName(TextField newNoteName) {
         this.newNoteName = newNoteName;
     }
 
-    private TextField newNoteName;
-
     public void initialize() throws IOException {
 
+        super.start(root,menuButton);
         notesView = new NoteView(this,root);
-        darkFilterWhileMenu();
-        darkSideWhenMenu.setVisible(false);
-
         root.setOnMouseClicked(this::removeAllThingsByClicked);
         notesView.createTags(root,firstNote, notesDatabase);
 
-
     }
 
+
     private void removeAllThingsByClicked(MouseEvent mouseEvent) {
-        root.getChildren().remove(menuFMXL);
-        darkSideWhenMenu.setVisible(false);
+        super.hideMenu(mouseEvent);
         if(newNoteName != null)root.getChildren().remove(newNoteName);
     }
 
-    /**
-     * show menu, if is menu already shown hide it
-     * @throws IOException
-     */
-    public void showMenu() throws IOException {
-
-        if (isMenuShown)
-        {
-            hideMenu(null);
-            return;
-        }
-
-        root.getChildren().add(darkSideWhenMenu);
-        root.getChildren().add(loadFMXLMenu());
-
-        isMenuShown = true;
-        darkSideWhenMenu.setVisible(true);
-
-    }
-
-    private void hideMenu(MouseEvent mouseEvent) {
-
-        root.getChildren().remove(darkSideWhenMenu);
-        isMenuShown = false;
-        try {
-            root.getChildren().remove(menuFMXL);
-            darkSideWhenMenu.setVisible(false);
-        }
-        catch (NullPointerException e)
-        {
-
-        }
-    }
-
-
-    /**
-     * load anchor pane with menu buttons
-     * @return menu
-     */
-    public AnchorPane loadFMXLMenu() throws IOException {
-
-        menuFMXL = FXMLLoader.load(Main.class.getResource("/project/view/mainMenu.fxml"));
-        menuFMXL.setLayoutY(75);
-        return menuFMXL;
-    }
-
-    public Label darkFilterWhileMenu() throws IOException {
-        darkSideWhenMenu = FXMLLoader.load(Main.class.getResource("/project/view/darkFilterWhileMenu.fxml"));
-        darkSideWhenMenu.setLayoutX(174);
-        return darkSideWhenMenu;
-    }
 
     public void onClick_btn_Save() throws IOException {
         Stage stage = new Stage();
@@ -175,6 +137,28 @@ public class NotesController {
         root.getChildren().remove(newNoteName);
         notesView.createTags(root,firstNote, notesDatabase);
 
+    }
+
+    @FXML
+    void changeLanguage() {
+        Locale locale;
+        ResourceBundle bundle;
+        if(languageButton.getText().equals("EN")){
+            locale = new Locale("en");
+            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
+            CalendarController.language = "EN";
+        }
+        else{
+            locale = new Locale("sk");
+            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
+            CalendarController.language = "SK";
+        }
+        languageButton.setText(bundle.getString("language"));
+        circle.setText(bundle.getString("notesTitle"));
+        saveBtn.setText(bundle.getString("saveNote"));
+        importBtn.setText(bundle.getString("importNotes"));
+        noteNameLbl.setText(bundle.getString("noteName"));
+        createNoteBtn.setText(bundle.getString("createNote"));
     }
 
 }

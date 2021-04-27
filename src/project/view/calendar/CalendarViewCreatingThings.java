@@ -2,26 +2,23 @@ package project.view.calendar;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
-import javafx.stage.Stage;
-import project.controller.calendar.AnchorPaneNode;
-import project.controller.calendar.CalendarController;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import project.controller.calendar.AnchorPaneNode;
+import project.controller.calendar.CalendarController;
 import project.controller.calendar.CalendarTagController;
 import project.controller.calendar.EventDetail;
-import project.model.databases.CalendarDatabase;
 import project.model.calendar.OneCellRecord;
+import project.model.databases.CalendarDatabase;
 import project.model.databases.sizesAndPosition.CalendarSizesAndPositonOfObjects;
 
 import java.io.IOException;
@@ -41,7 +38,7 @@ public class CalendarViewCreatingThings {
     private CalendarSizesAndPositonOfObjects calendarSizes = new CalendarSizesAndPositonOfObjects();
 
     private AnchorPane root;
-    private Label fistTag;
+    private Label firstTag;
 
     private boolean canAddNote = false;
 
@@ -79,8 +76,8 @@ public class CalendarViewCreatingThings {
         contextMenu.getItems().addAll(item1, item2, item3, parentMenu);
     }
 
-    public void setFistTag(Label fistTag) {
-        this.fistTag = fistTag;
+    public void setFirstTag(Label firstTag) {
+        this.firstTag = firstTag;
     }
 
     public void setCreateTagController(CalendarTagController calendarTagController) {
@@ -108,8 +105,8 @@ public class CalendarViewCreatingThings {
             root.getChildren().remove(label);
         }
 
-        double yPosition = fistTag.getLayoutY() + 70;
-        double xPosition = fistTag.getLayoutX();
+        double yPosition = firstTag.getLayoutY() + 70;
+        double xPosition = firstTag.getLayoutX();
         tagsWithColor = calendarDatabase.getTagsWithColor();
 
         for ( Map.Entry<String, String> entry : tagsWithColor.entrySet() ) {
@@ -125,7 +122,7 @@ public class CalendarViewCreatingThings {
             tag.setPadding(new Insets(3 ,5 ,3,5));
 
             tag.setOnMouseClicked(event -> {
-             if (event.getButton() == MouseButton.SECONDARY)
+                if (event.getButton() == MouseButton.SECONDARY)
                 {
                     setContextMenu(tag);
                     contextMenu.show(tag, event.getScreenX(), event.getScreenY());
@@ -391,14 +388,14 @@ public class CalendarViewCreatingThings {
     private void changeButtonColor(TextField textFieldNote, Button addButton) {
 
         if(!textFieldNote.getText().equals(""))
-            {
-                addButton.setStyle("-fx-background-color:  #f4ed71");
-                canAddNote = true;
-            }
+        {
+            addButton.setStyle("-fx-background-color:  #f4ed71");
+            canAddNote = true;
+        }
         else
-            {
-                addButton.setStyle("-fx-background-color: #d0d0d0");
-            }
+        {
+            addButton.setStyle("-fx-background-color: #d0d0d0");
+        }
     }
 
     public void showEditEvent(OneCellRecord event, OneCellRecord.Event eventName, CalendarController calendarController) throws IOException {
@@ -416,86 +413,39 @@ public class CalendarViewCreatingThings {
     public void setContextMenu(Label currentLabel)
     {
 
-        item1.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                //create textfield to rename event
-                newNoteName = new TextField();
-                newNoteName.setPrefSize(calendarSizes.getTextFieldWidth(),calendarSizes.getTextFieldHeight());
-                newNoteName.setText(currentLabel.getText());
-                newNoteName.setLayoutX(currentLabel.getTranslateX()-5);
-                newNoteName.setLayoutY(currentLabel.getTranslateY());
-                root.getChildren().add(newNoteName);
-                calendarTagController.setNewNoteName(newNoteName);
-                calendarController.setNewNoteName(newNoteName);
+        item1.setOnAction(event -> {
+            //create textfield to rename event
+            newNoteName = new TextField();
+            newNoteName.setPrefSize(calendarSizes.getTextFieldWidth(), calendarSizes.getTextFieldHeight());
+            newNoteName.setText(currentLabel.getText());
+            newNoteName.setLayoutX(currentLabel.getTranslateX() - 5);
+            newNoteName.setLayoutY(currentLabel.getTranslateY());
+            root.getChildren().add(newNoteName);
+            calendarTagController.setNewNoteName(newNoteName);
+            calendarController.setNewNoteName(newNoteName);
 
-                newNoteName.setOnKeyPressed(new EventHandler<KeyEvent>() {
-
-                    @Override
-                    public void handle(KeyEvent event) {
-                        if(event.getCode().equals(KeyCode.ENTER)) {
-                            calendarTagController.renameNote(currentLabel);
-                        }
-                    }
-                });
-            }
-        });
-        item2.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                calendarTagController.deleteNote(currentLabel);
-            }
-        });
-
-        item3.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    calendarController.openWindowToAddNewTag();
-                } catch (IOException e) {
-                    e.printStackTrace();
+            newNoteName.setOnKeyPressed(event1 -> {
+                if (event1.getCode().equals(KeyCode.ENTER)) {
+                    calendarTagController.renameNote(currentLabel);
                 }
+            });
+        });
+        item2.setOnAction(event -> calendarTagController.deleteNote(currentLabel));
+
+        item3.setOnAction(event -> {
+            try {
+                calendarController.openWindowToAddNewTag();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
 
 //        childMenuItem1 childMenuItem2,childMenuItem3,childMenuItem4,childMenuItem5,childMenuItem6
-        blueColor.setOnAction(new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent event) {
-            calendarTagController.changeColor(currentLabel,"Modrá");
-        }
-
-    });
-        purpleColor.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                calendarTagController.changeColor(currentLabel,"Fialová");
-            }
-
-        });
-        yellowColor.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                calendarTagController.changeColor(currentLabel, "Žltá");
-            }
-
-        });
-        redColor.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                calendarTagController.changeColor(currentLabel, "Červená");
-            }
-
-        });
-        greenColor.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                calendarTagController.changeColor(currentLabel, "Zelená");
-            }
-
-        });
+        blueColor.setOnAction(event -> calendarTagController.changeColor(currentLabel,"Modrá"));
+        purpleColor.setOnAction(event -> calendarTagController.changeColor(currentLabel, "Fialová"));
+        yellowColor.setOnAction(event -> calendarTagController.changeColor(currentLabel, "Žltá"));
+        redColor.setOnAction(event -> calendarTagController.changeColor(currentLabel, "Červená"));
+        greenColor.setOnAction(event -> calendarTagController.changeColor(currentLabel, "Zelená"));
     }
 
     public void removeLastShownNote(AnchorPane root) {

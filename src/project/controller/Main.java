@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class Main extends Application{
 
@@ -15,16 +17,14 @@ public class Main extends Application{
 
 
     public static void main(String[] args) {
-
         launch(args);
 
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Skola");
+        this.primaryStage.setTitle("Škola");
         showMainView();
     }
 
@@ -33,7 +33,9 @@ public class Main extends Application{
      * @throws IOException
      */
     public static void showMainView() throws IOException {
-        Parent root = FXMLLoader.load(Main.class.getResource("/project/view/calendar/calendar.fxml"));
+        Locale locale = new Locale("sk");
+        ResourceBundle bundle = ResourceBundle.getBundle("/project/Bundle", locale);
+        Parent root = FXMLLoader.load(Main.class.getResource("/project/view/calendar/calendar.fxml"), bundle);
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();

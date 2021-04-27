@@ -11,39 +11,42 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import project.controller.Main;
+import project.controller.AplicationWindow;
 import project.model.databases.CalendarDatabase;
 import project.view.calendar.CalendarViewCreatingThings;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Hashtable;
+import java.util.*;
 
 
-public class CalendarController {
+public class CalendarController extends AplicationWindow {
 
     @FXML
     private AnchorPane root;
     @FXML
     private GridPane calendar;
     @FXML
+    private Button monthBefore;
+    @FXML
+    private Button monthForward;
+    @FXML
     private Label month;
     @FXML
     private Label year;
     @FXML
-    private Button monthForward;
-    @FXML
-    private Button monthBefore;
-    @FXML
     private Label firstTag;
     @FXML
-    private AnchorPane menuFMXL; //this anchor is anchor pane with menu
+    private Button addTag;
     @FXML
-    private Label darkSideWhenMenu;
+    private Label titleLbl;
+    @FXML
+    private Button menuButton;
+    @FXML
+    private Button languageButton;
 
+    public static String language;
 
     private boolean isMenuShown = false;
     private Stage stage = new Stage();
@@ -65,11 +68,10 @@ public class CalendarController {
 
     public void initialize() throws IOException {
 
-        darkFilterWhileMenu();
-        darkSideWhenMenu.setVisible(false);
+        super.start(root, menuButton);
+
 
         //Section to set connect all object connected to calendar and tags
-        AnchorPaneNode.setRoot(root);
         AnchorPaneNode.setCalendarView(calendarView);
         calendarView.setCalendarController(this, root);
         calendarView.setCalendarDatabase(calendarDatabase);
@@ -79,12 +81,13 @@ public class CalendarController {
         calendarTagController.setCalendarDatabase(calendarDatabase);
         calendarTagController.setCalendarView(calendarView);
 
-        calendarView.setFistTag(firstTag);
+        calendarView.setFirstTag(firstTag);
         calendarTagController.initData(calendarDatabase, calendarView, null, root,firstTag, this);
 
         initCalendar();
-
+        calendarView.createTags(root, calendarDatabase);
         root.setOnMouseClicked(this::removeAllThingsByClicked);
+
     }
 
     /**
@@ -94,7 +97,14 @@ public class CalendarController {
     {
         updateCalendar(currentMonth);
 
-        initMonthDictionary();
+        if(languageButton.getText().equals("EN")){
+            initMonthDictionarySK();
+            language = "SK";
+        }else{
+            initMonthDictionaryEN();
+            language = "EN";
+        }
+
         year.setText(String.valueOf(currentMonth.getYear()));
         month.setText(monthsDict.get(currentMonth.getMonthValue()));
 
@@ -102,11 +112,10 @@ public class CalendarController {
         monthForward.setText(String.valueOf(currentMonth.plusMonths(1)));
         monthBefore.setText(String.valueOf(currentMonth.minusMonths(1)));
 
-        calendarView.createTags(root, calendarDatabase);
     }
 
     private void removeAllThingsByClicked(MouseEvent mouseEvent) {
-        hideMenu(mouseEvent);
+        super.hideMenu(mouseEvent);
         removeLastShownNote(mouseEvent);
         root.getChildren().remove(newNoteName);
 
@@ -115,7 +124,7 @@ public class CalendarController {
     //------------------------------------------------------
     //DICTIONARY NA MESIACE
     //------------------------------------------------------
-    private void initMonthDictionary(){
+    private void initMonthDictionarySK(){
         monthsDict.put(1,"Január");
         monthsDict.put(2,"Február");
         monthsDict.put(3,"Marec");
@@ -126,6 +135,20 @@ public class CalendarController {
         monthsDict.put(8,"August");
         monthsDict.put(9,"September");
         monthsDict.put(10,"Október");
+        monthsDict.put(11,"November");
+        monthsDict.put(12,"December");
+    }
+    private void initMonthDictionaryEN(){
+        monthsDict.put(1,"January");
+        monthsDict.put(2,"February");
+        monthsDict.put(3,"March");
+        monthsDict.put(4,"April");
+        monthsDict.put(5,"May");
+        monthsDict.put(6,"June");
+        monthsDict.put(7,"July");
+        monthsDict.put(8,"August");
+        monthsDict.put(9,"September");
+        monthsDict.put(10,"October");
         monthsDict.put(11,"November");
         monthsDict.put(12,"December");
     }
@@ -191,12 +214,12 @@ public class CalendarController {
 
     /**
      * opens new window when you can edit or create tag
-     * @throws IOException
+     * @throws IOException if fxml is not find
      */
     public void openWindowToAddNewTag() throws IOException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/project/view/calendar/createTag.fxml"));
-        Parent root2 = (Parent) loader.load();
+        Parent root2 = loader.load();
         CalendarTagController controller = loader.getController();
         controller.initData(calendarDatabase,calendarView, stage,root,firstTag, this);
         Scene scene = new Scene(root2);
@@ -222,57 +245,27 @@ public class CalendarController {
         }
     }
 
-    /**
-     * show menu, if is menu already shown hide it
-     * @throws IOException
-     */
-    public void showMenu() throws IOException {
-
-        if (isMenuShown)
-        {
-            hideMenu(null);
-            return;
+    @FXML
+    void changeLanguage() {
+        Locale locale;
+        ResourceBundle bundle;
+        if(languageButton.getText().equals("EN")){
+            locale = new Locale("en");
+            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
+            language = "EN";
         }
-
-        root.getChildren().add(darkSideWhenMenu);
-        root.getChildren().add(loadFMXLMenu());
-
-        isMenuShown = true;
-        darkSideWhenMenu.setVisible(true);
-
-    }
-
-    private void hideMenu(MouseEvent mouseEvent) {
-
-        root.getChildren().remove(darkSideWhenMenu);
-        isMenuShown = false;
-        try {
-            root.getChildren().remove(menuFMXL);
-            darkSideWhenMenu.setVisible(false);
+        else{
+            locale = new Locale("sk");
+            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
+            language = "SK";
         }
-        catch (NullPointerException e)
-        {
-
-        }
+        titleLbl.setText(bundle.getString("calendarTitle"));
+        addTag.setText(bundle.getString("tagManagement"));
+        languageButton.setText(bundle.getString("language"));
+        initCalendar();
     }
 
 
-    /**
-     * load anchor pane with menu buttons
-     * @return menu
-     */
-    public AnchorPane loadFMXLMenu() throws IOException {
-
-        menuFMXL = FXMLLoader.load(Main.class.getResource("/project/view/mainMenu.fxml"));
-        menuFMXL.setLayoutY(75);
-        return menuFMXL;
-    }
-
-    public Label darkFilterWhileMenu() throws IOException {
-        darkSideWhenMenu = FXMLLoader.load(Main.class.getResource("/project/view/darkFilterWhileMenu.fxml"));
-        darkSideWhenMenu.setLayoutX(174);
-        return darkSideWhenMenu;
-    }
 }
 
 
