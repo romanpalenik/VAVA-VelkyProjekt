@@ -17,7 +17,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class NotesController extends AplicationWindow{
+public class NotesController extends AplicationWindow implements Internationalization{
 
     @FXML
     private AnchorPane root;
@@ -140,19 +140,14 @@ public class NotesController extends AplicationWindow{
     }
 
     @FXML
-    void changeLanguage() {
-        Locale locale;
-        ResourceBundle bundle;
+    void translate() {
         if(languageButton.getText().equals("EN")){
-            locale = new Locale("en");
-            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
             CalendarController.language = "EN";
         }
         else{
-            locale = new Locale("sk");
-            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
             CalendarController.language = "SK";
         }
+        ResourceBundle bundle = this.changeLanguage();
         languageButton.setText(bundle.getString("language"));
         circle.setText(bundle.getString("notesTitle"));
         saveBtn.setText(bundle.getString("saveNote"));

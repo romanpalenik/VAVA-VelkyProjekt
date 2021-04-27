@@ -9,26 +9,26 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="692.0" prefWidth="996.0" style="-fx-background-color: #383140;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.controller.NotesController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="692.0" prefWidth="1050.0" style="-fx-background-color: #383140;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.controller.NotesController">
     <children>
-        <Separator layoutX="172.0" layoutY="-7.0" orientation="VERTICAL" prefHeight="699.0" prefWidth="2.0" />
-        <Separator layoutY="72.0" prefHeight="2.0" prefWidth="996.0" style="-fx-background-color: #f1f3f2;" />
-      <Label fx:id="circle" layoutX="195.0" layoutY="14.0" prefHeight="48.0" prefWidth="245.0" text="%notesTitle" textFill="#f1f3f2" AnchorPane.leftAnchor="195.0">
+        <Separator layoutX="172.0" layoutY="-7.0" orientation="VERTICAL" prefHeight="699.0" prefWidth="2.0" AnchorPane.leftAnchor="225.0" />
+        <Separator layoutY="72.0" prefHeight="2.0" prefWidth="1050.0" style="-fx-background-color: #f1f3f2;" />
+      <Label fx:id="circle" layoutX="195.0" layoutY="14.0" prefHeight="48.0" prefWidth="245.0" text="%notesTitle" textFill="#f1f3f2" AnchorPane.leftAnchor="248.0">
          <font>
             <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-      <Button fx:id="createNoteBtn" layoutX="5.0" layoutY="204.0" mnemonicParsing="false" onAction="#createNewNote" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 20;" text="%createNote" AnchorPane.leftAnchor="10.0" />
+      <Button fx:id="createNoteBtn" layoutX="16.0" layoutY="206.0" mnemonicParsing="false" onAction="#createNewNote" prefHeight="31.0" prefWidth="190.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 20;" text="%createNote" AnchorPane.leftAnchor="16.0" />
       <TextArea fx:id="note" layoutX="185.0" layoutY="156.0" prefHeight="510.0" prefWidth="782.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
-      <Separator layoutY="115.0" prefHeight="3.0" prefWidth="1002.0" />
-      <Button fx:id="importBtn" layoutX="10.0" layoutY="79.0" mnemonicParsing="false" onAction="#onClick_btn_Save" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 20;" text="%importNotes" />
-      <Button fx:id="saveBtn" layoutX="185.0" layoutY="79.0" mnemonicParsing="false" onAction="#saveNote" prefHeight="31.0" prefWidth="90.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 20;" text="%saveNote" />
+      <Separator layoutY="115.0" prefHeight="3.0" prefWidth="1050.0" />
+      <Button fx:id="importBtn" layoutX="16.0" layoutY="79.0" mnemonicParsing="false" onAction="#onClick_btn_Save" prefHeight="31.0" prefWidth="190.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 20;" text="%importNotes" />
+      <Button fx:id="saveBtn" layoutX="940.0" layoutY="79.0" mnemonicParsing="false" onAction="#saveNote" prefHeight="31.0" prefWidth="90.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 20;" text="%saveNote" AnchorPane.leftAnchor="940.0" />
       <Label fx:id="nameOfNotes" layoutX="309.0" layoutY="132.0" textFill="WHITE" />
-      <TextField fx:id="nameOfNewNote" layoutX="10.0" layoutY="164.0" prefHeight="26.0" prefWidth="152.0" AnchorPane.leftAnchor="10.0" />
-      <Separator layoutX="-25.0" layoutY="245.0" prefWidth="200.0" />
-      <Label fx:id="firstNote" layoutX="5.0" layoutY="259.0" prefHeight="21.0" prefWidth="161.0" text="%dajakyTag" textFill="WHITE" />
-      <Label fx:id="noteNameLbl" layoutX="10.0" layoutY="132.0" text="%noteName" textFill="WHITE" />
-      <Label layoutX="195.0" layoutY="132.0" text="%notes" textFill="WHITE" />
+      <TextField fx:id="nameOfNewNote" layoutX="11.0" layoutY="164.0" prefHeight="26.0" prefWidth="200.0" AnchorPane.leftAnchor="11.0" />
+      <Separator layoutX="-25.0" layoutY="245.0" prefWidth="225.0" AnchorPane.leftAnchor="0.0" />
+      <Label fx:id="firstNote" layoutX="5.0" layoutY="259.0" prefHeight="21.0" prefWidth="200.0" text="%dajakyTag" textFill="WHITE" AnchorPane.leftAnchor="10.0" />
+      <Label fx:id="noteNameLbl" layoutX="10.0" layoutY="132.0" prefHeight="21.0" prefWidth="200.0" text="%noteName" textFill="WHITE" AnchorPane.leftAnchor="10.0" />
+      <Label layoutX="195.0" layoutY="132.0" text="%notes" textFill="WHITE" AnchorPane.leftAnchor="248.0" />
       <Button fx:id="menuButton" layoutX="38.0" layoutY="32.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="43.0" style="-fx-background-color: transparent; -fx-padding: 0;" text="≡" textFill="WHITE" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="0.0">
          <font>
             <Font name="System Bold" size="45.0" />
@@ -37,7 +37,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="languageButton" layoutX="972.0" layoutY="49.0" mnemonicParsing="false" onAction="#changeLanguage" prefWidth="55.0" style="-fx-background-color: transparent;" text="%language" textFill="WHITE" underline="true" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="18.0">
+      <Button fx:id="languageButton" layoutX="972.0" layoutY="49.0" mnemonicParsing="false" onAction="#translate" prefWidth="55.0" style="-fx-background-color: transparent;" text="%language" textFill="WHITE" underline="true" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="18.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -45,5 +45,10 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <Label layoutX="68.0" layoutY="20.0" prefHeight="53.0" text="Menu" textFill="WHITE" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="10.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>
