@@ -10,37 +10,17 @@ public class LinkDatabase {
     private Map<String, String> linksWithNames = new HashMap<>();
 
     public LinkDatabase() {
-        addToLinks("youtube","https://www.youtube.com/watch?v=Keooxe5x6Ts" );
         LinkGroup linkGroup = new LinkGroup();
         linkGroup.addToLinks("Ed", "https://www.youtube.com/watch?v=2fngvQS_PmQ");
         linkGroups.put("Vseobecne",linkGroup);
     }
 
-    public void addToLinks(String linkName, String link)
+    public void addGroupLink(String linkName)
     {
-        linksWithNames.put(linkName, link);
+        LinkGroup linkGroup = new LinkGroup();
+        linkGroups.put(linkName,linkGroup);
     }
 
-    public Map<String, String> getLinksWithNames()
-    {
-        return linksWithNames;
-    }
-
-    public String findLinkToName(String linkName)
-    {
-        return linksWithNames.get(linkName);
-    }
-
-    public void deleteTag(String tagName)
-    {
-        linksWithNames.remove(tagName);
-    }
-
-    public void renameTag(String oldNoteName,String newNoteName, String link )
-    {
-        deleteTag(oldNoteName);
-        addToLinks(newNoteName,link);
-    }
 
     private Map<String, LinkGroup> linkGroups = new HashMap<>();
 
