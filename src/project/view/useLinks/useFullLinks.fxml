@@ -40,7 +40,10 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="addButton" layoutX="194.0" layoutY="93.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="109.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 15;" text="%addLink" AnchorPane.leftAnchor="248.0" />
+      <Button fx:id="addButton" layoutX="194.0" layoutY="93.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="109.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 15;" text="%addLink" AnchorPane.leftAnchor="248.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Label layoutX="68.0" layoutY="20.0" prefHeight="53.0" text="Menu" textFill="WHITE" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="10.0">
          <font>
             <Font size="36.0" />

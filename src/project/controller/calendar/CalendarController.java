@@ -218,13 +218,13 @@ public class CalendarController extends AplicationWindow implements Internationa
      * @throws IOException if fxml is not find
      */
     public void openWindowToAddNewTag() throws IOException {
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/project/view/calendar/createTag.fxml"));
+        ResourceBundle bundle = this.changeLanguage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/project/view/calendar/createTag.fxml"), bundle);
         Parent root2 = loader.load();
         CalendarTagController controller = loader.getController();
         controller.initData(calendarDatabase,calendarView, stage,root,firstTag, this);
         Scene scene = new Scene(root2);
-        stage.setTitle("Pridat tag");
+        stage.setTitle("Pridať tag");
         stage.setScene(scene);
         stage.show();
     }

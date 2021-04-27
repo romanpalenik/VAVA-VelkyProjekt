@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import project.controller.UseFullLinksController;
+import project.controller.calendar.CalendarController;
 import project.model.LinkGroup;
 import project.model.databases.LinkDatabase;
 import project.model.databases.sizesAndPosition.CalendarSizesAndPositonOfObjects;
@@ -301,16 +302,20 @@ public class UseFullLinksView {
                 label.setLayoutY(label.getLayoutY() + 70);
             }
             newNoteName = new TextField();
-            newNoteName.setPromptText("nazov linku");
             newNoteName.setLayoutX(addButton.getLayoutX());
-            newNoteName.setLayoutY(addButton.getLayoutY() + 40);
-
+            newNoteName.setLayoutY(addButton.getLayoutY() + 50);
+            if(CalendarController.language.equals("SK")){
+                newNoteName.setPromptText("názov linku");
+            }
+            else{
+                newNoteName.setPromptText("link name");
+            }
             root.getChildren().add(newNoteName);
 
             newLink = new TextField();
             newLink.setPromptText("link");
             newLink.setLayoutX(addButton.getLayoutX() + 180);
-            newLink.setLayoutY(addButton.getLayoutY() + 40);
+            newLink.setLayoutY(addButton.getLayoutY() + 50);
             root.getChildren().add(newLink);
 
             separator1 = new Separator();

@@ -14,6 +14,9 @@ import javafx.stage.Stage;
 import project.model.databases.CalendarDatabase;
 import project.view.calendar.CalendarViewCreatingThings;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 public class CalendarTagController {
 
     @FXML
@@ -36,8 +39,10 @@ public class CalendarTagController {
     private Label tagNameDescription;
 
 
-    ObservableList<String> choice = FXCollections.observableArrayList("Pridať nový","Upraviť","Vymazať");
-    ObservableList<String> colors = FXCollections.observableArrayList("Červená","Zelená","Modrá","Fialová","Žltá");
+    ObservableList<String> choiceSK = FXCollections.observableArrayList("Pridať nový","Upraviť","Vymazať");
+    ObservableList<String> colorsSK = FXCollections.observableArrayList("Červená","Zelená","Modrá","Fialová","Žltá");
+    ObservableList<String> choiceEN = FXCollections.observableArrayList("Add new","Edit","Delete");
+    ObservableList<String> colorsEN = FXCollections.observableArrayList("Red","Green","Blue","Purple","Yellow");
 
     private CalendarDatabase calendarDatabase;
     private CalendarViewCreatingThings calendarView;
@@ -55,9 +60,16 @@ public class CalendarTagController {
 
     public void initialize()
     {
-        choiceColor.setItems(colors);
-        choiceMode.setItems(choice);
-        choiceMode.setValue("Pridať nový");
+        if(CalendarController.language.equals("SK")){
+            choiceColor.setItems(colorsSK);
+            choiceMode.setItems(choiceSK);
+            choiceMode.setValue("Pridať nový");
+        }
+        else{
+            choiceColor.setItems(colorsEN);
+            choiceMode.setItems(choiceEN);
+            choiceMode.setValue("Add new");
+        }
         tagWarning.setVisible(false);
         choiceTag.setVisible(false);
         tagsDescription.setVisible(false);
@@ -81,10 +93,8 @@ public class CalendarTagController {
         };
 
         choiceTag.setOnAction(event2);
-
-
-
     }
+
     public void initData(CalendarDatabase calendarDatabase, CalendarViewCreatingThings calendarView, Stage stage, AnchorPane root,
                          Label firstTag, CalendarController calendarController) {
         this.calendarDatabase = calendarDatabase;
@@ -100,12 +110,15 @@ public class CalendarTagController {
         String choice = (String) choiceMode.getValue();
         switch (choice) {
             case "Upraviť":
+            case "Edit":
                 editTag();
                 break;
             case "Pridať nový":
+            case "Add new":
                 addNewTag();
                 break;
             case "Vymazať":
+            case "Delete":
                 deleteTag();
                 break;
         }
@@ -113,24 +126,19 @@ public class CalendarTagController {
     }
 
 
-    public void addNewTag()
-    {
+    public void addNewTag(){
         tagWarning.setVisible(false);
 
-        if(calendarDatabase.addToTags(tagName.getText(), (String) choiceColor.getValue()))
-        {
+        if(calendarDatabase.addToTags(tagName.getText(), (String) choiceColor.getValue())) {
             calendarView.createTags(root,calendarDatabase);
             stage.close();
         }
         else {
-            tagWarning.setText("Tag uz existuje");
             tagWarning.setVisible(true);
-            }
-
+        }
     }
 
-    public void editTag()
-    {
+    public void editTag(){
         calendarDatabase.addToTags(tagName.getText(), (String) choiceColor.getValue());
         calendarView.createTags(root,calendarDatabase);
         calendarController.updateCalendar(calendarController.getCurrentMonth());
@@ -146,53 +154,68 @@ public class CalendarTagController {
     }
 
 
-    public void switchToEditOrCreateMode()
-    {
-
-
+    public void switchToEditOrCreateMode() {
         String choice = (String) choiceMode.getValue();
         switch (choice) {
-            case "Upraviť": {
-                actionButton.setText("Upraviť tag");
-                tagsDescription.setText("Tag na úpravu");
-
+            case "Upraviť":
+            case "Edit":
+                if(CalendarController.language.equals("SK")){
+                    actionButton.setText("Upraviť tag");
+                    tagsDescription.setText("Tag na úpravu");
+                }
+                else{
+                    actionButton.setText("Edit tag");
+                    tagsDescription.setText("Edit Tag");
+                }
                 colorDescription.setVisible(true);
                 tagsDescription.setVisible(true);
                 choiceTag.setVisible(true);
+                choiceColor.setVisible(true);
+                tagName.setVisible(true);
+                tagNameDescription.setVisible(true);
 
                 ObservableList<String> tags = FXCollections.observableArrayList(calendarDatabase.getTagsWithColor().keySet());
                 choiceTag.setItems(tags);
                 break;
-            }
             case "Pridať nový":
-                actionButton.setText("Pridať tag");
-
+            case "Add new":
+                if(CalendarController.language.equals("SK")){
+                    actionButton.setText("Pridať tag");
+                }
+                else{
+                    actionButton.setText("Add tag");
+                }
                 colorDescription.setVisible(true);
                 tagsDescription.setVisible(false);
                 tagName.setVisible(true);
-                choiceColor.setValue(true);
+                tagNameDescription.setVisible(true);
+                choiceColor.setVisible(true);
                 choiceTag.setVisible(false);
                 break;
-            case "Vymazať": {
-                actionButton.setText("Vymazať");
-                tagsDescription.setText("Tag na vymazanie");
-
-                tagNameDescription.setVisible(true);
-                tagsDescription.setVisible(false);
+            case "Vymazať":
+            case "Delete":
+                if(CalendarController.language.equals("SK")){
+                    actionButton.setText("Vymazať");
+                    tagsDescription.setText("Tag na vymazanie");
+                }
+                else{
+                    actionButton.setText("Delete");
+                    tagsDescription.setText("Delete tag");
+                }
+                tagNameDescription.setVisible(false);
+                tagsDescription.setVisible(true);
                 colorDescription.setVisible(false);
                 choiceTag.setVisible(true);
                 tagName.setVisible(false);
                 choiceColor.setVisible(false);
 
-                ObservableList<String> tags = FXCollections.observableArrayList(calendarDatabase.getTagsWithColor().keySet());
-                choiceTag.setItems(tags);
+                ObservableList<String> tags2 = FXCollections.observableArrayList(calendarDatabase.getTagsWithColor().keySet());
+                choiceTag.setItems(tags2);
                 break;
-            }
         }
     }
 
     public void renameNote(Label currentTag) {
-
         calendarDatabase.renameTag(currentTag.getText(), calendarDatabase.findColorToTag(currentTag.getText()), newNoteName.getText());
         root.getChildren().remove(newNoteName);
         calendarView.createTags(root,calendarDatabase);
@@ -203,7 +226,6 @@ public class CalendarTagController {
         root.getChildren().remove(newNoteName);
         calendarView.createTags(root,calendarDatabase);
         calendarController.updateCalendar(calendarController.getCurrentMonth());
-
     }
 
 
@@ -219,12 +241,10 @@ public class CalendarTagController {
         this.calendarController = calendarController;
     }
 
-    public void changeColor(Label currentTag, String color)
-    {
+    public void changeColor(Label currentTag, String color) {
         calendarDatabase.addToTags(currentTag.getText(), color);
         calendarView.createTags(root,calendarDatabase);
         calendarController.updateCalendar(calendarController.getCurrentMonth());
-
     }
 
 }

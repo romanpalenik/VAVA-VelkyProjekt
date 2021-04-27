@@ -80,18 +80,19 @@ public class NotesController extends AplicationWindow implements Internationaliz
     public void onClick_btn_Save() throws IOException {
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Vyberte poznamky");
+        fileChooser.setTitle("Vyberte poznámky");
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.txt" ,"*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
         File selectedFile = fileChooser.showOpenDialog(stage);
 
+        if(selectedFile != null) {
+            nameOfNotes.setText(selectedFile.getName());
+            note.setText(notesDatabase.loadTxt(selectedFile.getPath()));
+            notesDatabase.addToNotes(nameOfNotes.getText(), notesDatabase.loadTxt(selectedFile.getPath()));
+            notesView.createTags(root, firstNote, notesDatabase);
 
-        nameOfNotes.setText(selectedFile.getName());
-        note.setText(notesDatabase.loadTxt(selectedFile.getPath()));
-        notesDatabase.addToNotes(nameOfNotes.getText(), notesDatabase.loadTxt(selectedFile.getPath()));
-        notesView.createTags(root,firstNote, notesDatabase);
-
-        saveNote();
+            saveNote();
+        }
     }
 
 
@@ -154,6 +155,8 @@ public class NotesController extends AplicationWindow implements Internationaliz
         importBtn.setText(bundle.getString("importNotes"));
         noteNameLbl.setText(bundle.getString("noteName"));
         createNoteBtn.setText(bundle.getString("createNote"));
+        firstNote.setText(bundle.getString("dajakyTag"));
+
     }
 
 }
