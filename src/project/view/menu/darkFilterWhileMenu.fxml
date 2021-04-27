@@ -3,4 +3,4 @@
 <?import javafx.scene.control.Label?>
 
 
-<Label fx:id="darkSideWhenMenu" opacity="0.8" prefHeight="692.0" prefWidth="996.0" style="-fx-background-color: #04030C;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" />
+<Label fx:id="darkSideWhenMenu" opacity="0.8" prefHeight="692.0" prefWidth="1050.0" style="-fx-background-color: #04030C;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" />
