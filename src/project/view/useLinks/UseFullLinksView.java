@@ -82,7 +82,7 @@ public class UseFullLinksView {
             isNewLinkCreatorShow = false;
         }
 
-        double yPosition = firstTagForLinkGroups.getLayoutY() + 30;
+        double yPosition = firstTagForLinkGroups.getLayoutY() + 50;
         double xPosition = firstTagForLinkGroups.getLayoutX();
         groupNames = linkDatabase.getLinkGroups();
 

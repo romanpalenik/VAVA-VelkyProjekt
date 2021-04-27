@@ -7,12 +7,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import project.controller.calendar.CalendarController;
 import project.model.databases.NotesDatabase;
 import project.view.notes.NoteView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class NotesController extends AplicationWindow{
 
@@ -36,6 +39,16 @@ public class NotesController extends AplicationWindow{
     private Label menu;
     @FXML
     private Button menuButton;
+    @FXML
+    private Button languageButton;
+    @FXML
+    private Button saveBtn;
+    @FXML
+    private Button importBtn;
+    @FXML
+    private Button createNoteBtn;
+    @FXML
+    private Label noteNameLbl;
 
 
     private boolean isMenuShown = false;
@@ -59,7 +72,7 @@ public class NotesController extends AplicationWindow{
 
 
     private void removeAllThingsByClicked(MouseEvent mouseEvent) {
-        super.hideMenu();
+        super.hideMenu(mouseEvent);
         if(newNoteName != null)root.getChildren().remove(newNoteName);
     }
 
@@ -124,6 +137,28 @@ public class NotesController extends AplicationWindow{
         root.getChildren().remove(newNoteName);
         notesView.createTags(root,firstNote, notesDatabase);
 
+    }
+
+    @FXML
+    void changeLanguage() {
+        Locale locale;
+        ResourceBundle bundle;
+        if(languageButton.getText().equals("EN")){
+            locale = new Locale("en");
+            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
+            CalendarController.language = "EN";
+        }
+        else{
+            locale = new Locale("sk");
+            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
+            CalendarController.language = "SK";
+        }
+        languageButton.setText(bundle.getString("language"));
+        circle.setText(bundle.getString("notesTitle"));
+        saveBtn.setText(bundle.getString("saveNote"));
+        importBtn.setText(bundle.getString("importNotes"));
+        noteNameLbl.setText(bundle.getString("noteName"));
+        createNoteBtn.setText(bundle.getString("createNote"));
     }
 
 }

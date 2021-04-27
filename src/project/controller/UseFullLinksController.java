@@ -6,11 +6,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import project.controller.calendar.CalendarController;
 import project.model.databases.LinkDatabase;
 import project.view.useLinks.UseFullLinksView;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class UseFullLinksController extends AplicationWindow {
 
@@ -26,6 +29,8 @@ public class UseFullLinksController extends AplicationWindow {
     private TextField newLink;
     @FXML
     private Button addButton;
+    @FXML
+    private Button languageButton;
 
     private UseFullLinksView linkView;
     private LinkDatabase linkDatabase = new LinkDatabase();
@@ -51,10 +56,8 @@ public class UseFullLinksController extends AplicationWindow {
     }
 
 
-
-
     private void removeAllThingsByClicked(MouseEvent mouseEvent) {
-        super.hideMenu();
+        super.hideMenu(mouseEvent);
         root.getChildren().remove(newNoteName);
 
     }
@@ -140,11 +143,29 @@ public class UseFullLinksController extends AplicationWindow {
 //
 //    }
 
-    public void addToLinks()
-    {
+    public void addToLinks() {
         linkDatabase.getLinkGroups().get(currentLinkGroup).addToLinks("jako",newLink.getText());
     }
 
+    @FXML
+    void changeLanguage() {
+        Locale locale;
+        ResourceBundle bundle;
+        if(languageButton.getText().equals("EN")){
+            locale = new Locale("en");
+            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
+            CalendarController.language = "EN";
+        }
+        else{
+            locale = new Locale("sk");
+            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
+            CalendarController.language = "SK";
+        }
+        firstTag.setText(bundle.getString("usefulLinksTitle"));
+        addButton.setText(bundle.getString("addLink"));
+        languageButton.setText(bundle.getString("language"));
+        firstTagForLinkGroups.setText(bundle.getString("links"));
+    }
 
 
 }

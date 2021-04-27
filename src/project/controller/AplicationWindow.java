@@ -72,11 +72,11 @@ public class AplicationWindow {
      */
     public void showMenu() throws IOException {
 
-        if (isMenuShown)
-        {
-            hideMenu();
-            return;
-        }
+//        if (isMenuShown)
+//        {
+//            hideMenu();
+//            return;
+//        }
 
         root.getChildren().add(darkSideWhenMenu);
         root.getChildren().add(loadFMXLMenu());
@@ -86,17 +86,16 @@ public class AplicationWindow {
 
     }
 
-    protected void hideMenu() {
+    protected void hideMenu(MouseEvent event) {
+        if(event.getSceneX() > 172) {
+            root.getChildren().remove(darkSideWhenMenu);
+            isMenuShown = false;
+            try {
+                root.getChildren().remove(menuFMXL);
+                darkSideWhenMenu.setVisible(false);
+            } catch (NullPointerException e) {
 
-        root.getChildren().remove(darkSideWhenMenu);
-        isMenuShown = false;
-        try {
-            root.getChildren().remove(menuFMXL);
-            darkSideWhenMenu.setVisible(false);
-        }
-        catch (NullPointerException e)
-        {
-
+            }
         }
     }
 

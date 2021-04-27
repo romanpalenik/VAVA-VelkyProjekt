@@ -52,16 +52,16 @@
             <Font size="18.0" />
          </font></Label>
       <Label fx:id="firstTag" layoutX="14.0" layoutY="108.0" text="Tags" textFill="#cac7d7" visible="false" />
-      <Button fx:id="addTag" layoutX="20.0" layoutY="100.0" mnemonicParsing="false" onAction="#openWindowToAddNewTag" prefHeight="35.0" prefWidth="132.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 15;" text="%tagManagement">
+      <Button fx:id="addTag" layoutX="20.0" layoutY="100.0" mnemonicParsing="false" onAction="#openWindowToAddNewTag" prefHeight="35.0" prefWidth="132.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 15;" text="%tagManagement" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
-      <Label fx:id="titleLbl" layoutX="193.0" layoutY="14.0" prefHeight="48.0" prefWidth="353.0" text="%title" textFill="#f1f3f2">
+      <Label fx:id="titleLbl" layoutX="193.0" layoutY="14.0" prefHeight="48.0" prefWidth="353.0" text="%calendarTitle" textFill="#f1f3f2" AnchorPane.leftAnchor="195.0">
          <font>
             <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-      <Button fx:id="menuButton" layoutX="8.0" layoutY="2.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="43.0" style="-fx-background-color: transparent; -fx-padding: 0;" text="≡" textFill="WHITE">
+      <Button fx:id="menuButton" layoutX="8.0" layoutY="2.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="43.0" style="-fx-background-color: transparent; -fx-padding: 0;" text="≡" textFill="WHITE" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="0.0">
          <font>
             <Font name="System Bold" size="45.0" />
          </font>
@@ -69,7 +69,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="languageButton" layoutX="942.0" layoutY="19.0" mnemonicParsing="false" onAction="#changeLanguage" style="-fx-background-color: transparent;" text="%language" textFill="WHITE" underline="true">
+      <Button fx:id="languageButton" layoutX="942.0" layoutY="19.0" mnemonicParsing="false" onAction="#changeLanguage" prefHeight="39.0" prefWidth="55.0" style="-fx-background-color: transparent;" text="%language" textFill="WHITE" underline="true" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="18.0">
          <font>
             <Font size="18.0" />
          </font>

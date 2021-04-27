@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -12,27 +13,37 @@
     <children>
         <Separator layoutX="172.0" layoutY="-7.0" orientation="VERTICAL" prefHeight="699.0" prefWidth="2.0" />
         <Separator layoutY="72.0" prefHeight="2.0" prefWidth="996.0" style="-fx-background-color: #f1f3f2;" />
-        <Label layoutX="14.0" layoutY="14.0" prefHeight="48.0" prefWidth="81.0" text="Menu" textFill="#f1f3f2">
-            <font>
-                <Font name="System Bold" size="24.0" />
-            </font>
-        </Label>
-      <Button fx:id="menuButton" layoutX="95.0" layoutY="25.0" mnemonicParsing="false" text="menu" />
-      <Label fx:id="circle" layoutX="195.0" layoutY="14.0" prefHeight="48.0" prefWidth="213.0" text="Poznámky" textFill="#f1f3f2">
+      <Label fx:id="circle" layoutX="195.0" layoutY="14.0" prefHeight="48.0" prefWidth="245.0" text="%notesTitle" textFill="#f1f3f2" AnchorPane.leftAnchor="195.0">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-      <Button layoutX="5.0" layoutY="204.0" mnemonicParsing="false" onAction="#createNewNote" prefHeight="26.0" prefWidth="161.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 20;" text="Vytvorit poznamku" />
-      <TextArea fx:id="note" layoutX="185.0" layoutY="156.0" prefHeight="510.0" prefWidth="791.0" />
+      <Button fx:id="createNoteBtn" layoutX="5.0" layoutY="204.0" mnemonicParsing="false" onAction="#createNewNote" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 20;" text="%createNote" AnchorPane.leftAnchor="10.0" />
+      <TextArea fx:id="note" layoutX="185.0" layoutY="156.0" prefHeight="510.0" prefWidth="782.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
       <Separator layoutY="115.0" prefHeight="3.0" prefWidth="1002.0" />
-      <Button layoutY="82.0" mnemonicParsing="false" onAction="#onClick_btn_Save" prefHeight="26.0" prefWidth="170.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 20;" text="Importovat poznamky" />
-      <Button layoutX="185.0" layoutY="82.0" mnemonicParsing="false" onAction="#saveNote" style="-fx-background-color: #f4ed71; -fx-background-radius: 20;" text="Ulozit" />
+      <Button fx:id="importBtn" layoutX="10.0" layoutY="79.0" mnemonicParsing="false" onAction="#onClick_btn_Save" prefHeight="31.0" prefWidth="152.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 20;" text="%importNotes" />
+      <Button fx:id="saveBtn" layoutX="185.0" layoutY="79.0" mnemonicParsing="false" onAction="#saveNote" prefHeight="31.0" prefWidth="90.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 20;" text="%saveNote" />
       <Label fx:id="nameOfNotes" layoutX="309.0" layoutY="132.0" textFill="WHITE" />
-      <TextField fx:id="nameOfNewNote" layoutX="10.0" layoutY="164.0" prefHeight="26.0" prefWidth="152.0" />
-      <Separator layoutX="-25.0" layoutY="241.0" prefWidth="200.0" />
-      <Label fx:id="firstNote" layoutX="14.0" layoutY="259.0" text="Poznamkovy blok" textFill="WHITE" />
-      <Label layoutX="10.0" layoutY="132.0" text="Nazov poznamok" textFill="WHITE" />
-      <Label layoutX="183.0" layoutY="132.0" text="Poznamkovy blok:" textFill="WHITE" />
+      <TextField fx:id="nameOfNewNote" layoutX="10.0" layoutY="164.0" prefHeight="26.0" prefWidth="152.0" AnchorPane.leftAnchor="10.0" />
+      <Separator layoutX="-25.0" layoutY="245.0" prefWidth="200.0" />
+      <Label fx:id="firstNote" layoutX="5.0" layoutY="259.0" prefHeight="21.0" prefWidth="161.0" text="%dajakyTag" textFill="WHITE" />
+      <Label fx:id="noteNameLbl" layoutX="10.0" layoutY="132.0" text="%noteName" textFill="WHITE" />
+      <Label layoutX="195.0" layoutY="132.0" text="%notes" textFill="WHITE" />
+      <Button fx:id="menuButton" layoutX="38.0" layoutY="32.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="43.0" style="-fx-background-color: transparent; -fx-padding: 0;" text="≡" textFill="WHITE" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="0.0">
+         <font>
+            <Font name="System Bold" size="45.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button fx:id="languageButton" layoutX="972.0" layoutY="49.0" mnemonicParsing="false" onAction="#changeLanguage" prefWidth="55.0" style="-fx-background-color: transparent;" text="%language" textFill="WHITE" underline="true" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="18.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
     </children>
 </AnchorPane>

@@ -115,7 +115,7 @@ public class CalendarController extends AplicationWindow {
     }
 
     private void removeAllThingsByClicked(MouseEvent mouseEvent) {
-        super.hideMenu();
+        super.hideMenu(mouseEvent);
         removeLastShownNote(mouseEvent);
         root.getChildren().remove(newNoteName);
 
@@ -259,7 +259,7 @@ public class CalendarController extends AplicationWindow {
             bundle = ResourceBundle.getBundle("/project/Bundle", locale);
             language = "SK";
         }
-        titleLbl.setText(bundle.getString("title"));
+        titleLbl.setText(bundle.getString("calendarTitle"));
         addTag.setText(bundle.getString("tagManagement"));
         languageButton.setText(bundle.getString("language"));
         initCalendar();
