@@ -9,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import project.controller.UseFullLinksController;
+import project.controller.calendar.CalendarController;
 import project.model.LinkGroup;
 import project.model.databases.LinkDatabase;
 import project.model.databases.sizesAndPosition.CalendarSizesAndPositonOfObjects;
@@ -319,18 +320,23 @@ public class UseFullLinksView {
             {
                 label.setLayoutY(label.getLayoutY() + 70);
             }
-            newLinkName = new TextField();
-            newLinkName.setPromptText("nazov linku");
-            newLinkName.setLayoutX(addLinkButton.getLayoutX() + 110);
-            newLinkName.setLayoutY(addLinkButton.getLayoutY());
-            useFullLinksController.setNewLinkName(newLinkName);
 
-            root.getChildren().add(newLinkName);
+            newNoteName = new TextField();
+            newNoteName.setLayoutX(addButton.getLayoutX());
+            newNoteName.setLayoutY(addButton.getLayoutY() + 50);
+            if(CalendarController.language.equals("SK")){
+                newNoteName.setPromptText("názov linku");
+            }
+            else{
+                newNoteName.setPromptText("link name");
+            }
+            root.getChildren().add(newNoteName);
 
             newLink = new TextField();
             newLink.setPromptText("link");
-            newLink.setLayoutX(addLinkButton.getLayoutX() + 180 + 110);
-            newLink.setLayoutY(addLinkButton.getLayoutY());
+            newLink.setLayoutX(addButton.getLayoutX() + 180);
+            newLink.setLayoutY(addButton.getLayoutY() + 50);
+
             root.getChildren().add(newLink);
             useFullLinksController.setNewLink(newLink);
 

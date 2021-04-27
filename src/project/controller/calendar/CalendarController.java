@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import project.controller.AplicationWindow;
+import project.controller.Internationalization;
 import project.model.databases.CalendarDatabase;
 import project.view.calendar.CalendarViewCreatingThings;
 
@@ -21,7 +22,7 @@ import java.time.YearMonth;
 import java.util.*;
 
 
-public class CalendarController extends AplicationWindow {
+public class CalendarController extends AplicationWindow implements Internationalization {
 
     @FXML
     private AnchorPane root;
@@ -217,13 +218,13 @@ public class CalendarController extends AplicationWindow {
      * @throws IOException if fxml is not find
      */
     public void openWindowToAddNewTag() throws IOException {
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/project/view/calendar/createTag.fxml"));
+        ResourceBundle bundle = this.changeLanguage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/project/view/calendar/createTag.fxml"), bundle);
         Parent root2 = loader.load();
         CalendarTagController controller = loader.getController();
         controller.initData(calendarDatabase,calendarView, stage,root,firstTag, this);
         Scene scene = new Scene(root2);
-        stage.setTitle("Pridat tag");
+        stage.setTitle("Pridať tag");
         stage.setScene(scene);
         stage.show();
     }
@@ -246,19 +247,14 @@ public class CalendarController extends AplicationWindow {
     }
 
     @FXML
-    void changeLanguage() {
-        Locale locale;
-        ResourceBundle bundle;
+    void translate() {
         if(languageButton.getText().equals("EN")){
-            locale = new Locale("en");
-            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
             language = "EN";
         }
         else{
-            locale = new Locale("sk");
-            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
             language = "SK";
         }
+        ResourceBundle bundle = this.changeLanguage();
         titleLbl.setText(bundle.getString("calendarTitle"));
         addTag.setText(bundle.getString("tagManagement"));
         languageButton.setText(bundle.getString("language"));

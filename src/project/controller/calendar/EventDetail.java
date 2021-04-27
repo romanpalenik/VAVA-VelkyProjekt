@@ -36,7 +36,8 @@ public class EventDetail {
 
 
     private ObservableList<String> tags;
-    private ObservableList<String> choiceDeleteOrEdit = FXCollections.observableArrayList("Vymazat","Zmenit","Ziadna zmena");
+    private ObservableList<String> choiceDeleteOrEditSK = FXCollections.observableArrayList("Vymazat","Zmenit","Ziadna zmena");
+    private ObservableList<String> choiceDeleteOrEditEN = FXCollections.observableArrayList("Delete","Change","Nič ty debilko");
 
     public void initData(Stage stage, OneCellRecord oneCellRecord, OneCellRecord.Event eventName, CalendarController calendarController, CalendarDatabase calendarDatabase) {
         this.stage = stage;
@@ -58,7 +59,12 @@ public class EventDetail {
 
         tags = FXCollections.observableArrayList(calendarDatabase.getTagsWithColor().keySet());
         tagsChoice.setItems(tags);
-        deleteOrChangeTag.setItems(choiceDeleteOrEdit);
+        if(CalendarController.language.equals("SK")){
+            deleteOrChangeTag.setItems(choiceDeleteOrEditSK);
+        }
+        else{
+            deleteOrChangeTag.setItems(choiceDeleteOrEditEN);
+        }
 
         EventHandler<ActionEvent> event2 = actionEvent -> {
             try {
@@ -94,10 +100,10 @@ public class EventDetail {
             event.setLocation(locationTextField.getText());
         }
         try {
-            if (deleteOrChangeTag.getValue().equals("Zmenit")) {
+            if (deleteOrChangeTag.getValue().equals("Zmenit") || deleteOrChangeTag.getValue().equals("Change")) {
                 event.setTag((String) tagsChoice.getValue());
             }
-            if(deleteOrChangeTag.getValue().equals("Vymazat"))
+            if(deleteOrChangeTag.getValue().equals("Vymazat") || deleteOrChangeTag.getValue().equals("Delete"))
             {
                 event.setTag("");
             }
@@ -116,7 +122,7 @@ public class EventDetail {
      */
     public void showTagsOrHide()
     {
-        if(deleteOrChangeTag.getValue().equals("Zmenit")) {
+        if(deleteOrChangeTag.getValue().equals("Zmenit") || deleteOrChangeTag.getValue().equals("Change")) {
             tagsChoice.setValue(event.getTag());
             tagChoiceLabel.setVisible(true);
             tagsChoice.setVisible(true);

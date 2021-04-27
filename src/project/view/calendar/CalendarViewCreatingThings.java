@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import project.controller.Internationalization;
 import project.controller.calendar.AnchorPaneNode;
 import project.controller.calendar.CalendarController;
 import project.controller.calendar.CalendarTagController;
@@ -27,11 +28,12 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  * class that create tags and make calendar bigger or smaller
  */
-public class CalendarViewCreatingThings {
+public class CalendarViewCreatingThings implements Internationalization {
 
     private Map<String, String> tagsWithColor = new HashMap<>();
     private ArrayList<Label> labelTags = new ArrayList<>();
@@ -400,7 +402,8 @@ public class CalendarViewCreatingThings {
 
     public void showEditEvent(OneCellRecord event, OneCellRecord.Event eventName, CalendarController calendarController) throws IOException {
         Stage stage = new Stage();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/project/view/calendar/eventDetail.fxml"));
+        ResourceBundle bundle = this.changeLanguage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/project/view/calendar/eventDetail.fxml"), bundle);
         Parent root2 = (Parent) loader.load();
         EventDetail controller = loader.getController();
         controller.initData(stage, event, eventName, calendarController, calendarDatabase);

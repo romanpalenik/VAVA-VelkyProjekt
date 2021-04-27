@@ -13,37 +13,45 @@
             <Cursor fx:constant="HAND" />
          </cursor>
          <font>
-            <Font size="16.0" />
+            <Font size="20.0" />
          </font></Button>
       <Button fx:id="todoBtn" layoutX="14.0" layoutY="215.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: transparent  transparent white  transparent;" text="%todoView" textAlignment="CENTER" textFill="WHITE" AnchorPane.topAnchor="200.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <font>
-            <Font size="16.0" />
+            <Font size="20.0" />
          </font></Button>
       <Button fx:id="linksBtn" layoutX="14.0" layoutY="288.0" mnemonicParsing="false" onAction="#changeSceneToLinks" prefHeight="43.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: transparent  transparent white  transparent;" text="%linksView" textFill="WHITE" AnchorPane.topAnchor="270.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <font>
-            <Font size="16.0" />
+            <Font size="20.0" />
          </font></Button>
       <Button fx:id="notificationsBtn" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: transparent  transparent white  transparent;" text="%notificationsView" textFill="WHITE" AnchorPane.topAnchor="340.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <font>
-            <Font size="16.0" />
+            <Font size="20.0" />
          </font></Button>
       <Button fx:id="notesBtn" layoutX="14.0" layoutY="437.0" mnemonicParsing="false" onAction="#changeSceneToNotes" prefHeight="43.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: transparent  transparent white  transparent;" text="%notesView" textFill="WHITE" AnchorPane.topAnchor="410.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
          <font>
-            <Font size="16.0" />
+            <Font size="20.0" />
          </font></Button>
-      <Label layoutX="40.0" layoutY="34.0" text="Menu" textFill="WHITE">
+      <Button fx:id="menuButton2" layoutX="18.0" layoutY="12.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="43.0" style="-fx-background-color: transparent; -fx-padding: 0;" text="≡" textFill="WHITE" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="0.0">
+         <font>
+            <Font name="System Bold" size="45.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Label layoutX="78.0" layoutY="30.0" prefHeight="53.0" text="Menu" textFill="WHITE" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="10.0">
          <font>
             <Font size="36.0" />
          </font>

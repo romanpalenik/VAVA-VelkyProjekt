@@ -17,7 +17,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class NotesController extends AplicationWindow{
+public class NotesController extends AplicationWindow implements Internationalization{
 
     @FXML
     private AnchorPane root;
@@ -80,18 +80,19 @@ public class NotesController extends AplicationWindow{
     public void onClick_btn_Save() throws IOException {
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Vyberte poznamky");
+        fileChooser.setTitle("Vyberte poznámky");
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("*.txt" ,"*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
         File selectedFile = fileChooser.showOpenDialog(stage);
 
+        if(selectedFile != null) {
+            nameOfNotes.setText(selectedFile.getName());
+            note.setText(notesDatabase.loadTxt(selectedFile.getPath()));
+            notesDatabase.addToNotes(nameOfNotes.getText(), notesDatabase.loadTxt(selectedFile.getPath()));
+            notesView.createTags(root, firstNote, notesDatabase);
 
-        nameOfNotes.setText(selectedFile.getName());
-        note.setText(notesDatabase.loadTxt(selectedFile.getPath()));
-        notesDatabase.addToNotes(nameOfNotes.getText(), notesDatabase.loadTxt(selectedFile.getPath()));
-        notesView.createTags(root,firstNote, notesDatabase);
-
-        saveNote();
+            saveNote();
+        }
     }
 
 
@@ -140,25 +141,22 @@ public class NotesController extends AplicationWindow{
     }
 
     @FXML
-    void changeLanguage() {
-        Locale locale;
-        ResourceBundle bundle;
+    void translate() {
         if(languageButton.getText().equals("EN")){
-            locale = new Locale("en");
-            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
             CalendarController.language = "EN";
         }
         else{
-            locale = new Locale("sk");
-            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
             CalendarController.language = "SK";
         }
+        ResourceBundle bundle = this.changeLanguage();
         languageButton.setText(bundle.getString("language"));
         circle.setText(bundle.getString("notesTitle"));
         saveBtn.setText(bundle.getString("saveNote"));
         importBtn.setText(bundle.getString("importNotes"));
         noteNameLbl.setText(bundle.getString("noteName"));
         createNoteBtn.setText(bundle.getString("createNote"));
+        firstNote.setText(bundle.getString("dajakyTag"));
+
     }
 
 }

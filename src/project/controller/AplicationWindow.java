@@ -1,6 +1,5 @@
 package project.controller;
 
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +15,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class AplicationWindow {
+public class AplicationWindow implements Internationalization{
 
     @FXML
     private Button calendarBtn;
@@ -55,7 +54,7 @@ public class AplicationWindow {
             }
         });
         darkFilterWhileMenu();
-        darkSideWhenMenu = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/project/view/darkFilterWhileMenu.fxml")));
+        darkSideWhenMenu = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/project/view/menu/darkFilterWhileMenu.fxml")));
 //        darkSideWhenMenu.setLayoutX(174);
         darkSideWhenMenu.setVisible(false);
 
@@ -105,23 +104,14 @@ public class AplicationWindow {
      * @return menu
      */
     public AnchorPane loadFMXLMenu() throws IOException {
-        Locale locale;
-        ResourceBundle bundle;
-        if(CalendarController.language.equals("EN")){
-            locale = new Locale("en");
-            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
-        }
-        else{
-            locale = new Locale("sk");
-            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
-        }
-        menuFMXL = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/project/view/mainMenu.fxml")), bundle);
+        ResourceBundle bundle = this.changeLanguage();
+        menuFMXL = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/project/view/menu/mainMenu.fxml")), bundle);
 //        menuFMXL.setLayoutY(75);
         return menuFMXL;
     }
 
     public void darkFilterWhileMenu() throws IOException {
-        darkSideWhenMenu = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/project/view/darkFilterWhileMenu.fxml")));
+        darkSideWhenMenu = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/project/view/menu/darkFilterWhileMenu.fxml")));
 //        darkSideWhenMenu.setLayoutX(174);
     }
 

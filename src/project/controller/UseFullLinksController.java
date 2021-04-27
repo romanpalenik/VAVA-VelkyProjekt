@@ -15,7 +15,7 @@ import java.net.URISyntaxException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class UseFullLinksController extends AplicationWindow {
+public class UseFullLinksController extends AplicationWindow implements Internationalization{
 
     @FXML
     private AnchorPane root;
@@ -166,19 +166,14 @@ public class UseFullLinksController extends AplicationWindow {
     }
 
     @FXML
-    void changeLanguage() {
-        Locale locale;
-        ResourceBundle bundle;
+    void translate() {
         if(languageButton.getText().equals("EN")){
-            locale = new Locale("en");
-            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
             CalendarController.language = "EN";
         }
         else{
-            locale = new Locale("sk");
-            bundle = ResourceBundle.getBundle("/project/Bundle", locale);
             CalendarController.language = "SK";
         }
+        ResourceBundle bundle = this.changeLanguage();
         firstTag.setText(bundle.getString("usefulLinksTitle"));
         addButton.setText(bundle.getString("addLink"));
         languageButton.setText(bundle.getString("language"));

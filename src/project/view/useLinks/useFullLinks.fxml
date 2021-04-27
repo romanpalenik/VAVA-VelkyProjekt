@@ -8,18 +8,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="692.0" prefWidth="996.0" style="-fx-background-color: #383140;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.controller.UseFullLinksController">
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="692.0" prefWidth="1050.0" style="-fx-background-color: #383140;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.controller.UseFullLinksController">
     <children>
-        <Separator layoutX="172.0" layoutY="-7.0" orientation="VERTICAL" prefHeight="699.0" prefWidth="2.0" />
-        <Separator layoutY="72.0" prefHeight="2.0" prefWidth="996.0" style="-fx-background-color: #f1f3f2;" />
-      <Label fx:id="firstTag" layoutX="195.0" layoutY="14.0" prefHeight="48.0" prefWidth="245.0" text="%usefulLinksTitle" textFill="#f1f3f2" AnchorPane.leftAnchor="195.0">
+        <Separator layoutX="172.0" layoutY="-7.0" orientation="VERTICAL" prefHeight="699.0" prefWidth="2.0" AnchorPane.leftAnchor="225.0" />
+        <Separator layoutY="72.0" prefHeight="2.0" prefWidth="1050.0" style="-fx-background-color: #f1f3f2;" />
+      <Label fx:id="firstTag" layoutX="195.0" layoutY="14.0" prefHeight="48.0" prefWidth="245.0" text="%usefulLinksTitle" textFill="#f1f3f2" AnchorPane.leftAnchor="248.0">
          <font>
             <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-      <Label fx:id="firstTagForLinkGroups" alignment="CENTER" layoutX="15.0" layoutY="197.0" prefHeight="34.0" prefWidth="132.0" style="-fx-border-color: transparent transparent white transparent;" text="%links" textFill="WHITE">
+      <Label fx:id="firstTagForLinkGroups" alignment="CENTER" layoutX="17.0" layoutY="101.0" prefHeight="34.0" prefWidth="193.0" style="-fx-border-color: transparent transparent white transparent;" text="%links" textFill="WHITE">
+
          <font>
-            <Font size="18.0" />
+            <Font size="20.0" />
          </font>
          <padding>
             <Insets bottom="5.0" />
@@ -32,7 +33,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="languageButton" layoutX="962.0" layoutY="39.0" mnemonicParsing="false" onAction="#changeLanguage" prefWidth="55.0" style="-fx-background-color: transparent;" text="%language" textFill="WHITE" underline="true" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="18.0">
+      <Button fx:id="languageButton" layoutX="962.0" layoutY="39.0" mnemonicParsing="false" onAction="#translate" prefWidth="55.0" style="-fx-background-color: transparent;" text="%language" textFill="WHITE" underline="true" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="18.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -40,7 +41,14 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="addButton" layoutX="26.0" layoutY="93.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="109.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 15;" text="%addLink" />
-      <Button fx:id="addGroupButton" layoutX="26.0" layoutY="146.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="109.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 15;" text="Pridaj skupinu" />
+      <Button fx:id="addButton" layoutX="194.0" layoutY="93.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="109.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 15;" text="%addLink" AnchorPane.leftAnchor="248.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Label layoutX="68.0" layoutY="20.0" prefHeight="53.0" text="Menu" textFill="WHITE" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="10.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>
