@@ -26,16 +26,21 @@ public class UseFullLinksController extends AplicationWindow {
     @FXML
     private Label firstTagForLinkGroups;
     @FXML
-    private TextField newLink;
-    @FXML
     private Button addButton;
     @FXML
+    private Button addGroupButton;
+    @FXML
     private Button languageButton;
+    @FXML
+    private TextField newLinkGroup;
 
     private UseFullLinksView linkView;
     private LinkDatabase linkDatabase = new LinkDatabase();
     private String currentLinkGroup;
 
+
+    private TextField newLink;
+    private TextField newLinkName;
     private TextField newNoteName;
 
 
@@ -43,12 +48,19 @@ public class UseFullLinksController extends AplicationWindow {
         this.newNoteName = newNoteName;
     }
 
+    public void setNewLink(TextField newLink) {
+        this.newLink = newLink;
+    }
+
+    public void setNewLinkName(TextField newLinkName) {
+        this.newLinkName = newLinkName;
+    }
 
     public void initialize() throws IOException {
 
         super.start(root, menuButton);
 
-        linkView = new UseFullLinksView(this, linkDatabase, firstTag, root, firstTagForLinkGroups,addButton);
+        linkView = new UseFullLinksView(this, linkDatabase, firstTag, root, firstTagForLinkGroups,addButton, addGroupButton);
         linkView.showGroupLinks();
 
         root.setOnMouseClicked(this::removeAllThingsByClicked);
@@ -107,15 +119,22 @@ public class UseFullLinksController extends AplicationWindow {
 
 
     public void renameLink(String linkName) {
-        linkDatabase.renameTag(linkName, newNoteName.getText(),linkDatabase.findLinkToName(linkName));
+        linkDatabase.getLinkGroups().get(currentLinkGroup).renameTag(linkName, newNoteName.getText(),linkDatabase.getLinkGroups().get(currentLinkGroup).findLinkToName(linkName));
         root.getChildren().remove(newNoteName);
         linkView.showGroupLinks();
     }
 
-    public void changeLink(String newLink, String linkName) {
-        linkDatabase.addToLinks(linkName,newNoteName.getText());
+    public void changeLink(String linkName) {
         root.getChildren().remove(newNoteName);
+        linkDatabase.getLinkGroups().get(currentLinkGroup).addToLinks(linkName,newNoteName.getText());
         linkView.showGroupLinks();
+    }
+
+    public void changeLinkGroup(Label currentLinkGroup)
+    {
+        this.currentLinkGroup = currentLinkGroup.getText();
+        linkView.setCurrentLinkGroup(currentLinkGroup.getText());
+        linkView.showLinkInSelectedGroup();
     }
 
     public void OnMouseEnteredChangeColor(Label currentLabel)
@@ -127,13 +146,6 @@ public class UseFullLinksController extends AplicationWindow {
     {
         linkView.changeLinkToWhite(currentLabel);
     }
-
-    public void changeLinkGroup(Label currentLinkGroup)
-    {
-        this.currentLinkGroup = currentLinkGroup.getText();
-        linkView.setCurrentLinkGroup(currentLinkGroup.getText());
-        linkView.showLinkInSelectedGroup();
-    }
 //
 //    public void deleteNote(Label currentLabel) {
 //        calendarDatabase.deleteTag(currentLabel.getText());
@@ -144,7 +156,13 @@ public class UseFullLinksController extends AplicationWindow {
 //    }
 
     public void addToLinks() {
-        linkDatabase.getLinkGroups().get(currentLinkGroup).addToLinks("jako",newLink.getText());
+        linkDatabase.getLinkGroups().get(currentLinkGroup).addToLinks(newLinkName.getText(),newLink.getText());
+        linkView.showGroupLinks();
+    }
+
+    public void addLinkGroup() {
+        linkDatabase.addGroupLink(newLinkGroup.getText());
+        linkView.showGroupLinks();
     }
 
     @FXML

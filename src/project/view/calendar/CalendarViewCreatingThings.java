@@ -238,12 +238,12 @@ public class CalendarViewCreatingThings {
         int showedDays=1;
         for (AnchorPaneNode ap : allCalendarDays) {
 
-            if (calendarDate.getDayOfMonth() == 1 && dayIsInMonth == false) {
+            if (calendarDate.getDayOfMonth() == 1 && !dayIsInMonth) {
                 showedDays = 1;
                 dayIsInMonth = true;
             }
             //if calendar create every day in month start mode not in month
-            if (showedDays > calendarDate.getDayOfMonth() || dayIsInMonth == false) {
+            if (showedDays > calendarDate.getDayOfMonth() || !dayIsInMonth) {
                 ap.getStylesheets().remove("daysInMonth.css");
                 ap.getStylesheets().add("/daysFromAnotherMonth.css");
                 ap.getStyleClass().add("pane");
