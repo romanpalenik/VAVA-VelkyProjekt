@@ -19,7 +19,6 @@ public class MainMenuController implements Internationalization{
     public void initialize()
     {
         BasicSizesAndPosition.setWidthOfMenu(root.getPrefWidth());
-
     }
 
     /**
@@ -57,6 +56,19 @@ public class MainMenuController implements Internationalization{
         Main.primaryStage.setScene(scene);
         Main.primaryStage.show();
     }
+
+    /**
+     * open new window when you can create new invoice
+     * @throws IOException if fxml is not loaded
+     */
+    public void changeSceneToNotification() throws IOException {
+        ResourceBundle bundle = this.changeLanguage();
+        Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/project/view/notification/notification.fxml")), bundle);
+        Scene scene = new Scene(root);
+        Main.primaryStage.setScene(scene);
+        Main.primaryStage.show();
+    }
+
 
 
 }
