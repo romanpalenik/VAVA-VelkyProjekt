@@ -1,16 +1,26 @@
 package project.controller;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import project.controller.calendar.CalendarController;
+import javafx.scene.layout.AnchorPane;
+import project.model.databases.sizesAndPosition.BasicSizesAndPosition;
 
 import java.io.IOException;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainMenuController implements Internationalization{
+
+    @FXML
+    private AnchorPane root;
+
+    public void initialize()
+    {
+        BasicSizesAndPosition.setWidthOfMenu(root.getPrefWidth());
+
+    }
 
     /**
      * open new window when you can create new invoice
