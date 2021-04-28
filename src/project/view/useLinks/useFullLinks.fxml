@@ -17,7 +17,7 @@
             <Font name="System Bold" size="28.0" />
          </font>
       </Label>
-      <Label fx:id="firstTagForLinkGroups" alignment="CENTER" layoutX="17.0" layoutY="101.0" prefHeight="34.0" prefWidth="193.0" style="-fx-border-color: transparent transparent white transparent;" text="%links" textFill="WHITE">
+      <Label fx:id="firstTagForLinkGroups" alignment="CENTER" layoutX="13.0" layoutY="200.0" prefHeight="34.0" prefWidth="193.0" style="-fx-border-color: transparent transparent white transparent;" text="%links" textFill="WHITE">
 
          <font>
             <Font size="20.0" />
@@ -41,7 +41,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Button fx:id="addButton" layoutX="194.0" layoutY="93.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="109.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 15;" text="%addLink" AnchorPane.leftAnchor="248.0">
+      <Button fx:id="addButton" layoutX="55.0" layoutY="89.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="109.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 15;" text="%addLink" AnchorPane.leftAnchor="55.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Button>
@@ -50,5 +50,10 @@
             <Font size="36.0" />
          </font>
       </Label>
+      <Button fx:id="addGroupButton" layoutX="55.0" layoutY="141.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="109.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 15;" text="%addLink">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
     </children>
 </AnchorPane>

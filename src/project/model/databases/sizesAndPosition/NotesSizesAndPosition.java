@@ -1,6 +1,7 @@
 package project.model.databases.sizesAndPosition;
 
 public class NotesSizesAndPosition {
+
     private int distanceFromFistNote = 30;
     private int distanceBetweenNameOfBlogs = 30;
 
