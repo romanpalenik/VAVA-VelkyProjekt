@@ -176,6 +176,7 @@ public class UseFullLinksController extends AplicationWindow implements Internat
         linkDatabase.addGroupLink(newLinkGroup.getText());
         linkView.showGroupLinks();
         linkDatabase.safeEvents();
+
     }
 
     @FXML
