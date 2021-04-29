@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TodoController extends AplicationWindow implements Internationalization, Initializable {
 
@@ -151,7 +153,7 @@ public class TodoController extends AplicationWindow implements Internationaliza
 
     @FXML
     void createGroupTodo(MouseEvent event) throws IOException {
-        if(!addGroupField.getText().equals("")) {
+        if(!addGroupField.getText().equals("") && testGroup(addGroupField.getText())) {
             TodoGroupDatabase.todoGroupArrList.add(addGroupField.getText());
             initGroupCBox();
             TodoGroupDatabase.saveTodoGroups();
@@ -160,5 +162,11 @@ public class TodoController extends AplicationWindow implements Internationaliza
         }
     }
 
+
+    public boolean testGroup(String toDoGroup){
+        Pattern pattern = Pattern.compile("^[A-Z]*$");
+        Matcher matcher = pattern.matcher(toDoGroup);
+        return matcher.find();
+    }
 
 }
