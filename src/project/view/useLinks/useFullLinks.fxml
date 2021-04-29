@@ -12,7 +12,7 @@
     <children>
         <Separator layoutX="172.0" layoutY="-7.0" orientation="VERTICAL" prefHeight="699.0" prefWidth="2.0" AnchorPane.leftAnchor="225.0" />
         <Separator layoutY="72.0" prefHeight="2.0" prefWidth="1050.0" style="-fx-background-color: #f1f3f2;" />
-      <Label fx:id="firstTag" layoutX="195.0" layoutY="14.0" prefHeight="48.0" prefWidth="245.0" text="%usefulLinksTitle" textFill="#f1f3f2" AnchorPane.leftAnchor="248.0">
+      <Label layoutX="195.0" layoutY="14.0" prefHeight="48.0" prefWidth="245.0" text="%usefulLinksTitle" textFill="#f1f3f2" AnchorPane.leftAnchor="248.0">
          <font>
             <Font name="System Bold" size="28.0" />
          </font>
@@ -55,5 +55,10 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <Label fx:id="firstTag" layoutX="264.0" layoutY="97.0" text="Label" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

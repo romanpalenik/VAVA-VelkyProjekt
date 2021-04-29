@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import project.controller.UseFullLinksController;
 import project.controller.calendar.CalendarController;
-import project.model.LinkGroup;
+import project.model.databases.LinkGroup;
 import project.model.databases.LinkDatabase;
 import project.model.databases.sizesAndPosition.BasicSizesAndPosition;
 import project.model.databases.sizesAndPosition.CalendarSizesAndPositonOfObjects;
@@ -32,12 +32,12 @@ public class UseFullLinksView {
     private TextField newGroup;
     private Separator separator1;
     private Button addToDatabaseButton;
+    private Label groupTitle;
 
     private CalendarSizesAndPositonOfObjects calendarSizes = new CalendarSizesAndPositonOfObjects();
     private UseFullLinksController useFullLinksController;
     private LinkDatabase linkDatabase;
 
-    private Label firstTag;
     private Label firstTagForLinkGroups;
     private Map<String, LinkGroup> groupNames = new HashMap<>();
     private Map<String, String> linkWithNames = new HashMap<>();
@@ -54,17 +54,15 @@ public class UseFullLinksView {
     MenuItem item2 = new MenuItem("Zmenit link");
     MenuItem item3 = new MenuItem("Vymazat link");
 
-    Menu parentMenu = new Menu("Zmena farby");
 
-
-    public UseFullLinksView(UseFullLinksController useFullLinksController, LinkDatabase linkDatabase, Label firstTag, AnchorPane root, Label firstTagForLinkGroups, Button addLinkButton, Button addGroupButton) {
+    public UseFullLinksView(UseFullLinksController useFullLinksController, LinkDatabase linkDatabase, AnchorPane root, Label firstTagForLinkGroups, Button addLinkButton, Button addGroupButton, Label groupTitle) {
         this.root = root;
-        this.firstTag = firstTag;
         this.useFullLinksController = useFullLinksController;
         this.linkDatabase = linkDatabase;
         this.firstTagForLinkGroups = firstTagForLinkGroups;
         this.addLinkButton = addLinkButton;
         this.addGroupButton = addGroupButton;
+        this.groupTitle = groupTitle;
 
         addLinkButton.setOnAction((EventHandler) event -> {
                 showAddLink();
@@ -72,7 +70,7 @@ public class UseFullLinksView {
         addGroupButton.setOnAction((EventHandler) event -> {
             showAddGroup();
         });
-        contextMenu.getItems().addAll(item1, item2, item3, parentMenu);
+        contextMenu.getItems().addAll(item1, item2, item3);
 
     }
 
@@ -119,7 +117,11 @@ public class UseFullLinksView {
 
                 if (event.getButton() == MouseButton.PRIMARY)
                 {
-                    useFullLinksController.changeLinkGroup(tag);
+                    try {
+                        useFullLinksController.changeLinkGroup(tag);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
             });
@@ -149,7 +151,7 @@ public class UseFullLinksView {
             isNewLinkCreatorShow = false;
         }
 
-        double yPosition = addLinkButton.getLayoutY();
+        double yPosition = groupTitle.getLayoutY() + 30;
         double xPosition = BasicSizesAndPosition.getWidthOfMenu() + BasicSizesAndPosition.getGapBetweenObjects();
         try{linkWithNames = linkDatabase.getLinkGroups().get(currentLinkGroup).getLinksWithNames();}
         catch (Exception ignored){}
@@ -217,7 +219,11 @@ public class UseFullLinksView {
 
             newLinkName.setOnKeyPressed(event1 -> {
                 if (event1.getCode().equals(KeyCode.ENTER)) {
-                    useFullLinksController.renameLink(arrOfStr[0]);
+                    try {
+                        useFullLinksController.renameLink(arrOfStr[0]);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
 
@@ -241,13 +247,27 @@ public class UseFullLinksView {
 
             newLink.setOnKeyPressed(event1 -> {
                 if (event1.getCode().equals(KeyCode.ENTER)) {
-                    useFullLinksController.changeLink(arrOfStr[0]);
+                    try {
+                        useFullLinksController.changeLink(arrOfStr[0]);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
                 }
             });
 
             newLink.textProperty().addListener((observable, oldValue, newValue) ->
                     newLink.setPrefSize(lengthOfWord(newLink.getText()), currentLabel.getHeight()));
+        });
+
+        item3.setOnAction(event ->
+        {
+            String[] arrOfStr = currentLabel.getText().split(": ");
+            try {
+                useFullLinksController.deleteNote(arrOfStr[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -295,11 +315,15 @@ public class UseFullLinksView {
 
     public void showAddLink()
     {
+        if(isNewGroupCreatorShow) {
+            hideAddGroupCreator();
+        }
         if(isNewLinkCreatorShow) {
             hideAddLinkCreator();
         }
         else {
 
+            groupTitle.setLayoutY(groupTitle.getLayoutY() + 70);
             for (Label label : labelTags)
             {
                 label.setLayoutY(label.getLayoutY() + 70);
@@ -309,6 +333,8 @@ public class UseFullLinksView {
             newNoteName.setLayoutX(BasicSizesAndPosition.getWidthOfMenu() + BasicSizesAndPosition.getGapBetweenObjects());
             newNoteName.setPrefWidth(BasicSizesAndPosition.getTextFieldWidth());
             newNoteName.setLayoutY(addLinkButton.getLayoutY());
+            useFullLinksController.setNewLinkName(newNoteName);
+
             if(CalendarController.language.equals("SK")){
                 newNoteName.setPromptText("názov linku");
             }
@@ -331,7 +357,13 @@ public class UseFullLinksView {
             addToDatabaseButton.setLayoutX(newLink.getLayoutX() + newLink.getPrefWidth() + BasicSizesAndPosition.getGapBetweenObjects());
             addToDatabaseButton.setLayoutY(addLinkButton.getLayoutY());
             root.getChildren().add(addToDatabaseButton);
-            addToDatabaseButton.setOnAction(event -> { useFullLinksController.addToLinks(); });
+            addToDatabaseButton.setOnAction(event -> {
+                try {
+                    useFullLinksController.addToLinks();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
 
             separator1 = new Separator();
             separator1.setLayoutX(BasicSizesAndPosition.getWidthOfMenu());
@@ -346,6 +378,7 @@ public class UseFullLinksView {
 
     public void hideAddLinkCreator()
     {
+        groupTitle.setLayoutY(groupTitle.getLayoutY() - 70);
         for(Label label:labelTags)
         {
             label.setLayoutY(label.getLayoutY() - 70);
@@ -359,39 +392,46 @@ public class UseFullLinksView {
     }
 
 
+
+
     public void showAddGroup()
     {
-        if(isNewGroupCreatorShow)
-        {
-            for(Label label:labelTags)
-            {
-                label.setLayoutY(label.getLayoutY() - 70);
-            }
-            root.getChildren().remove(newGroup);
-            root.getChildren().remove(separator1);
-            root.getChildren().remove(addToDatabaseButton);
-            isNewGroupCreatorShow = false;
+        if(isNewLinkCreatorShow) {
+            hideAddLinkCreator();
         }
+        if(isNewGroupCreatorShow) {
+            hideAddGroupCreator();
+        }
+
         else {
 
+            groupTitle.setLayoutY(groupTitle.getLayoutY() + 70);
             for (Label label : labelTags)
             {
                 label.setLayoutY(label.getLayoutY() + 70);
             }
 
             newGroup = new TextField();
-            newGroup.setPromptText("nazov linku");
+            newGroup.setPromptText("nazov skupiny");
             newGroup.setLayoutX(CalendarSizesAndPositonOfObjects.getWidthOfMenu() + BasicSizesAndPosition.getGapBetweenObjects());
             newGroup.setPrefWidth(calendarSizes.getTextFieldWidth());
             newGroup.setLayoutY(addLinkButton.getLayoutY());
             root.getChildren().add(newGroup);
+            useFullLinksController.setNewLinkGroup(newGroup);
 
             //set button next to text field
             addToDatabaseButton = new Button();
             addToDatabaseButton.setText("Pridat do databazy");
             addToDatabaseButton.setLayoutX(newGroup.getLayoutX() + newGroup.getPrefWidth() + BasicSizesAndPosition.getGapBetweenObjects() );
             addToDatabaseButton.setLayoutY(addLinkButton.getLayoutY());
-            addToDatabaseButton.setOnAction(event -> { useFullLinksController.addLinkGroup(); });
+
+            addToDatabaseButton.setOnAction(event -> {
+                try {
+                    useFullLinksController.addLinkGroup();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
             root.getChildren().add(addToDatabaseButton);
 
             separator1 = new Separator();
@@ -403,6 +443,19 @@ public class UseFullLinksView {
             isNewGroupCreatorShow = true;
         }
 
+    }
+
+    public void hideAddGroupCreator()
+    {
+        groupTitle.setLayoutY(groupTitle.getLayoutY() - 70);
+        for(Label label:labelTags)
+        {
+            label.setLayoutY(label.getLayoutY() - 70);
+        }
+        root.getChildren().remove(newGroup);
+        root.getChildren().remove(separator1);
+        root.getChildren().remove(addToDatabaseButton);
+        isNewGroupCreatorShow = false;
     }
 
 }

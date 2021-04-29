@@ -60,6 +60,9 @@ public class CalendarController extends AplicationWindow implements Internationa
 
     private TextField newNoteName;
 
+    public CalendarController() throws IOException, ClassNotFoundException {
+    }
+
     public void setNewNoteName(TextField newNoteName) {
         this.newNoteName = newNoteName;
     }

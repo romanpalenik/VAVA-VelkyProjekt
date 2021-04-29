@@ -8,11 +8,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import project.controller.calendar.CalendarController;
 import project.model.databases.LinkDatabase;
+import project.model.databases.sizesAndPosition.BasicSizesAndPosition;
 import project.view.useLinks.UseFullLinksView;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class UseFullLinksController extends AplicationWindow implements Internationalization{
@@ -43,6 +43,9 @@ public class UseFullLinksController extends AplicationWindow implements Internat
     private TextField newLinkName;
     private TextField newNoteName;
 
+    public UseFullLinksController() throws IOException, ClassNotFoundException {
+    }
+
 
     public void setNewNoteName(TextField newNoteName) {
         this.newNoteName = newNoteName;
@@ -56,11 +59,16 @@ public class UseFullLinksController extends AplicationWindow implements Internat
         this.newLinkName = newLinkName;
     }
 
+    public void setNewLinkGroup(TextField newLinkGroup) {
+        this.newLinkGroup = newLinkGroup;
+    }
+
     public void initialize() throws IOException {
 
+        firstTag.setLayoutX(BasicSizesAndPosition.getWidthOfMenu() + BasicSizesAndPosition.getGapBetweenObjects());
         super.start(root, menuButton);
 
-        linkView = new UseFullLinksView(this, linkDatabase, firstTag, root, firstTagForLinkGroups,addButton, addGroupButton);
+        linkView = new UseFullLinksView(this, linkDatabase, root, firstTagForLinkGroups,addButton, addGroupButton, firstTag);
         linkView.showGroupLinks();
 
         root.setOnMouseClicked(this::removeAllThingsByClicked);
@@ -85,7 +93,7 @@ public class UseFullLinksController extends AplicationWindow implements Internat
 
         try{
 
-            if (os.indexOf( "win" ) >= 0) {
+            if (os.contains("win")) {
 
                 // this doesn't support showing urls in the form of "page.html#nameLink"
                 rt.exec( "rundll32 url.dll,FileProtocolHandler " + arrOfStr[1]);
@@ -98,7 +106,7 @@ public class UseFullLinksController extends AplicationWindow implements Internat
 
                 // Do a best guess on unix until we get a platform independent way
                 // Build a list of browsers to try, in this order.
-                String[] browsers = {"vivaldi","epiphany", "firefox", "mozilla", "konqueror",
+                String[] browsers = {"chrome","vivaldi","epiphany", "firefox", "mozilla", "konqueror",
                         "netscape","opera","links","lynx","brave"};
 
                 // Build a command string which looks like "browser1 "url" || browser2 "url" ||..."
@@ -118,23 +126,26 @@ public class UseFullLinksController extends AplicationWindow implements Internat
     }
 
 
-    public void renameLink(String linkName) {
+    public void renameLink(String linkName) throws IOException {
         linkDatabase.getLinkGroups().get(currentLinkGroup).renameTag(linkName, newNoteName.getText(),linkDatabase.getLinkGroups().get(currentLinkGroup).findLinkToName(linkName));
         root.getChildren().remove(newNoteName);
         linkView.showGroupLinks();
+        linkDatabase.safeEvents();
     }
 
-    public void changeLink(String linkName) {
+    public void changeLink(String linkName) throws IOException {
         root.getChildren().remove(newNoteName);
         linkDatabase.getLinkGroups().get(currentLinkGroup).addToLinks(linkName,newNoteName.getText());
         linkView.showGroupLinks();
+        linkDatabase.safeEvents();
     }
 
-    public void changeLinkGroup(Label currentLinkGroup)
-    {
+    public void changeLinkGroup(Label currentLinkGroup) throws IOException {
+        firstTag.setText(currentLinkGroup.getText());
         this.currentLinkGroup = currentLinkGroup.getText();
         linkView.setCurrentLinkGroup(currentLinkGroup.getText());
         linkView.showLinkInSelectedGroup();
+        linkDatabase.safeEvents();
     }
 
     public void OnMouseEnteredChangeColor(Label currentLabel)
@@ -146,23 +157,25 @@ public class UseFullLinksController extends AplicationWindow implements Internat
     {
         linkView.changeLinkToWhite(currentLabel);
     }
-//
-//    public void deleteNote(Label currentLabel) {
-//        calendarDatabase.deleteTag(currentLabel.getText());
-//        root.getChildren().remove(newNoteName);
-//        calendarView.createTags(root,calendarDatabase);
-//        calendarController.updateCalendar(calendarController.getCurrentMonth());
-//
-//    }
 
-    public void addToLinks() {
-        linkDatabase.getLinkGroups().get(currentLinkGroup).addToLinks(newLinkName.getText(),newLink.getText());
+    public void deleteNote(String currentLabel) throws IOException {
+        linkDatabase.getLinkGroups().get(currentLinkGroup).deleteTag(currentLabel);
         linkView.showGroupLinks();
+        linkDatabase.safeEvents();
+
     }
 
-    public void addLinkGroup() {
+    public void addToLinks() throws IOException {
+        linkDatabase.getLinkGroups().get(currentLinkGroup).addToLinks(newLinkName.getText(),newLink.getText());
+        linkView.showGroupLinks();
+        linkDatabase.safeEvents();
+    }
+
+    public void addLinkGroup() throws IOException {
+        linkDatabase.setLastCreatedNote(newLinkGroup.getText());
         linkDatabase.addGroupLink(newLinkGroup.getText());
         linkView.showGroupLinks();
+        linkDatabase.safeEvents();
     }
 
     @FXML

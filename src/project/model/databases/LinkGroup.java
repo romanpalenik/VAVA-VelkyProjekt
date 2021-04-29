@@ -1,9 +1,10 @@
-package project.model;
+package project.model.databases;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LinkGroup {
+public class LinkGroup implements Serializable {
 
     private Map<String, String> linksWithNames = new HashMap<>();
 
