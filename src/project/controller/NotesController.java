@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 
 public class NotesController extends AplicationWindow implements Internationalization{
 
@@ -92,6 +93,8 @@ public class NotesController extends AplicationWindow implements Internationaliz
             notesView.createTags(root, firstNote, notesDatabase);
 
             saveNote();
+        }else{
+            Main.LOG.log(Level.SEVERE, "File not selected.");
         }
     }
 

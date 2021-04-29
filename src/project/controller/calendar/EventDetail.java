@@ -10,8 +10,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import project.controller.Main;
 import project.model.databases.CalendarDatabase;
 import project.model.calendar.OneCellRecord;
+
+import java.util.logging.Level;
 
 public class EventDetail {
 
@@ -71,6 +74,7 @@ public class EventDetail {
                 showTagsOrHide();
             } catch (Exception e) {
                 e.printStackTrace();
+                Main.LOG.log(Level.SEVERE, e.getMessage());
             }
         };
         deleteOrChangeTag.setOnAction(event2);
@@ -110,7 +114,7 @@ public class EventDetail {
         }
         catch (NullPointerException e)
         {
-
+            Main.LOG.log(Level.SEVERE, e.getMessage());
         }
         event.setNotes(notes.getText());
         calendarController.updateCalendar(calendarController.getCurrentMonth());

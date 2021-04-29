@@ -1,16 +1,16 @@
 package project.model;
 
-public class Todo {
+import java.io.Serializable;
+
+public class Todo implements Serializable {
     private String todoName;
     private String groupTodo;
     private String date;
-    private String completed;
 
-    public Todo(String todoName, String groupTodo, String date, String completed) {
+    public Todo(String todoName, String groupTodo, String date) {
         this.todoName = todoName;
         this.groupTodo = groupTodo;
         this.date = date;
-        this.completed = completed;
     }
 
     public String getTodoName() {
@@ -25,11 +25,4 @@ public class Todo {
         return date;
     }
 
-    public String getCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(String completed) {
-        this.completed = completed;
-    }
 }

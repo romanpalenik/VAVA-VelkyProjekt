@@ -4,20 +4,26 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import project.controller.calendar.CalendarController;
 import project.model.Todo;
 import project.model.databases.TodoDatabase;
+import project.model.databases.TodoGroupDatabase;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 
 public class TodoController extends AplicationWindow implements Internationalization, Initializable {
 
@@ -42,24 +48,13 @@ public class TodoController extends AplicationWindow implements Internationaliza
     @FXML
     private TableColumn<Todo, String> dateClmn;
     @FXML
-    private TableColumn<Todo, String> completedClmn;
-    @FXML
     private Label choosedGroupLbl;
     @FXML
     private TextField addGroupField;
     @FXML
     private Label groupTitleLbl;
-//    -----------
     @FXML
-    private Button actionButton;
-    @FXML
-    private Label tagWarning;
-    @FXML
-    private ComboBox<?> categoryCBox;
-    @FXML
-    private DatePicker todoDatePicker;
-    @FXML
-    private TextField todoNoteField;
+    private ComboBox<String> groupCBox;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -70,35 +65,57 @@ public class TodoController extends AplicationWindow implements Internationaliza
         }
         todoClmn.setCellValueFactory(new PropertyValueFactory("todoName"));
         dateClmn.setCellValueFactory(new PropertyValueFactory("date"));
-        completedClmn.setCellValueFactory(new PropertyValueFactory("completed"));
-        ArrayList<Todo> todoArrListByCategory = TodoDatabase.findTodoByCategory("DBS");
-        if(todoArrListByCategory.size() > 0) {
-            ObservableList<Todo> data = FXCollections.observableArrayList(todoArrListByCategory);
-            todoTable.getItems().setAll(data);
-        }
-        choosedGroupLbl.setText("DBS");
+
+        initGroupCBox();
+        addGroupField.setPromptText(resourceBundle.getString("addGroupField"));
+        initTable(String.valueOf(groupCBox.getValue()));
+    }
+
+    public void initTable(String choosedValue){
+        ArrayList<Todo> todoArrListByCategory = TodoDatabase.findTodoByCategory(choosedValue);
+        ObservableList<Todo> data = FXCollections.observableArrayList(todoArrListByCategory);
+        todoTable.getItems().setAll(data);
+        choosedGroupLbl.setText(choosedValue);
+    }
+
+    private void initGroupCBox(){
+        ObservableList obGroupList = FXCollections.observableList(TodoGroupDatabase.todoGroupArrList);
+        groupCBox.setItems(obGroupList);
+        groupCBox.getSelectionModel().selectFirst();
+        addGroupField.setText("");
+    }
+
+    @FXML
+    void showSelectedGroup(ActionEvent event) {
+        initTable(String.valueOf(groupCBox.getValue()));
     }
 
     @FXML
     void markCompleted(MouseEvent event) {
+        ButtonType jopBtn;
         Todo todo = todoTable.getSelectionModel().getSelectedItem();
         if (todo != null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText(null);
-            alert.setContentText("Máš hotovo?");
-            ButtonType jopBtn = new ButtonType("Jo");
+            if(CalendarController.language.equals("SK")){
+                alert.setContentText("Máš hotovo?");
+                jopBtn = new ButtonType("Jo");
+            }
+            else{
+                alert.setContentText("Task completed?");
+                jopBtn = new ButtonType("Yes");
+            }
             alert.getButtonTypes().setAll(jopBtn, ButtonType.CANCEL);
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == jopBtn){
-                TodoDatabase.updateCompleted(todo);
+                TodoDatabase.updateArrListIfCompleted(todo);
                 ArrayList<Todo> todoArrListByCategory = TodoDatabase.findTodoByCategory("DBS");
                 ObservableList<Todo> data = FXCollections.observableArrayList(todoArrListByCategory);
                 todoTable.getItems().setAll(data);
             }
             todoTable.getSelectionModel().clearSelection();
         }
-
     }
 
 
@@ -113,23 +130,34 @@ public class TodoController extends AplicationWindow implements Internationaliza
         ResourceBundle bundle = this.changeLanguage();
         addButton.setText(bundle.getString("addTodo"));
         addGroupButton.setText(bundle.getString("addGroup"));
-        addGroupField.setText(bundle.getString("addGroupField"));
+        addGroupField.setPromptText(bundle.getString("addGroupField"));
         firstTagForLinkGroups.setText(bundle.getString("groups"));
         languageButton.setText(bundle.getString("language"));
         dateClmn.setText(bundle.getString("todoDate"));
-        completedClmn.setText(bundle.getString("todoCompleted"));
         groupTitleLbl.setText(bundle.getString("groupTitle"));
 
     }
 
     @FXML
-    void createTodo(ActionEvent event) {
-
+    void createTodo(MouseEvent event) throws IOException {
+        ResourceBundle bundle = this.changeLanguage();
+        Parent root = FXMLLoader.load(TodoController.class.getResource("/project/view/todo/addTodoView.fxml"), bundle);
+        Stage stage = new Stage();
+        stage.setTitle("Vytvor TO-DO");
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML
-    void createGroupTodo(ActionEvent event) {
-
+    void createGroupTodo(MouseEvent event) throws IOException {
+        if(!addGroupField.getText().equals("")) {
+            TodoGroupDatabase.todoGroupArrList.add(addGroupField.getText());
+            initGroupCBox();
+            TodoGroupDatabase.saveTodoGroups();
+        }else{
+            Main.LOG.log(Level.SEVERE, "Text field for group name is empty.");
+        }
     }
 
 

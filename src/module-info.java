@@ -7,6 +7,7 @@ module ProjektVelky {
     requires javafx.base;
     requires java.desktop;
     requires java.management;
+    requires java.logging;
 
     opens project.controller;
     opens project.controller.calendar;
