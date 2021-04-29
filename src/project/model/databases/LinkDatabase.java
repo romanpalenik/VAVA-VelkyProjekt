@@ -29,14 +29,8 @@ public class LinkDatabase implements Serializable{
             fis = new FileInputStream("links.ser");
             ois = new ObjectInputStream(fis);
             linkGroups = (Map<String, LinkGroup>) ois.readObject();
+        } catch (IOException ignored) {
         }
-        catch (IOException ignored) {}
-
-    public LinkDatabase() {
-        LinkGroup linkGroup = new LinkGroup();
-        linkGroup.addToLinks("Easter egg", "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-        linkGroups.put("Vseobecne",linkGroup);
-
     }
 
     public void safeEvents() throws IOException {
