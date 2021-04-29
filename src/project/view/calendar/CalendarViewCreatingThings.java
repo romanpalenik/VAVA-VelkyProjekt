@@ -23,6 +23,7 @@ import project.model.databases.CalendarDatabase;
 import project.model.databases.sizesAndPosition.CalendarSizesAndPositonOfObjects;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ import java.util.ResourceBundle;
 /**
  * class that create tags and make calendar bigger or smaller
  */
-public class CalendarViewCreatingThings implements Internationalization {
+public class CalendarViewCreatingThings implements Internationalization, Serializable {
 
     private Map<String, String> tagsWithColor = new HashMap<>();
     private ArrayList<Label> labelTags = new ArrayList<>();
@@ -357,7 +358,11 @@ public class CalendarViewCreatingThings implements Internationalization {
 
         saveNoteButton.setOnMouseClicked(e -> {
             if (canAddNote) {
-                calendarDatabase.addToEvents(date, textFieldNote.getText(), (String) tagsChoice.getValue());
+                try {
+                    calendarDatabase.addToEvents(date, textFieldNote.getText(), (String) tagsChoice.getValue());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
                 removeLastShownNote(root);
                 calendarController.updateCalendar(calendarController.getCurrentMonth());
             }

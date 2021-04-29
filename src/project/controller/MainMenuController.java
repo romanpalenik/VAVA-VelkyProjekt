@@ -19,7 +19,6 @@ public class MainMenuController implements Internationalization{
     public void initialize()
     {
         BasicSizesAndPosition.setWidthOfMenu(root.getPrefWidth());
-
     }
 
     /**

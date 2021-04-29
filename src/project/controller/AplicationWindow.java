@@ -8,25 +8,13 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import project.controller.calendar.AnchorPaneNode;
-import project.controller.calendar.CalendarController;
 
 import java.io.IOException;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class AplicationWindow implements Internationalization{
 
-    @FXML
-    private Button calendarBtn;
-    @FXML
-    private Button todoBtn;
-    @FXML
-    private Button linksBtn;
-    @FXML
-    private Button notificationsBtn;
-    @FXML
-    private Button notesBtn;
 
     @FXML
     private AnchorPane root;
@@ -71,11 +59,13 @@ public class AplicationWindow implements Internationalization{
      */
     public void showMenu() throws IOException {
 
-//        if (isMenuShown)
-//        {
-//            hideMenu();
-//            return;
-//        }
+        //TODO ked sa klikne na tlacidlo, tak nejde
+
+        if (isMenuShown)
+        {
+            hideMenu(null);
+            return;
+        }
 
         root.getChildren().add(darkSideWhenMenu);
         root.getChildren().add(loadFMXLMenu());
@@ -106,13 +96,11 @@ public class AplicationWindow implements Internationalization{
     public AnchorPane loadFMXLMenu() throws IOException {
         ResourceBundle bundle = this.changeLanguage();
         menuFMXL = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/project/view/menu/mainMenu.fxml")), bundle);
-//        menuFMXL.setLayoutY(75);
         return menuFMXL;
     }
 
     public void darkFilterWhileMenu() throws IOException {
         darkSideWhenMenu = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/project/view/menu/darkFilterWhileMenu.fxml")));
-//        darkSideWhenMenu.setLayoutX(174);
     }
 
 }

@@ -1,9 +1,10 @@
 package project.model.calendar;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class OneCellRecord {
+public class OneCellRecord implements Serializable {
 
     private LocalDate date;
     private ArrayList<Event> everyEvent = new ArrayList<>();
@@ -46,7 +47,7 @@ public class OneCellRecord {
     /**
      * class to hold information of every event
      */
-    public class Event
+    public class Event implements Serializable
     {
         private String eventName;
         private String tag;

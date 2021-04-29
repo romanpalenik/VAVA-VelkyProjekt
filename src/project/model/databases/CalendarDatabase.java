@@ -2,32 +2,43 @@ package project.model.databases;
 
 import project.model.calendar.OneCellRecord;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CalendarDatabase {
+public class CalendarDatabase implements Serializable {
 
-    private static List<String> tags = new ArrayList<String>();
     private static List<OneCellRecord> events = new ArrayList<>();
-    private static List<String> colors = new ArrayList<>();
 
     private static Map<String, String> tagsWithColor = new HashMap<>();
-    private Map<String, String> colorWithHexId = new HashMap<>();
+    private static Map<String, String> colorWithHexId = new HashMap<>();
 
-    /**
-     * used when is created new tag
-     * @param tag
-     * @param color
-     */
-    public void addNewTagWithColor(String tag, String color)
-    {
-        tagsWithColor.put(tag, color);
+
+    private FileInputStream fis;
+    private ObjectInputStream ois;
+
+
+    public void loadEvents() throws IOException, ClassNotFoundException {
+
+        try {
+
+            fis = new FileInputStream("events.ser");
+            ois = new ObjectInputStream(fis);
+            events = (List<OneCellRecord>) ois.readObject();
+        }
+        catch (IOException ignored) {}
     }
 
-    public CalendarDatabase() {
+    public void safeEvents() throws IOException {
+        FileOutputStream fos = new FileOutputStream("events.ser");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(events);
+    }
+
+    public CalendarDatabase() throws IOException, ClassNotFoundException {
 
         colorWithHexId.put("Červená","#f5a3a3");
         colorWithHexId.put("Red","#f5a3a3");
@@ -40,6 +51,8 @@ public class CalendarDatabase {
         colorWithHexId.put("Žltá","#f5f3a3");
         colorWithHexId.put("Yellow","#f5f3a3");
 
+        loadEvents();
+
     }
 
 
@@ -48,8 +61,7 @@ public class CalendarDatabase {
      * @param date
      * @param event
      */
-    public void addToEvents(LocalDate date, String event, String tag)
-    {
+    public void addToEvents(LocalDate date, String event, String tag) throws IOException {
         //search if cell has already record in database
         for(OneCellRecord oneCellRecord:events)
         {
@@ -62,6 +74,8 @@ public class CalendarDatabase {
         }
             OneCellRecord oneCellRecord = new OneCellRecord(date, event, tag);
             events.add(oneCellRecord);
+
+        safeEvents();
     }
 
     public void deleteFromEvents(LocalDate date, String event, String tag)
