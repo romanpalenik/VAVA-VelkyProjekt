@@ -13,6 +13,7 @@ import project.controller.calendar.CalendarController;
 import project.model.Todo;
 import project.model.databases.TodoDatabase;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -62,6 +63,11 @@ public class TodoController extends AplicationWindow implements Internationaliza
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            super.start(root, menuButton);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         todoClmn.setCellValueFactory(new PropertyValueFactory("todoName"));
         dateClmn.setCellValueFactory(new PropertyValueFactory("date"));
         completedClmn.setCellValueFactory(new PropertyValueFactory("completed"));

@@ -44,7 +44,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label layoutX="78.0" layoutY="30.0" prefHeight="53.0" text="Menu" textFill="WHITE" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="0.0">
+      <Label layoutX="78.0" layoutY="30.0" prefHeight="53.0" text="Menu" textFill="WHITE" AnchorPane.leftAnchor="60.0" AnchorPane.topAnchor="10.0">
          <font>
             <Font size="36.0" />
          </font>
