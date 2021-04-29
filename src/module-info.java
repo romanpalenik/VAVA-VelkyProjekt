@@ -8,4 +8,6 @@ module ProjektVelky {
     requires java.desktop;
     opens project.controller;
     opens project.controller.calendar;
+
+    opens project.model to javafx.base;
 }

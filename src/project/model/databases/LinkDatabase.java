@@ -11,7 +11,7 @@ public class LinkDatabase {
 
     public LinkDatabase() {
         LinkGroup linkGroup = new LinkGroup();
-        linkGroup.addToLinks("Ed", "https://www.youtube.com/watch?v=2fngvQS_PmQ");
+        linkGroup.addToLinks("Easter egg", "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
         linkGroups.put("Vseobecne",linkGroup);
     }
 

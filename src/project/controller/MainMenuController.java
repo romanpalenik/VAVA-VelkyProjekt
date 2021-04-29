@@ -58,5 +58,13 @@ public class MainMenuController implements Internationalization{
         Main.primaryStage.show();
     }
 
+    public void changeSceneToTodo() throws IOException {
+        ResourceBundle bundle = this.changeLanguage();
+        Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/project/view/todo/todo.fxml")), bundle);
+        Scene scene = new Scene(root);
+        Main.primaryStage.setScene(scene);
+        Main.primaryStage.show();
+    }
+
 
 }

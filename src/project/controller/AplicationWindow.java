@@ -86,7 +86,7 @@ public class AplicationWindow implements Internationalization{
     }
 
     protected void hideMenu(MouseEvent event) {
-        if(event.getSceneX() > 172) {
+        if(event.getSceneX() > 225) {
             root.getChildren().remove(darkSideWhenMenu);
             isMenuShown = false;
             try {
