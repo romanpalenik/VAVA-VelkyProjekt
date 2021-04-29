@@ -29,6 +29,7 @@
          <font>
             <Font size="20.0" />
          </font></Button>
+      <Button fx:id="notesBtn" layoutX="14.0" layoutY="437.0" mnemonicParsing="false" onAction="#changeSceneToNotes" prefHeight="43.0" prefWidth="200.0" style="-fx-background-color: transparent; -fx-border-color: transparent  transparent white  transparent;" text="%notesView" textFill="WHITE" AnchorPane.topAnchor="340.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

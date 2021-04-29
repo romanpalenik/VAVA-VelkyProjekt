@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 
 public interface Internationalization {
 
-    default public ResourceBundle changeLanguage(){
+    default ResourceBundle changeLanguage(){
         Locale locale;
         ResourceBundle bundle;
         if(CalendarController.language.equals("EN")){
