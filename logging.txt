@@ -2,3 +2,5 @@ Apr 29, 2021 9:48:57 PM project.controller.TodoController createGroupTodo
 SEVERE: Text field for group name is empty.
 Apr 29, 2021 9:49:03 PM project.controller.AddTodoController createTodo
 SEVERE: TO-DO field without name.
+Apr 29, 2021 11:11:12 PM project.controller.TodoController createGroupTodo
+SEVERE: Text field for group name is empty.
