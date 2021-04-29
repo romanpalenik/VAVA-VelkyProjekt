@@ -7,6 +7,7 @@ import java.util.Map;
 public class LinkDatabase implements Serializable{
 
 
+
     private Map<String, LinkGroup> linkGroups = new HashMap<>();
     private String lastCreatedNote;
 
@@ -30,6 +31,12 @@ public class LinkDatabase implements Serializable{
             linkGroups = (Map<String, LinkGroup>) ois.readObject();
         }
         catch (IOException ignored) {}
+
+    public LinkDatabase() {
+        LinkGroup linkGroup = new LinkGroup();
+        linkGroup.addToLinks("Easter egg", "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+        linkGroups.put("Vseobecne",linkGroup);
+
     }
 
     public void safeEvents() throws IOException {

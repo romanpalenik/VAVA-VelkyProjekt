@@ -57,18 +57,13 @@ public class MainMenuController implements Internationalization{
         Main.primaryStage.show();
     }
 
-    /**
-     * open new window when you can create new invoice
-     * @throws IOException if fxml is not loaded
-     */
-    public void changeSceneToNotification() throws IOException {
+    public void changeSceneToTodo() throws IOException {
         ResourceBundle bundle = this.changeLanguage();
-        Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/project/view/notification/notification.fxml")), bundle);
+        Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/project/view/todo/todo.fxml")), bundle);
         Scene scene = new Scene(root);
         Main.primaryStage.setScene(scene);
         Main.primaryStage.show();
     }
-
 
 
 }

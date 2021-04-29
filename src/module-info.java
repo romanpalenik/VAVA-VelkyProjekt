@@ -10,4 +10,6 @@ module ProjektVelky {
 
     opens project.controller;
     opens project.controller.calendar;
+
+    opens project.model to javafx.base;
 }
