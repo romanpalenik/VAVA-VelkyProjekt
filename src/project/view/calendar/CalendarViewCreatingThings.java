@@ -449,11 +449,41 @@ public class CalendarViewCreatingThings implements Internationalization, Seriali
         });
 
 //        childMenuItem1 childMenuItem2,childMenuItem3,childMenuItem4,childMenuItem5,childMenuItem6
-        blueColor.setOnAction(event -> calendarTagController.changeColor(currentLabel,"Modrá"));
-        purpleColor.setOnAction(event -> calendarTagController.changeColor(currentLabel, "Fialová"));
-        yellowColor.setOnAction(event -> calendarTagController.changeColor(currentLabel, "Žltá"));
-        redColor.setOnAction(event -> calendarTagController.changeColor(currentLabel, "Červená"));
-        greenColor.setOnAction(event -> calendarTagController.changeColor(currentLabel, "Zelená"));
+        blueColor.setOnAction(event -> {
+            try {
+                calendarTagController.changeColor(currentLabel,"Modrá");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        purpleColor.setOnAction(event -> {
+            try {
+                calendarTagController.changeColor(currentLabel, "Fialová");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        yellowColor.setOnAction(event -> {
+            try {
+                calendarTagController.changeColor(currentLabel, "Žltá");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        redColor.setOnAction(event -> {
+            try {
+                calendarTagController.changeColor(currentLabel, "Červená");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        greenColor.setOnAction(event -> {
+            try {
+                calendarTagController.changeColor(currentLabel, "Zelená");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void removeLastShownNote(AnchorPane root) {

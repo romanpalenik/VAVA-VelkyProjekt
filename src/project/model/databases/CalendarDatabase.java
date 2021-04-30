@@ -38,6 +38,25 @@ public class CalendarDatabase implements Serializable {
         oos.writeObject(events);
     }
 
+    public static void saveTags() throws IOException {
+        FileOutputStream fos = new FileOutputStream("tags.ser");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(tagsWithColor);
+    }
+
+
+    public void loadTags() throws ClassNotFoundException {
+
+        try {
+
+            fis = new FileInputStream("tags.ser");
+            ois = new ObjectInputStream(fis);
+            tagsWithColor = (Map<String, String>) ois.readObject();
+        }
+        catch (IOException ignored) {}
+    }
+
+
     public CalendarDatabase() throws IOException, ClassNotFoundException {
 
         colorWithHexId.put("Červená","#f5a3a3");
@@ -52,6 +71,7 @@ public class CalendarDatabase implements Serializable {
         colorWithHexId.put("Yellow","#f5f3a3");
 
         loadEvents();
+        loadTags();
 
     }
 
@@ -114,9 +134,9 @@ public class CalendarDatabase implements Serializable {
      * @param newTag
      * @return
      */
-    public boolean addToTags(String newTag, String color)
-    {
+    public boolean addToTags(String newTag, String color) throws IOException {
         tagsWithColor.put(newTag,colorWithHexId.get(color));
+        saveTags();
         return true;
     }
 
