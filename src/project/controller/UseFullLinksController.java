@@ -194,6 +194,7 @@ public class UseFullLinksController extends ApplicationWindow implements Interna
         addButton.setText(bundle.getString("addLink"));
         languageButton.setText(bundle.getString("language"));
         firstTagForLinkGroups.setText(bundle.getString("links"));
+        addGroupButton.setText(bundle.getString("addGroupLink"));
     }
 
 

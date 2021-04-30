@@ -124,6 +124,7 @@ public class NotesController extends ApplicationWindow implements Internationali
         note.setText("");
         saveNote();
 
+        nameOfNewNote.setText("");
     }
 
     public void saveNote() throws IOException {
