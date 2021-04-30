@@ -3,17 +3,21 @@ package project.controller;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import project.controller.calendar.AnchorPaneNode;
+import project.controller.calendar.EventDetail;
 
 import java.io.IOException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class AplicationWindow implements Internationalization{
+public class ApplicationWindow implements Internationalization{
 
 
     @FXML
@@ -23,9 +27,14 @@ public class AplicationWindow implements Internationalization{
     @FXML
     private Button menuButton;
 
+    @FXML
+    private Button menuButtonInMenu;
+
     private Label darkSideWhenMenu;
 
-
+    public void setMenuButtonInMenu(Button menuButtonInMenu) {
+        this.menuButtonInMenu = menuButtonInMenu;
+    }
 
     private boolean isMenuShown = false;
 
@@ -43,7 +52,6 @@ public class AplicationWindow implements Internationalization{
         });
         darkFilterWhileMenu();
         darkSideWhenMenu = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/project/view/menu/darkFilterWhileMenu.fxml")));
-//        darkSideWhenMenu.setLayoutX(174);
         darkSideWhenMenu.setVisible(false);
 
         //Section to set connect all object connected to calendar and tags
@@ -76,7 +84,7 @@ public class AplicationWindow implements Internationalization{
     }
 
     protected void hideMenu(MouseEvent event) {
-        if(event.getSceneX() > 225) {
+       if(event.getSceneX() > 225 || event.getSource().equals(menuButtonInMenu)) {
             root.getChildren().remove(darkSideWhenMenu);
             isMenuShown = false;
             try {
@@ -95,7 +103,11 @@ public class AplicationWindow implements Internationalization{
      */
     public AnchorPane loadFMXLMenu() throws IOException {
         ResourceBundle bundle = this.changeLanguage();
-        menuFMXL = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/project/view/menu/mainMenu.fxml")), bundle);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/project/view/menu/mainMenu.fxml"), bundle);
+        menuFMXL = loader.load();
+        MainMenuController controller = loader.getController();
+        controller.initData(menuButton, this);
         return menuFMXL;
     }
 

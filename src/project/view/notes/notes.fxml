@@ -28,7 +28,7 @@
       <Separator layoutX="-25.0" layoutY="245.0" prefWidth="225.0" AnchorPane.leftAnchor="0.0" />
       <Label fx:id="firstNote" layoutX="5.0" layoutY="259.0" prefHeight="21.0" prefWidth="200.0" text="%dajakyTag" textFill="WHITE" AnchorPane.leftAnchor="10.0" />
       <Label fx:id="noteNameLbl" layoutX="10.0" layoutY="132.0" prefHeight="21.0" prefWidth="200.0" text="%noteName" textFill="WHITE" AnchorPane.leftAnchor="10.0" />
-      <Label layoutX="195.0" layoutY="132.0" text="%notes" textFill="WHITE" AnchorPane.leftAnchor="248.0" />
+      <Label fx:id="noteTitle" layoutX="195.0" layoutY="132.0" text="%notes" textFill="WHITE" AnchorPane.leftAnchor="248.0" />
       <Button fx:id="menuButton" layoutX="38.0" layoutY="32.0" mnemonicParsing="false" prefHeight="53.0" prefWidth="43.0" style="-fx-background-color: transparent; -fx-padding: 0;" text="≡" textFill="WHITE" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="0.0">
          <font>
             <Font name="System Bold" size="45.0" />

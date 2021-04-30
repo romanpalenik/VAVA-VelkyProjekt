@@ -1,9 +1,12 @@
 package project.controller;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import project.model.databases.sizesAndPosition.BasicSizesAndPosition;
 
@@ -15,6 +18,10 @@ public class MainMenuController implements Internationalization{
 
     @FXML
     private AnchorPane root;
+
+    @FXML
+    private Button menuButton2;
+    private ApplicationWindow appWindow;
 
     public void initialize()
     {
@@ -66,4 +73,12 @@ public class MainMenuController implements Internationalization{
     }
 
 
+    public void initData(Button menuButton, ApplicationWindow appWindow) {
+        this.appWindow = appWindow;
+
+        appWindow.setMenuButtonInMenu(menuButton2);
+        this.menuButton2.setOnMouseClicked((EventHandler) event -> {
+            appWindow.hideMenu((MouseEvent) event);
+        });
+    }
 }

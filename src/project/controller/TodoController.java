@@ -27,7 +27,7 @@ import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TodoController extends AplicationWindow implements Internationalization, Initializable {
+public class TodoController extends ApplicationWindow implements Internationalization, Initializable {
 
     @FXML
     private AnchorPane root;
