@@ -90,7 +90,7 @@ public class ApplicationWindow implements Internationalization{
             try {
                 root.getChildren().remove(menuFMXL);
                 darkSideWhenMenu.setVisible(false);
-            } catch (NullPointerException e) {
+            } catch (NullPointerException ignored) {
 
             }
         }

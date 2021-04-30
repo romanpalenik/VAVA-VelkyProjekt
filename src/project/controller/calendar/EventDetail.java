@@ -14,6 +14,7 @@ import project.controller.Main;
 import project.model.databases.CalendarDatabase;
 import project.model.calendar.OneCellRecord;
 
+import java.io.IOException;
 import java.util.logging.Level;
 
 public class EventDetail {
@@ -83,8 +84,7 @@ public class EventDetail {
     /**
      * deleting event from cell and update calendar
      */
-    public void deleteEvent()
-    {
+    public void deleteEvent() throws IOException {
         oneCellRecord.deleteFromEvents(event.getEventName());
         calendarController.updateCalendar(calendarController.getCurrentMonth());
         stage.close();
