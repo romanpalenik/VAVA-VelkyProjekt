@@ -20952,3 +20952,7 @@ Apr 30, 2021 10:15:08 AM project.controller.calendar.EventDetail saveEvent
 SEVERE: null
 Apr 30, 2021 10:15:08 AM project.controller.calendar.EventDetail saveEvent
 SEVERE: null
+Apr 30, 2021 11:05:23 AM project.controller.AddTodoController createTodo
+SEVERE: TO-DO field without name.
+Apr 30, 2021 11:05:39 AM project.controller.AddTodoController createTodo
+SEVERE: TO-DO already exists.

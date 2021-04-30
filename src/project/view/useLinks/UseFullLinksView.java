@@ -353,7 +353,12 @@ public class UseFullLinksView {
             useFullLinksController.setNewLink(newLink);
 
             addToDatabaseButton = new Button();
-            addToDatabaseButton.setText("Pridat do databazy");
+            if(CalendarController.language.equals("SK")){
+                addToDatabaseButton.setText("Pridať do databázy");
+            }
+            else{
+                addToDatabaseButton.setText("Add to database");
+            }
             addToDatabaseButton.setLayoutX(newLink.getLayoutX() + newLink.getPrefWidth() + BasicSizesAndPosition.getGapBetweenObjects());
             addToDatabaseButton.setLayoutY(addLinkButton.getLayoutY());
             root.getChildren().add(addToDatabaseButton);
@@ -412,7 +417,12 @@ public class UseFullLinksView {
             }
 
             newGroup = new TextField();
-            newGroup.setPromptText("nazov skupiny");
+            if(CalendarController.language.equals("SK")){
+                newGroup.setPromptText("názov skupiny");
+            }
+            else{
+                newGroup.setPromptText("group name");
+            }
             newGroup.setLayoutX(CalendarSizesAndPositonOfObjects.getWidthOfMenu() + BasicSizesAndPosition.getGapBetweenObjects());
             newGroup.setPrefWidth(calendarSizes.getTextFieldWidth());
             newGroup.setLayoutY(addLinkButton.getLayoutY());
@@ -421,7 +431,12 @@ public class UseFullLinksView {
 
             //set button next to text field
             addToDatabaseButton = new Button();
-            addToDatabaseButton.setText("Pridat do databazy");
+            if(CalendarController.language.equals("SK")){
+                addToDatabaseButton.setText("Pridať do databázy");
+            }
+            else{
+                addToDatabaseButton.setText("Add to database");
+            }
             addToDatabaseButton.setLayoutX(newGroup.getLayoutX() + newGroup.getPrefWidth() + BasicSizesAndPosition.getGapBetweenObjects() );
             addToDatabaseButton.setLayoutY(addLinkButton.getLayoutY());
 
