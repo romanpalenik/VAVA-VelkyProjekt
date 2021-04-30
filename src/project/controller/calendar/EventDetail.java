@@ -5,15 +5,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import project.controller.Main;
 import project.model.databases.CalendarDatabase;
 import project.model.calendar.OneCellRecord;
 
+import java.io.IOException;
 import java.util.logging.Level;
 
 public class EventDetail {
@@ -30,6 +29,11 @@ public class EventDetail {
     private Label tagChoiceLabel;
     @FXML
     private TextArea notes;
+    @FXML
+    private Button saveEvent;
+    @FXML
+    private Button deleteEvent;
+
 
     private Stage stage;
     private OneCellRecord oneCellRecord;
@@ -40,7 +44,7 @@ public class EventDetail {
 
     private ObservableList<String> tags;
     private ObservableList<String> choiceDeleteOrEditSK = FXCollections.observableArrayList("Vymazat","Zmenit","Ziadna zmena");
-    private ObservableList<String> choiceDeleteOrEditEN = FXCollections.observableArrayList("Delete","Change","Nič ty debilko");
+    private ObservableList<String> choiceDeleteOrEditEN = FXCollections.observableArrayList("Delete","Change","No change");
 
     public void initData(Stage stage, OneCellRecord oneCellRecord, OneCellRecord.Event eventName, CalendarController calendarController, CalendarDatabase calendarDatabase) {
         this.stage = stage;
@@ -83,8 +87,8 @@ public class EventDetail {
     /**
      * deleting event from cell and update calendar
      */
-    public void deleteEvent()
-    {
+    public void deleteEvent() throws IOException {
+        deleteEvent.getScene().getWindow().hide();
         oneCellRecord.deleteFromEvents(event.getEventName());
         calendarController.updateCalendar(calendarController.getCurrentMonth());
         stage.close();
@@ -118,6 +122,7 @@ public class EventDetail {
         }
         event.setNotes(notes.getText());
         calendarController.updateCalendar(calendarController.getCurrentMonth());
+        saveEvent.getScene().getWindow().hide();
     }
 
     /**

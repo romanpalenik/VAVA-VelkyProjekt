@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ResourceBundle;
 
-public class UseFullLinksController extends AplicationWindow implements Internationalization{
+public class UseFullLinksController extends ApplicationWindow implements Internationalization{
 
     @FXML
     private AnchorPane root;

@@ -18,7 +18,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 
-public class NotesController extends AplicationWindow implements Internationalization{
+public class NotesController extends ApplicationWindow implements Internationalization{
 
     @FXML
     private AnchorPane root;

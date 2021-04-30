@@ -1,5 +1,6 @@
 package project.controller;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +14,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class AplicationWindow implements Internationalization{
+public class ApplicationWindow implements Internationalization{
 
 
     @FXML
@@ -26,7 +27,6 @@ public class AplicationWindow implements Internationalization{
     private Label darkSideWhenMenu;
 
 
-
     private boolean isMenuShown = false;
 
 
@@ -34,13 +34,13 @@ public class AplicationWindow implements Internationalization{
 
         this.root = root;
         this.menuButton = menuButton;
-        this.menuButton.setOnAction((EventHandler) event -> {
-            try {
-                showMenu();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+//        this.menuButton.setOnAction((EventHandler) event -> {
+//            try {
+//                showMenu();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        });
         darkFilterWhileMenu();
         darkSideWhenMenu = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/project/view/menu/darkFilterWhileMenu.fxml")));
 //        darkSideWhenMenu.setLayoutX(174);
@@ -58,15 +58,6 @@ public class AplicationWindow implements Internationalization{
      * @throws IOException if menu is not loaded
      */
     public void showMenu() throws IOException {
-
-        //TODO ked sa klikne na tlacidlo, tak nejde
-
-        if (isMenuShown)
-        {
-            hideMenu(null);
-            return;
-        }
-
         root.getChildren().add(darkSideWhenMenu);
         root.getChildren().add(loadFMXLMenu());
 
@@ -75,7 +66,8 @@ public class AplicationWindow implements Internationalization{
 
     }
 
-    protected void hideMenu(MouseEvent event) {
+
+    protected void hideMenu(MouseEvent event)  {
         if(event.getSceneX() > 225) {
             root.getChildren().remove(darkSideWhenMenu);
             isMenuShown = false;

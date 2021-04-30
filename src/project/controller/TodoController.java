@@ -27,7 +27,7 @@ import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TodoController extends AplicationWindow implements Internationalization, Initializable {
+public class TodoController extends ApplicationWindow implements Internationalization, Initializable {
 
     @FXML
     private AnchorPane root;
@@ -71,6 +71,12 @@ public class TodoController extends AplicationWindow implements Internationaliza
         initGroupCBox();
         addGroupField.setPromptText(resourceBundle.getString("addGroupField"));
         initTable(String.valueOf(groupCBox.getValue()));
+
+        root.setOnMouseClicked(this::removeAllThingsByClicked);
+    }
+
+    private void removeAllThingsByClicked(MouseEvent mouseEvent) {
+        super.hideMenu(mouseEvent);
     }
 
     public void initTable(String choosedValue){

@@ -11,7 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import project.controller.AplicationWindow;
+import project.controller.ApplicationWindow;
 import project.controller.Internationalization;
 import project.model.databases.CalendarDatabase;
 import project.view.calendar.CalendarViewCreatingThings;
@@ -22,7 +22,7 @@ import java.time.YearMonth;
 import java.util.*;
 
 
-public class CalendarController extends AplicationWindow implements Internationalization {
+public class CalendarController extends ApplicationWindow implements Internationalization {
 
     @FXML
     private AnchorPane root;
