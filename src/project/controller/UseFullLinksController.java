@@ -167,7 +167,8 @@ public class UseFullLinksController extends ApplicationWindow implements Interna
 
     public void addToLinks() throws IOException {
         linkDatabase.getLinkGroups().get(currentLinkGroup).addToLinks(newLinkName.getText(),newLink.getText());
-        linkView.showGroupLinks();
+        linkView.showLinkInSelectedGroup();
+        linkView.showAddLink();
         linkDatabase.safeEvents();
     }
 
@@ -175,6 +176,7 @@ public class UseFullLinksController extends ApplicationWindow implements Interna
         linkDatabase.setLastCreatedNote(newLinkGroup.getText());
         linkDatabase.addGroupLink(newLinkGroup.getText());
         linkView.showGroupLinks();
+        linkView.showAddGroup();
         linkDatabase.safeEvents();
 
     }

@@ -116,11 +116,14 @@ public class NotesController extends ApplicationWindow implements Internationali
      * also set notes to created one
      */
     public void createNewNote() throws IOException {
-        saveNote();
+        nameOfNotes.setLayoutX(noteTitle.getLayoutX() + noteTitle.getWidth() + BasicSizesAndPosition.getGapBetweenObjects());
         notesDatabase.addToNotes(nameOfNewNote.getText(), "");
         notesView.createTags(root,firstNote, notesDatabase);
+
         nameOfNotes.setText(nameOfNewNote.getText());
         note.setText("");
+        saveNote();
+
         nameOfNewNote.setText("");
     }
 
@@ -130,11 +133,11 @@ public class NotesController extends ApplicationWindow implements Internationali
         }
     }
 
-    public void changeNote(String noteName)
-    {
+    public void changeNote(String noteName) throws IOException {
         nameOfNotes.setLayoutX(noteTitle.getLayoutX() + noteTitle.getWidth() + BasicSizesAndPosition.getGapBetweenObjects());
         nameOfNotes.setText(noteName);
         note.setText(notesDatabase.getNoteByName(noteName));
+        saveNote();
     }
 
     public void deleteNote(String noteToDelete) throws IOException {
@@ -142,13 +145,16 @@ public class NotesController extends ApplicationWindow implements Internationali
         nameOfNotes.setText("");
         notesDatabase.deleteNotes(noteToDelete);
         notesView.createTags(root,firstNote, notesDatabase);
+        saveNote();
     }
 
     public void renameNote(Label currentLabel) throws IOException {
         notesDatabase.renameNotes(currentLabel.getText(),notesDatabase.getNoteByName(currentLabel.getText()),newNoteName.getText());
+        nameOfNotes.setLayoutX(noteTitle.getLayoutX() + noteTitle.getWidth() + BasicSizesAndPosition.getGapBetweenObjects());
         nameOfNotes.setText(newNoteName.getText());
         root.getChildren().remove(newNoteName);
         notesView.createTags(root,firstNote, notesDatabase);
+        saveNote();
 
     }
 
