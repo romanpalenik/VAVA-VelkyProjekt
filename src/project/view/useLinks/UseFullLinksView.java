@@ -54,6 +54,9 @@ public class UseFullLinksView {
     MenuItem item2 = new MenuItem("Zmenit link");
     MenuItem item3 = new MenuItem("Vymazat link");
 
+    ContextMenu contextMenu2 = new ContextMenu();
+    MenuItem item12 = new MenuItem();
+
 
     public UseFullLinksView(UseFullLinksController useFullLinksController, LinkDatabase linkDatabase, AnchorPane root, Label firstTagForLinkGroups, Button addLinkButton, Button addGroupButton, Label groupTitle) {
         this.root = root;
@@ -71,6 +74,7 @@ public class UseFullLinksView {
             showAddGroup();
         });
         contextMenu.getItems().addAll(item1, item2, item3);
+        contextMenu2.getItems().addAll(item12);
 
     }
 
@@ -82,15 +86,11 @@ public class UseFullLinksView {
      * delete all link, and create new from database
      */
     public void showGroupLinks() {
-        
+
+
         for(Label label:linkGroup)
         {
             root.getChildren().remove(label);
-            root.getChildren().remove(newLinkName);
-            root.getChildren().remove(separator1);
-            root.getChildren().remove(newLink);
-            root.getChildren().remove(addToDatabaseButton);
-            isNewLinkCreatorShow = false;
         }
 
         double yPosition = firstTagForLinkGroups.getLayoutY() + 50;
@@ -145,10 +145,6 @@ public class UseFullLinksView {
         for(Label label:labelTags)
         {
             root.getChildren().remove(label);
-            root.getChildren().remove(newLinkName);
-            root.getChildren().remove(separator1);
-            root.getChildren().remove(newLink);
-            isNewLinkCreatorShow = false;
         }
 
         double yPosition = groupTitle.getLayoutY() + 30;

@@ -69,7 +69,11 @@ public class NoteView {
             noteBlog.setOnMouseClicked(event -> {
                 if (event.getButton() == MouseButton.PRIMARY)
                 {
-                    notesController.changeNote(noteBlog.getText());
+                    try {
+                        notesController.changeNote(noteBlog.getText());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 } else if (event.getButton() == MouseButton.SECONDARY)
                 {
                     setContextMenu(noteBlog);

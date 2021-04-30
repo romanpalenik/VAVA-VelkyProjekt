@@ -21,7 +21,7 @@ public class CalendarDatabase implements Serializable {
     private ObjectInputStream ois;
 
 
-    public void loadEvents() throws IOException, ClassNotFoundException {
+    public void loadEvents() throws ClassNotFoundException {
 
         try {
 
