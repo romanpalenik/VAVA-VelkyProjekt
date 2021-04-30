@@ -121,7 +121,7 @@ public class NotesController extends ApplicationWindow implements Internationali
         notesView.createTags(root,firstNote, notesDatabase);
         nameOfNotes.setText(nameOfNewNote.getText());
         note.setText("");
-
+        nameOfNewNote.setText("");
     }
 
     public void saveNote() throws IOException {
