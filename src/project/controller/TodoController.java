@@ -71,6 +71,12 @@ public class TodoController extends ApplicationWindow implements Internationaliz
         initGroupCBox();
         addGroupField.setPromptText(resourceBundle.getString("addGroupField"));
         initTable(String.valueOf(groupCBox.getValue()));
+
+        root.setOnMouseClicked(this::removeAllThingsByClicked);
+    }
+
+    private void removeAllThingsByClicked(MouseEvent mouseEvent) {
+        super.hideMenu(mouseEvent);
     }
 
     public void initTable(String choosedValue){
