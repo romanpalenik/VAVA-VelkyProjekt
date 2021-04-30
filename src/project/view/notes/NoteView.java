@@ -16,6 +16,7 @@ import project.controller.NotesController;
 import project.model.databases.NotesDatabase;
 import project.model.databases.sizesAndPosition.NotesSizesAndPosition;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -74,8 +75,10 @@ public class NoteView {
                     setContextMenu(noteBlog);
                     contextMenu.show(noteBlog, event.getScreenX(), event.getScreenY());
                 }
-
             });
+
+            noteBlog.setOnMouseEntered(event -> notesController.OnMouseEnteredChangeColor(noteBlog));
+            noteBlog.setOnMouseExited(event -> notesController.OnMouseLeaveChangeColor(noteBlog));
 
             labelTags.add(noteBlog);
 
@@ -106,7 +109,11 @@ public class NoteView {
                     @Override
                     public void handle(KeyEvent event) {
                         if(event.getCode().equals(KeyCode.ENTER)) {
-                            notesController.renameNote(currentLabel);
+                            try {
+                                notesController.renameNote(currentLabel);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 });
@@ -117,12 +124,25 @@ public class NoteView {
 
             @Override
             public void handle(ActionEvent event) {
-                notesController.deleteNote(currentLabel.getText());
+                try {
+                    notesController.deleteNote(currentLabel.getText());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         // Add MenuItem to ContextMenu
+    }
 
+    public void changeLinkToBlue(Label currentLink)
+    {
+        currentLink.setTextFill(Color.rgb(55, 123, 225, 1));
+    }
+
+    public void changeLinkToWhite(Label currentLink)
+    {
+        currentLink.setTextFill(Color.color(1,1,1));
     }
 
 }

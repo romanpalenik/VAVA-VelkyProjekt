@@ -32,7 +32,7 @@ public class CalendarDatabase implements Serializable {
         catch (IOException ignored) {}
     }
 
-    public void safeEvents() throws IOException {
+    public static void safeEvents() throws IOException {
         FileOutputStream fos = new FileOutputStream("events.ser");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(events);
@@ -78,8 +78,7 @@ public class CalendarDatabase implements Serializable {
         safeEvents();
     }
 
-    public void deleteFromEvents(LocalDate date, String event, String tag)
-    {
+    public void deleteFromEvents(LocalDate date, String event, String tag) throws IOException {
         //search if cell has already record in database
         for(OneCellRecord oneCellRecord:events)
         {

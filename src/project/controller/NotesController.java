@@ -1,7 +1,6 @@
 package project.controller;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -9,12 +8,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import project.controller.calendar.CalendarController;
 import project.model.databases.NotesDatabase;
+import project.model.databases.sizesAndPosition.BasicSizesAndPosition;
 import project.view.notes.NoteView;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Locale;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 
@@ -50,6 +48,8 @@ public class NotesController extends ApplicationWindow implements Internationali
     private Button createNoteBtn;
     @FXML
     private Label noteNameLbl;
+    @FXML
+    private Label noteTitle;
 
 
     private boolean isMenuShown = false;
@@ -62,11 +62,12 @@ public class NotesController extends ApplicationWindow implements Internationali
         this.newNoteName = newNoteName;
     }
 
-    public void initialize() throws IOException {
+    public void initialize() throws IOException, ClassNotFoundException {
 
         super.start(root,menuButton);
         notesView = new NoteView(this,root);
         root.setOnMouseClicked(this::removeAllThingsByClicked);
+        notesDatabase.loadEvents();
         notesView.createTags(root,firstNote, notesDatabase);
 
     }
@@ -76,6 +77,17 @@ public class NotesController extends ApplicationWindow implements Internationali
         super.hideMenu(mouseEvent);
         if(newNoteName != null)root.getChildren().remove(newNoteName);
     }
+
+    public void OnMouseEnteredChangeColor(Label currentLabel)
+    {
+        notesView.changeLinkToBlue(currentLabel);
+    }
+
+    public void OnMouseLeaveChangeColor(Label currentLabel)
+    {
+        notesView.changeLinkToWhite(currentLabel);
+    }
+
 
 
     public void onClick_btn_Save() throws IOException {
@@ -103,8 +115,7 @@ public class NotesController extends ApplicationWindow implements Internationali
      * save old notes and create new one
      * also set notes to created one
      */
-    public void createNewNote()
-    {
+    public void createNewNote() throws IOException {
         saveNote();
         notesDatabase.addToNotes(nameOfNewNote.getText(), "");
         notesView.createTags(root,firstNote, notesDatabase);
@@ -113,8 +124,7 @@ public class NotesController extends ApplicationWindow implements Internationali
 
     }
 
-    public void saveNote()
-    {
+    public void saveNote() throws IOException {
         if(!nameOfNotes.getText().equals("")) {
             notesDatabase.addToNotes(nameOfNotes.getText(), note.getText());
         }
@@ -122,20 +132,19 @@ public class NotesController extends ApplicationWindow implements Internationali
 
     public void changeNote(String noteName)
     {
+        nameOfNotes.setLayoutX(noteTitle.getLayoutX() + noteTitle.getWidth() + BasicSizesAndPosition.getGapBetweenObjects());
         nameOfNotes.setText(noteName);
         note.setText(notesDatabase.getNoteByName(noteName));
     }
 
-    public void deleteNote(String noteToDelete)
-    {
+    public void deleteNote(String noteToDelete) throws IOException {
         note.setText("");
         nameOfNotes.setText("");
         notesDatabase.deleteNotes(noteToDelete);
         notesView.createTags(root,firstNote, notesDatabase);
     }
 
-    public void renameNote(Label currentLabel)
-    {
+    public void renameNote(Label currentLabel) throws IOException {
         notesDatabase.renameNotes(currentLabel.getText(),notesDatabase.getNoteByName(currentLabel.getText()),newNoteName.getText());
         nameOfNotes.setText(newNoteName.getText());
         root.getChildren().remove(newNoteName);
@@ -161,5 +170,7 @@ public class NotesController extends ApplicationWindow implements Internationali
         firstNote.setText(bundle.getString("dajakyTag"));
 
     }
+
+
 
 }

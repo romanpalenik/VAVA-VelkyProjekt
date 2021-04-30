@@ -1,5 +1,8 @@
 package project.model.calendar;
 
+import project.model.databases.CalendarDatabase;
+
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,13 +25,12 @@ public class OneCellRecord implements Serializable {
         this.date = date;
     }
 
-    public OneCellRecord(LocalDate date, String event, String tag) {
+    public OneCellRecord(LocalDate date, String event, String tag) throws IOException {
         this.date = date;
         addEvent(event, tag);
     }
 
-    public void deleteFromEvents(String event)
-    {
+    public void deleteFromEvents(String event) throws IOException {
         for(int i = 0;i < everyEvent.size();i++)
         {
             if(everyEvent.get(i).getEventName().equals(event))
@@ -36,12 +38,13 @@ public class OneCellRecord implements Serializable {
                 everyEvent.remove(i);
             }
         }
+        CalendarDatabase.safeEvents();
     }
     
-    public void addEvent(String event, String tag)
-    {
+    public void addEvent(String event, String tag) throws IOException {
         Event eventObject = new Event(event,tag);
         this.everyEvent.add(eventObject);
+        CalendarDatabase.safeEvents();
     }
 
     /**

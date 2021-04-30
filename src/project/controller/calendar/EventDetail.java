@@ -91,7 +91,6 @@ public class EventDetail {
         deleteEvent.getScene().getWindow().hide();
         oneCellRecord.deleteFromEvents(event.getEventName());
         calendarController.updateCalendar(calendarController.getCurrentMonth());
-        stage.close();
     }
 
     /**
