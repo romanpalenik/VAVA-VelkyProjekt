@@ -128,6 +128,7 @@ public class NotesController extends ApplicationWindow implements Internationali
     }
 
     public void saveNote() throws IOException {
+
         if(!nameOfNotes.getText().equals("")) {
             notesDatabase.addToNotes(nameOfNotes.getText(), note.getText());
         }
