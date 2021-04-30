@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import project.model.databases.CalendarDatabase;
 import project.view.calendar.CalendarViewCreatingThings;
 
+import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -105,8 +106,7 @@ public class CalendarTagController {
         this.calendarController = calendarController;
     }
 
-    public void choiceEditOrCreate()
-    {
+    public void choiceEditOrCreate() throws IOException {
         String choice = (String) choiceMode.getValue();
         switch (choice) {
             case "Upraviť":
@@ -126,7 +126,7 @@ public class CalendarTagController {
     }
 
 
-    public void addNewTag(){
+    public void addNewTag() throws IOException {
         tagWarning.setVisible(false);
 
         if(calendarDatabase.addToTags(tagName.getText(), (String) choiceColor.getValue())) {
@@ -138,7 +138,7 @@ public class CalendarTagController {
         }
     }
 
-    public void editTag(){
+    public void editTag() throws IOException {
         calendarDatabase.addToTags(tagName.getText(), (String) choiceColor.getValue());
         calendarView.createTags(root,calendarDatabase);
         calendarController.updateCalendar(calendarController.getCurrentMonth());
@@ -241,7 +241,7 @@ public class CalendarTagController {
         this.calendarController = calendarController;
     }
 
-    public void changeColor(Label currentTag, String color) {
+    public void changeColor(Label currentTag, String color) throws IOException {
         calendarDatabase.addToTags(currentTag.getText(), color);
         calendarView.createTags(root,calendarDatabase);
         calendarController.updateCalendar(calendarController.getCurrentMonth());
