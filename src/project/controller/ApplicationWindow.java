@@ -5,10 +5,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+
 import javafx.stage.Stage;
 import project.controller.calendar.AnchorPaneNode;
 import project.controller.calendar.EventDetail;
@@ -36,6 +38,7 @@ public class ApplicationWindow implements Internationalization{
         this.menuButtonInMenu = menuButtonInMenu;
     }
 
+
     private boolean isMenuShown = false;
 
 
@@ -43,6 +46,7 @@ public class ApplicationWindow implements Internationalization{
 
         this.root = root;
         this.menuButton = menuButton;
+
         this.menuButton.setOnAction((EventHandler) event -> {
             try {
                 showMenu();
@@ -52,11 +56,11 @@ public class ApplicationWindow implements Internationalization{
         });
         darkFilterWhileMenu();
         darkSideWhenMenu = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/project/view/menu/darkFilterWhileMenu.fxml")));
+
         darkSideWhenMenu.setVisible(false);
 
         //Section to set connect all object connected to calendar and tags
         AnchorPaneNode.setRoot(root);
-
     }
 
 
@@ -85,11 +89,13 @@ public class ApplicationWindow implements Internationalization{
 
     protected void hideMenu(MouseEvent event) {
        if(event.getSceneX() > 225 || event.getSource().equals(menuButtonInMenu)) {
+
             root.getChildren().remove(darkSideWhenMenu);
             isMenuShown = false;
             try {
                 root.getChildren().remove(menuFMXL);
                 darkSideWhenMenu.setVisible(false);
+
             } catch (NullPointerException ignored) {
 
             }

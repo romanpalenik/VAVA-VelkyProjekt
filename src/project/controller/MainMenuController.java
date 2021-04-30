@@ -1,8 +1,10 @@
 package project.controller;
 
 import javafx.event.EventHandler;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -72,6 +74,13 @@ public class MainMenuController implements Internationalization{
         Main.primaryStage.show();
     }
 
+    public void changeSceneToAboutUs() throws IOException {
+        ResourceBundle bundle = this.changeLanguage();
+        Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/project/view/aboutUs.fxml")), bundle);
+        Scene scene = new Scene(root);
+        Main.primaryStage.setScene(scene);
+        Main.primaryStage.show();
+    }
 
     public void initData(Button menuButton, ApplicationWindow appWindow) {
         this.appWindow = appWindow;

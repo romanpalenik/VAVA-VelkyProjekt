@@ -22,7 +22,7 @@ public class Main extends Application{
 
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        loggerFile = new FileHandler("logging.txt", true);
+        loggerFile = new FileHandler("log", true);
         SimpleFormatter simpleFormatter = new SimpleFormatter();
         loggerFile.setFormatter(simpleFormatter);
         LOG.addHandler(Main.loggerFile);
