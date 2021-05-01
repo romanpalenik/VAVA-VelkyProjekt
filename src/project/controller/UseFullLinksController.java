@@ -68,7 +68,7 @@ public class UseFullLinksController extends ApplicationWindow implements Interna
         firstTag.setLayoutX(BasicSizesAndPosition.getWidthOfMenu() + BasicSizesAndPosition.getGapBetweenObjects());
         super.start(root, menuButton);
 
-        linkView = new UseFullLinksView(this, linkDatabase, root, firstTagForLinkGroups,addButton, addGroupButton, firstTag);
+        linkView = new UseFullLinksView(this, linkDatabase, root, firstTagForLinkGroups,addButton, addGroupButton, firstTag,languageButton);
         linkView.showGroupLinks();
 
         root.setOnMouseClicked(this::removeAllThingsByClicked);
@@ -198,6 +198,11 @@ public class UseFullLinksController extends ApplicationWindow implements Interna
     }
 
 
+    public void deleteGroup(Label currentLabel) throws IOException {
+        linkView.showGroupLinks();
+        linkDatabase.deleteGroup(currentLabel.getText());
+        linkDatabase.safeEvents();
+    }
 }
 
 
