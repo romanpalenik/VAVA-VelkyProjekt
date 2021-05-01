@@ -99,7 +99,7 @@ public class TodoController extends ApplicationWindow implements Internationaliz
     }
 
     @FXML
-    void markCompleted(MouseEvent event) {
+    void markCompleted(MouseEvent event) throws IOException {
         ButtonType jopBtn;
         Todo todo = todoTable.getSelectionModel().getSelectedItem();
         if (todo != null) {

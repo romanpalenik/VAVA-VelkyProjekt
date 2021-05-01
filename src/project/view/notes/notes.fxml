@@ -19,10 +19,13 @@
          </font>
       </Label>
       <Button fx:id="createNoteBtn" layoutX="16.0" layoutY="206.0" mnemonicParsing="false" onAction="#createNewNote" prefHeight="31.0" prefWidth="190.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 20;" text="%createNote" AnchorPane.leftAnchor="16.0" />
-      <TextArea fx:id="note" layoutX="185.0" layoutY="156.0" prefHeight="510.0" prefWidth="782.0" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+      <TextArea fx:id="note" layoutX="185.0" layoutY="156.0" prefHeight="510.0" prefWidth="782.0" wrapText="true" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
          <cursor>
             <Cursor fx:constant="TEXT" />
-         </cursor></TextArea>
+         </cursor>
+         <font>
+            <Font size="18.0" />
+         </font></TextArea>
       <Separator layoutY="115.0" prefHeight="3.0" prefWidth="1050.0" />
       <Button fx:id="importBtn" layoutX="16.0" layoutY="79.0" mnemonicParsing="false" onAction="#onClick_btn_Save" prefHeight="31.0" prefWidth="190.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 20;" text="%importNotes" />
       <Button fx:id="saveBtn" layoutX="940.0" layoutY="79.0" mnemonicParsing="false" onAction="#saveNote" prefHeight="31.0" prefWidth="90.0" style="-fx-background-color: #f4ed71; -fx-background-radius: 20;" text="%saveNote" AnchorPane.leftAnchor="940.0" />

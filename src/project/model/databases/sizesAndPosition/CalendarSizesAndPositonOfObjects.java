@@ -5,7 +5,7 @@ public class CalendarSizesAndPositonOfObjects extends BasicSizesAndPosition{
     private int widthOfCalendar = 750;
     private int heightOfCalendar = 487;
     private int leftUpCornerX = 260;
-    private int leftUpCornerY = 170;
+    private int leftUpCornerY = 180;
     private int oneCalendarCell = 200;
 
     public int getOneCalendarCell() {

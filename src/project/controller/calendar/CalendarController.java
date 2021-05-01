@@ -46,6 +46,20 @@ public class CalendarController extends ApplicationWindow implements Internation
     private Button menuButton;
     @FXML
     private Button languageButton;
+    @FXML
+    private Label mondayLbl;
+    @FXML
+    private Label tuesdayLbl;
+    @FXML
+    private Label wednesdayLbl;
+    @FXML
+    private Label thursdayLbl;
+    @FXML
+    private Label fridayLbl;
+    @FXML
+    private Label saturdayLbl;
+    @FXML
+    private Label sundayLbl;
 
     public static String language;
 
@@ -261,6 +275,14 @@ public class CalendarController extends ApplicationWindow implements Internation
         titleLbl.setText(bundle.getString("calendarTitle"));
         addTag.setText(bundle.getString("tagManagement"));
         languageButton.setText(bundle.getString("language"));
+        mondayLbl.setText(bundle.getString("monday"));
+        tuesdayLbl.setText(bundle.getString("tuesday"));
+        wednesdayLbl.setText(bundle.getString("wednesday"));
+        thursdayLbl.setText(bundle.getString("thursday"));
+        fridayLbl.setText(bundle.getString("friday"));
+        saturdayLbl.setText(bundle.getString("saturday"));
+        sundayLbl.setText(bundle.getString("sunday"));
+
         initCalendar();
     }
 

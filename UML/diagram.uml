@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>project.model.databases.sizesAndPosition.BasicSizesAndPosition</OriginalElement>
+  <nodes>
+    <node x="0.0" y="1073.0">project.controller.calendar.CalendarController</node>
+    <node x="2263.0" y="2055.0">project.model.databases.LinkDatabase</node>
+    <node x="285.0" y="2770.0">project.model.calendar.OneCellRecord</node>
+    <node x="874.0" y="2770.0">project.model.Todo</node>
+    <node x="1302.0" y="2770.0">project.model.databases.TodoGroupDatabase</node>
+    <node x="0.0" y="2770.0">project.controller.AddTodoController</node>
+    <node x="2575.0" y="2055.0">project.model.databases.TodoDatabase</node>
+    <node x="1887.0" y="2770.0">project.model.calendar.OneCalendarDay</node>
+    <node x="1090.0" y="2770.0">project.controller.Main</node>
+    <node x="2214.0" y="0.0">project.controller.calendar.CalendarTagController</node>
+    <node x="1224.5" y="414.0">project.controller.ApplicationWindow</node>
+    <node x="852.0" y="2055.0">project.controller.calendar.AnchorPaneNode</node>
+    <node x="357.30681818181824" y="1260.0">project.controller.TodoController</node>
+    <node x="92.62500000000011" y="436.0">project.controller.MainMenuController</node>
+    <node x="1572.0" y="2055.0">project.view.notes.NoteView</node>
+    <node x="1265.0" y="1183.0">project.controller.UseFullLinksController</node>
+    <node x="556.0" y="2770.0">project.model.databases.LinkGroup</node>
+    <node x="930.0000000000001" y="0.0">project.controller.Internationalization</node>
+    <node x="32.5" y="2055.0">project.model.databases.sizesAndPosition.BasicSizesAndPosition</node>
+    <node x="1881.0" y="1172.0">project.controller.NotesController</node>
+    <node x="1573.0" y="1414.0">project.controller.AboutUsController</node>
+    <node x="891.5000000000001" y="106.0">project.view.useLinks.UseFullLinksView</node>
+    <node x="1584.0" y="2770.0">project.model.databases.sizesAndPosition.NotesSizesAndPosition</node>
+    <node x="395.5000000000001" y="117.0">project.view.calendar.CalendarViewCreatingThings</node>
+    <node x="322.0" y="2055.0">project.controller.calendar.EventDetail</node>
+    <node x="1944.0" y="2055.0">project.model.databases.NotesDatabase</node>
+    <node x="1221.0" y="2055.0">project.model.databases.CalendarDatabase</node>
+    <node x="0.0" y="2426.0">project.model.databases.sizesAndPosition.CalendarSizesAndPositonOfObjects</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="project.controller.NotesController" target="project.controller.Internationalization" relationship="REALIZATION">
+      <point x="72.0" y="-369.5" />
+      <point x="2097.0" y="81.0" />
+      <point x="1048.0" y="81.0" />
+      <point x="0.0" y="28.0" />
+    </edge>
+    <edge source="project.controller.AboutUsController" target="project.controller.ApplicationWindow" relationship="GENERALIZATION">
+      <point x="-72.0" y="-127.5" />
+      <point x="1645.0" y="1052.0" />
+      <point x="1344.0" y="1052.0" />
+      <point x="0.0" y="149.5" />
+    </edge>
+    <edge source="project.controller.MainMenuController" target="project.controller.Internationalization" relationship="REALIZATION">
+      <point x="0.0" y="-127.5" />
+      <point x="229.1250000000001" y="81.0" />
+      <point x="1048.0" y="81.0" />
+      <point x="0.0" y="28.0" />
+    </edge>
+    <edge source="project.controller.TodoController" target="project.controller.Internationalization" relationship="REALIZATION">
+      <point x="-72.0" y="-281.5" />
+      <point x="429.30681818181824" y="1042.0" />
+      <point x="385.0000000000001" y="1042.0" />
+      <point x="385.0000000000001" y="81.0" />
+      <point x="1048.0" y="81.0" />
+      <point x="0.0" y="28.0" />
+    </edge>
+    <edge source="project.controller.NotesController" target="project.controller.ApplicationWindow" relationship="GENERALIZATION">
+      <point x="-72.0" y="-369.5" />
+      <point x="1953.0" y="1052.0" />
+      <point x="1344.0" y="1052.0" />
+      <point x="0.0" y="149.5" />
+    </edge>
+    <edge source="project.view.calendar.CalendarViewCreatingThings" target="project.controller.Internationalization" relationship="REALIZATION">
+      <point x="0.0" y="-446.5" />
+      <point x="633.5000000000001" y="81.0" />
+      <point x="1048.0" y="81.0" />
+      <point x="0.0" y="28.0" />
+    </edge>
+    <edge source="project.controller.TodoController" target="project.controller.ApplicationWindow" relationship="GENERALIZATION">
+      <point x="72.0" y="-281.5" />
+      <point x="573.3068181818182" y="1052.0" />
+      <point x="1344.0" y="1052.0" />
+      <point x="0.0" y="149.5" />
+    </edge>
+    <edge source="project.controller.AboutUsController" target="project.controller.Internationalization" relationship="REALIZATION">
+      <point x="72.0" y="-127.5" />
+      <point x="1789.0" y="81.0" />
+      <point x="1048.0" y="81.0" />
+      <point x="0.0" y="28.0" />
+    </edge>
+    <edge source="project.controller.ApplicationWindow" target="project.controller.Internationalization" relationship="REALIZATION">
+      <point x="0.0" y="-149.5" />
+      <point x="1344.0" y="81.0" />
+      <point x="1048.0" y="81.0" />
+      <point x="0.0" y="28.0" />
+    </edge>
+    <edge source="project.model.databases.sizesAndPosition.CalendarSizesAndPositonOfObjects" target="project.model.databases.sizesAndPosition.BasicSizesAndPosition" relationship="GENERALIZATION">
+      <point x="0.0" y="-149.5" />
+      <point x="0.0" y="160.5" />
+    </edge>
+    <edge source="project.controller.calendar.CalendarController" target="project.controller.Internationalization" relationship="REALIZATION">
+      <point x="-73.25" y="-468.5" />
+      <point x="73.25000000000011" y="81.0" />
+      <point x="1048.0" y="81.0" />
+      <point x="0.0" y="28.0" />
+    </edge>
+    <edge source="project.controller.calendar.CalendarController" target="project.controller.ApplicationWindow" relationship="GENERALIZATION">
+      <point x="73.25" y="-468.5" />
+      <point x="219.75" y="1052.0" />
+      <point x="1344.0" y="1052.0" />
+      <point x="0.0" y="149.5" />
+    </edge>
+    <edge source="project.controller.UseFullLinksController" target="project.controller.Internationalization" relationship="REALIZATION">
+      <point x="72.0" y="-358.5" />
+      <point x="1481.0" y="1042.0" />
+      <point x="1474.0" y="1042.0" />
+      <point x="1474.0" y="81.0" />
+      <point x="1048.0" y="81.0" />
+      <point x="0.0" y="28.0" />
+    </edge>
+    <edge source="project.view.useLinks.UseFullLinksView" target="project.controller.Internationalization" relationship="REALIZATION">
+      <point x="0.0" y="-457.5" />
+      <point x="0.0" y="28.0" />
+    </edge>
+    <edge source="project.controller.UseFullLinksController" target="project.controller.ApplicationWindow" relationship="GENERALIZATION">
+      <point x="-72.0" y="-358.5" />
+      <point x="1337.0" y="1052.0" />
+      <point x="1344.0" y="1052.0" />
+      <point x="0.0" y="149.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.2249076871433367" showDependencies="false" x="1433.0" y="1479.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

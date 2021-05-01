@@ -23,13 +23,14 @@ public class TodoDatabase {
         return todoArrListByCategory;
     }
 
-    public static void updateArrListIfCompleted(Todo item){
+    public static void updateArrListIfCompleted(Todo item) throws IOException {
         for(int i = 0; i < todoArrList.size(); i++) {
             if(item.getTodoName().equals(todoArrList.get(i).getTodoName())){
                 todoArrList.remove(todoArrList.get(i));
                 break;
             }
         }
+        saveTodo();
     }
 
     public static boolean findByName(String item, String itemGroup){
