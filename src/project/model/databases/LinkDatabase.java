@@ -50,6 +50,11 @@ public class LinkDatabase implements Serializable{
         safeEvents();
     }
 
+    public void deleteGroup(String groupName)
+    {
+        linkGroups.remove(groupName);
+    }
+
 
     public Map<String, LinkGroup> getLinkGroups() {
         return linkGroups;

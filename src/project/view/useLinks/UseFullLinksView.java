@@ -1,6 +1,7 @@
 package project.view.useLinks;
 
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
@@ -8,6 +9,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import project.controller.Internationalization;
 import project.controller.UseFullLinksController;
 import project.controller.calendar.CalendarController;
 import project.model.databases.LinkGroup;
@@ -20,8 +22,9 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
-public class UseFullLinksView {
+public class UseFullLinksView implements Internationalization {
 
     private AnchorPane root;
     private Button addLinkButton;
@@ -33,6 +36,8 @@ public class UseFullLinksView {
     private Separator separator1;
     private Button addToDatabaseButton;
     private Label groupTitle;
+
+    private Button languageButton;
 
     private CalendarSizesAndPositonOfObjects calendarSizes = new CalendarSizesAndPositonOfObjects();
     private UseFullLinksController useFullLinksController;
@@ -55,10 +60,10 @@ public class UseFullLinksView {
     MenuItem item3 = new MenuItem("Vymazat link");
 
     ContextMenu contextMenu2 = new ContextMenu();
-    MenuItem item12 = new MenuItem();
+    MenuItem item12 = new MenuItem("Vymazat");
 
 
-    public UseFullLinksView(UseFullLinksController useFullLinksController, LinkDatabase linkDatabase, AnchorPane root, Label firstTagForLinkGroups, Button addLinkButton, Button addGroupButton, Label groupTitle) {
+    public UseFullLinksView(UseFullLinksController useFullLinksController, LinkDatabase linkDatabase, AnchorPane root, Label firstTagForLinkGroups, Button addLinkButton, Button addGroupButton, Label groupTitle, Button languageButton) {
         this.root = root;
         this.useFullLinksController = useFullLinksController;
         this.linkDatabase = linkDatabase;
@@ -66,6 +71,7 @@ public class UseFullLinksView {
         this.addLinkButton = addLinkButton;
         this.addGroupButton = addGroupButton;
         this.groupTitle = groupTitle;
+        this.languageButton = languageButton;
 
         addLinkButton.setOnAction((EventHandler) event -> {
                 showAddLink();
@@ -111,8 +117,8 @@ public class UseFullLinksView {
             tag.setOnMouseClicked(event -> {
                 if (event.getButton() == MouseButton.SECONDARY)
                 {
-                    setContextMenu(tag);
-                    contextMenu.show(tag, event.getScreenX(), event.getScreenY());
+                    setContextMenu2(tag);
+                    contextMenu2.show(tag, event.getScreenX(), event.getScreenY());
                 }
 
                 if (event.getButton() == MouseButton.PRIMARY)
@@ -265,6 +271,22 @@ public class UseFullLinksView {
                 e.printStackTrace();
             }
         });
+    }
+
+    public void setContextMenu2(Label currentLabel)
+    {
+        if(CalendarController.language.equals("SK")){
+            item12.setText("Vymazat skupinu");
+        }
+        else{
+            item12.setText("Delete group");
+        }
+        item12.setOnAction(event -> {
+            try {
+                useFullLinksController.deleteGroup(currentLabel);
+            } catch (IOException ignored) {}
+        });
+
     }
 
     public double lengthOfWord(String word)
@@ -468,5 +490,6 @@ public class UseFullLinksView {
         root.getChildren().remove(addToDatabaseButton);
         isNewGroupCreatorShow = false;
     }
+
 
 }
